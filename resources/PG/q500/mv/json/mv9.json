@@ -1,0 +1,72 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": true,
+    "Join Type": "Inner",
+    "Startup Cost": 24803.83,
+    "Total Cost": 71898.18,
+    "Plan Rows": 53195,
+    "Plan Width": 37,
+    "Actual Startup Time": 319.438,
+    "Actual Total Time": 390.874,
+    "Actual Rows": 4926,
+    "Actual Loops": 7,
+    "Inner Unique": false,
+    "Hash Cond": "(mk.movie_id = mi_idx.movie_id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": true,
+        "Relation Name": "movie_keyword",
+        "Alias": "mk",
+        "Startup Cost": 0.0,
+        "Total Cost": 42695.65,
+        "Plan Rows": 18145,
+        "Plan Width": 12,
+        "Actual Startup Time": 0.168,
+        "Actual Total Time": 144.715,
+        "Actual Rows": 8350,
+        "Actual Loops": 7,
+        "Filter": "(keyword_id = 16264)",
+        "Rows Removed by Filter": 637926
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": true,
+        "Startup Cost": 13685.15,
+        "Total Cost": 13685.15,
+        "Plan Rows": 575015,
+        "Plan Width": 25,
+        "Actual Startup Time": 140.254,
+        "Actual Total Time": 140.259,
+        "Actual Rows": 197148,
+        "Actual Loops": 7,
+        "Hash Buckets": 65536,
+        "Original Hash Buckets": 65536,
+        "Hash Batches": 32,
+        "Original Hash Batches": 32,
+        "Peak Memory Usage": 2784,
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": true,
+            "Relation Name": "movie_info_idx",
+            "Alias": "mi_idx",
+            "Startup Cost": 0.0,
+            "Total Cost": 13685.15,
+            "Plan Rows": 575015,
+            "Plan Width": 25,
+            "Actual Startup Time": 0.063,
+            "Actual Total Time": 50.948,
+            "Actual Rows": 197148,
+            "Actual Loops": 7
+          }
+        ]
+      }
+    ]
+  }
+}

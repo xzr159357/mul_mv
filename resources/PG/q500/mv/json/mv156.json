@@ -1,0 +1,127 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": true,
+    "Join Type": "Inner",
+    "Startup Cost": 283672.64,
+    "Total Cost": 339135.8,
+    "Plan Rows": 235414,
+    "Plan Width": 180,
+    "Actual Startup Time": 1686.425,
+    "Actual Total Time": 1917.21,
+    "Actual Rows": 204261,
+    "Actual Loops": 7,
+    "Inner Unique": false,
+    "Hash Cond": "(mk.movie_id = t.id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": true,
+        "Relation Name": "movie_keyword",
+        "Alias": "mk",
+        "Startup Cost": 0.0,
+        "Total Cost": 42695.65,
+        "Plan Rows": 476446,
+        "Plan Width": 12,
+        "Actual Startup Time": 0.124,
+        "Actual Total Time": 150.98,
+        "Actual Rows": 210662,
+        "Actual Loops": 7,
+        "Filter": "(keyword_id > 11171)",
+        "Rows Removed by Filter": 435614
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": true,
+        "Startup Cost": 274693.56,
+        "Total Cost": 274693.56,
+        "Plan Rows": 249847,
+        "Plan Width": 168,
+        "Actual Startup Time": 1439.237,
+        "Actual Total Time": 1439.292,
+        "Actual Rows": 184133,
+        "Actual Loops": 7,
+        "Hash Buckets": 32768,
+        "Original Hash Buckets": 32768,
+        "Hash Batches": 128,
+        "Original Hash Batches": 128,
+        "Peak Memory Usage": 1696,
+        "Plans": [
+          {
+            "Node Type": "Hash Join",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": true,
+            "Join Type": "Inner",
+            "Startup Cost": 59496.64,
+            "Total Cost": 274693.56,
+            "Plan Rows": 249847,
+            "Plan Width": 168,
+            "Actual Startup Time": 964.102,
+            "Actual Total Time": 1298.475,
+            "Actual Rows": 184133,
+            "Actual Loops": 7,
+            "Inner Unique": true,
+            "Hash Cond": "(mi.movie_id = t.id)",
+            "Plans": [
+              {
+                "Node Type": "Seq Scan",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": true,
+                "Relation Name": "movie_info",
+                "Alias": "mi",
+                "Startup Cost": 0.0,
+                "Total Cost": 198938.07,
+                "Plan Rows": 249847,
+                "Plan Width": 73,
+                "Actual Startup Time": 18.732,
+                "Actual Total Time": 504.73,
+                "Actual Rows": 184133,
+                "Actual Loops": 7,
+                "Filter": "(info_type_id = 2)",
+                "Rows Removed by Filter": 1935256
+              },
+              {
+                "Node Type": "Hash",
+                "Parent Relationship": "Inner",
+                "Parallel Aware": true,
+                "Startup Cost": 42336.73,
+                "Total Cost": 42336.73,
+                "Plan Rows": 632073,
+                "Plan Width": 95,
+                "Actual Startup Time": 343.831,
+                "Actual Total Time": 343.837,
+                "Actual Rows": 361187,
+                "Actual Loops": 7,
+                "Hash Buckets": 32768,
+                "Original Hash Buckets": 32768,
+                "Hash Batches": 128,
+                "Original Hash Batches": 128,
+                "Peak Memory Usage": 2624,
+                "Plans": [
+                  {
+                    "Node Type": "Seq Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": true,
+                    "Relation Name": "title",
+                    "Alias": "t",
+                    "Startup Cost": 0.0,
+                    "Total Cost": 42336.73,
+                    "Plan Rows": 632073,
+                    "Plan Width": 95,
+                    "Actual Startup Time": 0.035,
+                    "Actual Total Time": 103.214,
+                    "Actual Rows": 361187,
+                    "Actual Loops": 7
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

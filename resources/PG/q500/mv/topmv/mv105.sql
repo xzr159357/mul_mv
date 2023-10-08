@@ -1,0 +1,3 @@
+create materialized view if not exists mv105 as select movie_companies.company_type_id AS company_type_id, movie_companies.movie_id AS movie_id, movie_keyword.keyword_id AS keyword_id, title.production_year AS production_year
+ from movie_keyword,title,movie_companies
+ where ((((((movie_keyword.keyword_id < 1724) Or (movie_keyword.keyword_id = 74852))) Or (movie_keyword.keyword_id = 39091))) Or (movie_keyword.keyword_id = 13886)) And (movie_keyword.movie_id = title.id) And (movie_companies.movie_id = title.id) And ((movie_companies.company_type_id = 1) Or (movie_companies.company_type_id = 2))

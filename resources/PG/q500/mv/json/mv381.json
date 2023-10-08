@@ -1,0 +1,74 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": true,
+    "Join Type": "Inner",
+    "Startup Cost": 55127.21,
+    "Total Cost": 110273.8,
+    "Plan Rows": 337435,
+    "Plan Width": 107,
+    "Actual Startup Time": 858.049,
+    "Actual Total Time": 1206.802,
+    "Actual Rows": 221432,
+    "Actual Loops": 4,
+    "Inner Unique": true,
+    "Hash Cond": "(mk.movie_id = t.id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": true,
+        "Relation Name": "movie_keyword",
+        "Alias": "mk",
+        "Startup Cost": 0.0,
+        "Total Cost": 42695.65,
+        "Plan Rows": 516546,
+        "Plan Width": 12,
+        "Actual Startup Time": 0.069,
+        "Actual Total Time": 269.751,
+        "Actual Rows": 401547,
+        "Actual Loops": 4,
+        "Filter": "(keyword_id < 2488)",
+        "Rows Removed by Filter": 729435
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": true,
+        "Startup Cost": 43916.91,
+        "Total Cost": 43916.91,
+        "Plan Rows": 412904,
+        "Plan Width": 95,
+        "Actual Startup Time": 464.167,
+        "Actual Total Time": 464.176,
+        "Actual Rows": 410878,
+        "Actual Loops": 4,
+        "Hash Buckets": 32768,
+        "Original Hash Buckets": 32768,
+        "Hash Batches": 64,
+        "Original Hash Batches": 64,
+        "Peak Memory Usage": 3328,
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": true,
+            "Relation Name": "title",
+            "Alias": "t",
+            "Startup Cost": 0.0,
+            "Total Cost": 43916.91,
+            "Plan Rows": 412904,
+            "Plan Width": 95,
+            "Actual Startup Time": 0.038,
+            "Actual Total Time": 275.651,
+            "Actual Rows": 410878,
+            "Actual Loops": 4,
+            "Filter": "(production_year > 1994)",
+            "Rows Removed by Filter": 221200
+          }
+        ]
+      }
+    ]
+  }
+}

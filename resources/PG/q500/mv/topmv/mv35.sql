@@ -1,0 +1,3 @@
+create materialized view if not exists mv35 as select cast_info.movie_id AS movie_id, cast_info.person_id AS person_id, cast_info.role_id AS role_id, title.kind_id AS kind_id, title.production_year AS production_year
+ from title,cast_info
+ where (title.id = cast_info.movie_id) And (((((((cast_info.person_id = 613664)  And  (cast_info.role_id = 1)) Or ((cast_info.person_id > 2861977)  And  (cast_info.role_id = 8)))) Or ((cast_info.person_id = 1699564)  And  (cast_info.role_id = 1)))) Or ((cast_info.person_id > 3393072)  And  (cast_info.role_id = 10)))

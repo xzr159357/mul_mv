@@ -1,0 +1,71 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parallel Aware": false,
+    "Join Type": "Inner",
+    "Startup Cost": 85628.38,
+    "Total Cost": 221094.01,
+    "Plan Rows": 1186928,
+    "Plan Width": 107,
+    "Actual Startup Time": 1057.632,
+    "Actual Total Time": 5356.085,
+    "Actual Rows": 2886675,
+    "Actual Loops": 1,
+    "Inner Unique": true,
+    "Hash Cond": "(mk.movie_id = t.id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": false,
+        "Relation Name": "movie_keyword",
+        "Alias": "mk",
+        "Startup Cost": 0.0,
+        "Total Cost": 69693.3,
+        "Plan Rows": 4523930,
+        "Plan Width": 12,
+        "Actual Startup Time": 0.072,
+        "Actual Total Time": 909.917,
+        "Actual Rows": 4523930,
+        "Actual Loops": 1
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": false,
+        "Startup Cost": 67619.64,
+        "Total Cost": 67619.64,
+        "Plan Rows": 663339,
+        "Plan Width": 95,
+        "Actual Startup Time": 1055.596,
+        "Actual Total Time": 1055.599,
+        "Actual Rows": 662825,
+        "Actual Loops": 1,
+        "Hash Buckets": 32768,
+        "Original Hash Buckets": 32768,
+        "Hash Batches": 32,
+        "Original Hash Batches": 32,
+        "Peak Memory Usage": 2489,
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Relation Name": "title",
+            "Alias": "t",
+            "Startup Cost": 0.0,
+            "Total Cost": 67619.64,
+            "Plan Rows": 663339,
+            "Plan Width": 95,
+            "Actual Startup Time": 22.985,
+            "Actual Total Time": 774.328,
+            "Actual Rows": 662825,
+            "Actual Loops": 1,
+            "Filter": "(kind_id = 1)",
+            "Rows Removed by Filter": 1865487
+          }
+        ]
+      }
+    ]
+  }
+}

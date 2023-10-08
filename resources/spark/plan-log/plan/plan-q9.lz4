@@ -1,0 +1,718 @@
+== Physical Plan ==
+* Project (4)
++- * Filter (3)
+   +- * ColumnarToRow (2)
+      +- Scan parquet tpcds_1.reason (1)
+
+
+(1) Scan parquet tpcds_1.reason
+Output [1]: [r_reason_sk#20]
+Batched: true
+Location: InMemoryFileIndex [file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/reason]
+PushedFilters: [IsNotNull(r_reason_sk), EqualTo(r_reason_sk,1)]
+ReadSchema: struct<r_reason_sk:int>
+
+(2) ColumnarToRow [codegen id : 1]
+Input [1]: [r_reason_sk#20]
+
+(3) Filter [codegen id : 1]
+Input [1]: [r_reason_sk#20]
+Condition : (isnotnull(r_reason_sk#20) AND (r_reason_sk#20 = 1))
+
+(4) Project [codegen id : 1]
+Output [5]: [CASE WHEN (Subquery scalar-subquery#0, [id=#34] > 62316685) THEN Subquery scalar-subquery#1, [id=#62] ELSE Subquery scalar-subquery#2, [id=#90] END AS bucket1#3, CASE WHEN (Subquery scalar-subquery#4, [id=#118] > 19045798) THEN Subquery scalar-subquery#5, [id=#146] ELSE Subquery scalar-subquery#6, [id=#174] END AS bucket2#7, CASE WHEN (Subquery scalar-subquery#8, [id=#202] > 365541424) THEN Subquery scalar-subquery#9, [id=#230] ELSE Subquery scalar-subquery#10, [id=#258] END AS bucket3#11, CASE WHEN (Subquery scalar-subquery#12, [id=#286] > 216357808) THEN Subquery scalar-subquery#13, [id=#314] ELSE Subquery scalar-subquery#14, [id=#342] END AS bucket4#15, CASE WHEN (Subquery scalar-subquery#16, [id=#370] > 184483884) THEN Subquery scalar-subquery#17, [id=#398] ELSE Subquery scalar-subquery#18, [id=#426] END AS bucket5#19]
+Input [1]: [r_reason_sk#20]
+
+===== Subqueries =====
+
+Subquery:1 Hosting operator id = 4 Hosting Expression = Subquery scalar-subquery#0, [id=#34]
+* HashAggregate (11)
++- Exchange (10)
+   +- * HashAggregate (9)
+      +- * Project (8)
+         +- * Filter (7)
+            +- * ColumnarToRow (6)
+               +- Scan parquet tpcds_1.store_sales (5)
+
+
+(5) Scan parquet tpcds_1.store_sales
+Output [1]: [ss_quantity#34]
+Batched: true
+Location: InMemoryFileIndex [file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/store_sales]
+PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)]
+ReadSchema: struct<ss_quantity:int>
+
+(6) ColumnarToRow [codegen id : 1]
+Input [1]: [ss_quantity#34]
+
+(7) Filter [codegen id : 1]
+Input [1]: [ss_quantity#34]
+Condition : ((isnotnull(ss_quantity#34) AND (ss_quantity#34 >= 1)) AND (ss_quantity#34 <= 20))
+
+(8) Project [codegen id : 1]
+Output: []
+Input [1]: [ss_quantity#34]
+
+(9) HashAggregate [codegen id : 1]
+Input: []
+Keys: []
+Functions [1]: [partial_count(1)]
+Aggregate Attributes [1]: [count#81L]
+Results [1]: [count#82L]
+
+(10) Exchange
+Input [1]: [count#82L]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [id=#30]
+
+(11) HashAggregate [codegen id : 2]
+Input [1]: [count#82L]
+Keys: []
+Functions [1]: [count(1)]
+Aggregate Attributes [1]: [count(1)#23L]
+Results [1]: [count(1)#23L AS count(1)#47L]
+
+Subquery:2 Hosting operator id = 4 Hosting Expression = Subquery scalar-subquery#1, [id=#62]
+* HashAggregate (18)
++- Exchange (17)
+   +- * HashAggregate (16)
+      +- * Project (15)
+         +- * Filter (14)
+            +- * ColumnarToRow (13)
+               +- Scan parquet tpcds_1.store_sales (12)
+
+
+(12) Scan parquet tpcds_1.store_sales
+Output [2]: [ss_quantity#34, ss_ext_discount_amt#38]
+Batched: true
+Location: InMemoryFileIndex [file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/store_sales]
+PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)]
+ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+
+(13) ColumnarToRow [codegen id : 1]
+Input [2]: [ss_quantity#34, ss_ext_discount_amt#38]
+
+(14) Filter [codegen id : 1]
+Input [2]: [ss_quantity#34, ss_ext_discount_amt#38]
+Condition : ((isnotnull(ss_quantity#34) AND (ss_quantity#34 >= 1)) AND (ss_quantity#34 <= 20))
+
+(15) Project [codegen id : 1]
+Output [1]: [ss_ext_discount_amt#38]
+Input [2]: [ss_quantity#34, ss_ext_discount_amt#38]
+
+(16) HashAggregate [codegen id : 1]
+Input [1]: [ss_ext_discount_amt#38]
+Keys: []
+Functions [1]: [partial_avg(UnscaledValue(ss_ext_discount_amt#38))]
+Aggregate Attributes [2]: [sum#83, count#84L]
+Results [2]: [sum#85, count#86L]
+
+(17) Exchange
+Input [2]: [sum#85, count#86L]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [id=#58]
+
+(18) HashAggregate [codegen id : 2]
+Input [2]: [sum#85, count#86L]
+Keys: []
+Functions [1]: [avg(UnscaledValue(ss_ext_discount_amt#38))]
+Aggregate Attributes [1]: [avg(UnscaledValue(ss_ext_discount_amt#38))#48]
+Results [1]: [cast((avg(UnscaledValue(ss_ext_discount_amt#38))#48 / 100.0) as decimal(11,6)) AS avg(ss_ext_discount_amt)#49]
+
+Subquery:3 Hosting operator id = 4 Hosting Expression = Subquery scalar-subquery#2, [id=#90]
+* HashAggregate (25)
++- Exchange (24)
+   +- * HashAggregate (23)
+      +- * Project (22)
+         +- * Filter (21)
+            +- * ColumnarToRow (20)
+               +- Scan parquet tpcds_1.store_sales (19)
+
+
+(19) Scan parquet tpcds_1.store_sales
+Output [2]: [ss_quantity#34, ss_net_paid#44]
+Batched: true
+Location: InMemoryFileIndex [file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/store_sales]
+PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)]
+ReadSchema: struct<ss_quantity:int,ss_net_paid:decimal(7,2)>
+
+(20) ColumnarToRow [codegen id : 1]
+Input [2]: [ss_quantity#34, ss_net_paid#44]
+
+(21) Filter [codegen id : 1]
+Input [2]: [ss_quantity#34, ss_net_paid#44]
+Condition : ((isnotnull(ss_quantity#34) AND (ss_quantity#34 >= 1)) AND (ss_quantity#34 <= 20))
+
+(22) Project [codegen id : 1]
+Output [1]: [ss_net_paid#44]
+Input [2]: [ss_quantity#34, ss_net_paid#44]
+
+(23) HashAggregate [codegen id : 1]
+Input [1]: [ss_net_paid#44]
+Keys: []
+Functions [1]: [partial_avg(UnscaledValue(ss_net_paid#44))]
+Aggregate Attributes [2]: [sum#87, count#88L]
+Results [2]: [sum#89, count#90L]
+
+(24) Exchange
+Input [2]: [sum#89, count#90L]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [id=#86]
+
+(25) HashAggregate [codegen id : 2]
+Input [2]: [sum#89, count#90L]
+Keys: []
+Functions [1]: [avg(UnscaledValue(ss_net_paid#44))]
+Aggregate Attributes [1]: [avg(UnscaledValue(ss_net_paid#44))#50]
+Results [1]: [cast((avg(UnscaledValue(ss_net_paid#44))#50 / 100.0) as decimal(11,6)) AS avg(ss_net_paid)#51]
+
+Subquery:4 Hosting operator id = 4 Hosting Expression = Subquery scalar-subquery#4, [id=#118]
+* HashAggregate (32)
++- Exchange (31)
+   +- * HashAggregate (30)
+      +- * Project (29)
+         +- * Filter (28)
+            +- * ColumnarToRow (27)
+               +- Scan parquet tpcds_1.store_sales (26)
+
+
+(26) Scan parquet tpcds_1.store_sales
+Output [1]: [ss_quantity#34]
+Batched: true
+Location: InMemoryFileIndex [file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/store_sales]
+PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)]
+ReadSchema: struct<ss_quantity:int>
+
+(27) ColumnarToRow [codegen id : 1]
+Input [1]: [ss_quantity#34]
+
+(28) Filter [codegen id : 1]
+Input [1]: [ss_quantity#34]
+Condition : ((isnotnull(ss_quantity#34) AND (ss_quantity#34 >= 21)) AND (ss_quantity#34 <= 40))
+
+(29) Project [codegen id : 1]
+Output: []
+Input [1]: [ss_quantity#34]
+
+(30) HashAggregate [codegen id : 1]
+Input: []
+Keys: []
+Functions [1]: [partial_count(1)]
+Aggregate Attributes [1]: [count#91L]
+Results [1]: [count#92L]
+
+(31) Exchange
+Input [1]: [count#92L]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [id=#114]
+
+(32) HashAggregate [codegen id : 2]
+Input [1]: [count#92L]
+Keys: []
+Functions [1]: [count(1)]
+Aggregate Attributes [1]: [count(1)#52L]
+Results [1]: [count(1)#52L AS count(1)#53L]
+
+Subquery:5 Hosting operator id = 4 Hosting Expression = Subquery scalar-subquery#5, [id=#146]
+* HashAggregate (39)
++- Exchange (38)
+   +- * HashAggregate (37)
+      +- * Project (36)
+         +- * Filter (35)
+            +- * ColumnarToRow (34)
+               +- Scan parquet tpcds_1.store_sales (33)
+
+
+(33) Scan parquet tpcds_1.store_sales
+Output [2]: [ss_quantity#34, ss_ext_discount_amt#38]
+Batched: true
+Location: InMemoryFileIndex [file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/store_sales]
+PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)]
+ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+
+(34) ColumnarToRow [codegen id : 1]
+Input [2]: [ss_quantity#34, ss_ext_discount_amt#38]
+
+(35) Filter [codegen id : 1]
+Input [2]: [ss_quantity#34, ss_ext_discount_amt#38]
+Condition : ((isnotnull(ss_quantity#34) AND (ss_quantity#34 >= 21)) AND (ss_quantity#34 <= 40))
+
+(36) Project [codegen id : 1]
+Output [1]: [ss_ext_discount_amt#38]
+Input [2]: [ss_quantity#34, ss_ext_discount_amt#38]
+
+(37) HashAggregate [codegen id : 1]
+Input [1]: [ss_ext_discount_amt#38]
+Keys: []
+Functions [1]: [partial_avg(UnscaledValue(ss_ext_discount_amt#38))]
+Aggregate Attributes [2]: [sum#93, count#94L]
+Results [2]: [sum#95, count#96L]
+
+(38) Exchange
+Input [2]: [sum#95, count#96L]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [id=#142]
+
+(39) HashAggregate [codegen id : 2]
+Input [2]: [sum#95, count#96L]
+Keys: []
+Functions [1]: [avg(UnscaledValue(ss_ext_discount_amt#38))]
+Aggregate Attributes [1]: [avg(UnscaledValue(ss_ext_discount_amt#38))#54]
+Results [1]: [cast((avg(UnscaledValue(ss_ext_discount_amt#38))#54 / 100.0) as decimal(11,6)) AS avg(ss_ext_discount_amt)#55]
+
+Subquery:6 Hosting operator id = 4 Hosting Expression = Subquery scalar-subquery#6, [id=#174]
+* HashAggregate (46)
++- Exchange (45)
+   +- * HashAggregate (44)
+      +- * Project (43)
+         +- * Filter (42)
+            +- * ColumnarToRow (41)
+               +- Scan parquet tpcds_1.store_sales (40)
+
+
+(40) Scan parquet tpcds_1.store_sales
+Output [2]: [ss_quantity#34, ss_net_paid#44]
+Batched: true
+Location: InMemoryFileIndex [file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/store_sales]
+PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)]
+ReadSchema: struct<ss_quantity:int,ss_net_paid:decimal(7,2)>
+
+(41) ColumnarToRow [codegen id : 1]
+Input [2]: [ss_quantity#34, ss_net_paid#44]
+
+(42) Filter [codegen id : 1]
+Input [2]: [ss_quantity#34, ss_net_paid#44]
+Condition : ((isnotnull(ss_quantity#34) AND (ss_quantity#34 >= 21)) AND (ss_quantity#34 <= 40))
+
+(43) Project [codegen id : 1]
+Output [1]: [ss_net_paid#44]
+Input [2]: [ss_quantity#34, ss_net_paid#44]
+
+(44) HashAggregate [codegen id : 1]
+Input [1]: [ss_net_paid#44]
+Keys: []
+Functions [1]: [partial_avg(UnscaledValue(ss_net_paid#44))]
+Aggregate Attributes [2]: [sum#97, count#98L]
+Results [2]: [sum#99, count#100L]
+
+(45) Exchange
+Input [2]: [sum#99, count#100L]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [id=#170]
+
+(46) HashAggregate [codegen id : 2]
+Input [2]: [sum#99, count#100L]
+Keys: []
+Functions [1]: [avg(UnscaledValue(ss_net_paid#44))]
+Aggregate Attributes [1]: [avg(UnscaledValue(ss_net_paid#44))#56]
+Results [1]: [cast((avg(UnscaledValue(ss_net_paid#44))#56 / 100.0) as decimal(11,6)) AS avg(ss_net_paid)#57]
+
+Subquery:7 Hosting operator id = 4 Hosting Expression = Subquery scalar-subquery#8, [id=#202]
+* HashAggregate (53)
++- Exchange (52)
+   +- * HashAggregate (51)
+      +- * Project (50)
+         +- * Filter (49)
+            +- * ColumnarToRow (48)
+               +- Scan parquet tpcds_1.store_sales (47)
+
+
+(47) Scan parquet tpcds_1.store_sales
+Output [1]: [ss_quantity#34]
+Batched: true
+Location: InMemoryFileIndex [file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/store_sales]
+PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)]
+ReadSchema: struct<ss_quantity:int>
+
+(48) ColumnarToRow [codegen id : 1]
+Input [1]: [ss_quantity#34]
+
+(49) Filter [codegen id : 1]
+Input [1]: [ss_quantity#34]
+Condition : ((isnotnull(ss_quantity#34) AND (ss_quantity#34 >= 41)) AND (ss_quantity#34 <= 60))
+
+(50) Project [codegen id : 1]
+Output: []
+Input [1]: [ss_quantity#34]
+
+(51) HashAggregate [codegen id : 1]
+Input: []
+Keys: []
+Functions [1]: [partial_count(1)]
+Aggregate Attributes [1]: [count#101L]
+Results [1]: [count#102L]
+
+(52) Exchange
+Input [1]: [count#102L]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [id=#198]
+
+(53) HashAggregate [codegen id : 2]
+Input [1]: [count#102L]
+Keys: []
+Functions [1]: [count(1)]
+Aggregate Attributes [1]: [count(1)#58L]
+Results [1]: [count(1)#58L AS count(1)#59L]
+
+Subquery:8 Hosting operator id = 4 Hosting Expression = Subquery scalar-subquery#9, [id=#230]
+* HashAggregate (60)
++- Exchange (59)
+   +- * HashAggregate (58)
+      +- * Project (57)
+         +- * Filter (56)
+            +- * ColumnarToRow (55)
+               +- Scan parquet tpcds_1.store_sales (54)
+
+
+(54) Scan parquet tpcds_1.store_sales
+Output [2]: [ss_quantity#34, ss_ext_discount_amt#38]
+Batched: true
+Location: InMemoryFileIndex [file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/store_sales]
+PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)]
+ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+
+(55) ColumnarToRow [codegen id : 1]
+Input [2]: [ss_quantity#34, ss_ext_discount_amt#38]
+
+(56) Filter [codegen id : 1]
+Input [2]: [ss_quantity#34, ss_ext_discount_amt#38]
+Condition : ((isnotnull(ss_quantity#34) AND (ss_quantity#34 >= 41)) AND (ss_quantity#34 <= 60))
+
+(57) Project [codegen id : 1]
+Output [1]: [ss_ext_discount_amt#38]
+Input [2]: [ss_quantity#34, ss_ext_discount_amt#38]
+
+(58) HashAggregate [codegen id : 1]
+Input [1]: [ss_ext_discount_amt#38]
+Keys: []
+Functions [1]: [partial_avg(UnscaledValue(ss_ext_discount_amt#38))]
+Aggregate Attributes [2]: [sum#103, count#104L]
+Results [2]: [sum#105, count#106L]
+
+(59) Exchange
+Input [2]: [sum#105, count#106L]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [id=#226]
+
+(60) HashAggregate [codegen id : 2]
+Input [2]: [sum#105, count#106L]
+Keys: []
+Functions [1]: [avg(UnscaledValue(ss_ext_discount_amt#38))]
+Aggregate Attributes [1]: [avg(UnscaledValue(ss_ext_discount_amt#38))#60]
+Results [1]: [cast((avg(UnscaledValue(ss_ext_discount_amt#38))#60 / 100.0) as decimal(11,6)) AS avg(ss_ext_discount_amt)#61]
+
+Subquery:9 Hosting operator id = 4 Hosting Expression = Subquery scalar-subquery#10, [id=#258]
+* HashAggregate (67)
++- Exchange (66)
+   +- * HashAggregate (65)
+      +- * Project (64)
+         +- * Filter (63)
+            +- * ColumnarToRow (62)
+               +- Scan parquet tpcds_1.store_sales (61)
+
+
+(61) Scan parquet tpcds_1.store_sales
+Output [2]: [ss_quantity#34, ss_net_paid#44]
+Batched: true
+Location: InMemoryFileIndex [file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/store_sales]
+PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)]
+ReadSchema: struct<ss_quantity:int,ss_net_paid:decimal(7,2)>
+
+(62) ColumnarToRow [codegen id : 1]
+Input [2]: [ss_quantity#34, ss_net_paid#44]
+
+(63) Filter [codegen id : 1]
+Input [2]: [ss_quantity#34, ss_net_paid#44]
+Condition : ((isnotnull(ss_quantity#34) AND (ss_quantity#34 >= 41)) AND (ss_quantity#34 <= 60))
+
+(64) Project [codegen id : 1]
+Output [1]: [ss_net_paid#44]
+Input [2]: [ss_quantity#34, ss_net_paid#44]
+
+(65) HashAggregate [codegen id : 1]
+Input [1]: [ss_net_paid#44]
+Keys: []
+Functions [1]: [partial_avg(UnscaledValue(ss_net_paid#44))]
+Aggregate Attributes [2]: [sum#107, count#108L]
+Results [2]: [sum#109, count#110L]
+
+(66) Exchange
+Input [2]: [sum#109, count#110L]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [id=#254]
+
+(67) HashAggregate [codegen id : 2]
+Input [2]: [sum#109, count#110L]
+Keys: []
+Functions [1]: [avg(UnscaledValue(ss_net_paid#44))]
+Aggregate Attributes [1]: [avg(UnscaledValue(ss_net_paid#44))#62]
+Results [1]: [cast((avg(UnscaledValue(ss_net_paid#44))#62 / 100.0) as decimal(11,6)) AS avg(ss_net_paid)#63]
+
+Subquery:10 Hosting operator id = 4 Hosting Expression = Subquery scalar-subquery#12, [id=#286]
+* HashAggregate (74)
++- Exchange (73)
+   +- * HashAggregate (72)
+      +- * Project (71)
+         +- * Filter (70)
+            +- * ColumnarToRow (69)
+               +- Scan parquet tpcds_1.store_sales (68)
+
+
+(68) Scan parquet tpcds_1.store_sales
+Output [1]: [ss_quantity#34]
+Batched: true
+Location: InMemoryFileIndex [file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/store_sales]
+PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)]
+ReadSchema: struct<ss_quantity:int>
+
+(69) ColumnarToRow [codegen id : 1]
+Input [1]: [ss_quantity#34]
+
+(70) Filter [codegen id : 1]
+Input [1]: [ss_quantity#34]
+Condition : ((isnotnull(ss_quantity#34) AND (ss_quantity#34 >= 61)) AND (ss_quantity#34 <= 80))
+
+(71) Project [codegen id : 1]
+Output: []
+Input [1]: [ss_quantity#34]
+
+(72) HashAggregate [codegen id : 1]
+Input: []
+Keys: []
+Functions [1]: [partial_count(1)]
+Aggregate Attributes [1]: [count#111L]
+Results [1]: [count#112L]
+
+(73) Exchange
+Input [1]: [count#112L]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [id=#282]
+
+(74) HashAggregate [codegen id : 2]
+Input [1]: [count#112L]
+Keys: []
+Functions [1]: [count(1)]
+Aggregate Attributes [1]: [count(1)#64L]
+Results [1]: [count(1)#64L AS count(1)#65L]
+
+Subquery:11 Hosting operator id = 4 Hosting Expression = Subquery scalar-subquery#13, [id=#314]
+* HashAggregate (81)
++- Exchange (80)
+   +- * HashAggregate (79)
+      +- * Project (78)
+         +- * Filter (77)
+            +- * ColumnarToRow (76)
+               +- Scan parquet tpcds_1.store_sales (75)
+
+
+(75) Scan parquet tpcds_1.store_sales
+Output [2]: [ss_quantity#34, ss_ext_discount_amt#38]
+Batched: true
+Location: InMemoryFileIndex [file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/store_sales]
+PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)]
+ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+
+(76) ColumnarToRow [codegen id : 1]
+Input [2]: [ss_quantity#34, ss_ext_discount_amt#38]
+
+(77) Filter [codegen id : 1]
+Input [2]: [ss_quantity#34, ss_ext_discount_amt#38]
+Condition : ((isnotnull(ss_quantity#34) AND (ss_quantity#34 >= 61)) AND (ss_quantity#34 <= 80))
+
+(78) Project [codegen id : 1]
+Output [1]: [ss_ext_discount_amt#38]
+Input [2]: [ss_quantity#34, ss_ext_discount_amt#38]
+
+(79) HashAggregate [codegen id : 1]
+Input [1]: [ss_ext_discount_amt#38]
+Keys: []
+Functions [1]: [partial_avg(UnscaledValue(ss_ext_discount_amt#38))]
+Aggregate Attributes [2]: [sum#113, count#114L]
+Results [2]: [sum#115, count#116L]
+
+(80) Exchange
+Input [2]: [sum#115, count#116L]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [id=#310]
+
+(81) HashAggregate [codegen id : 2]
+Input [2]: [sum#115, count#116L]
+Keys: []
+Functions [1]: [avg(UnscaledValue(ss_ext_discount_amt#38))]
+Aggregate Attributes [1]: [avg(UnscaledValue(ss_ext_discount_amt#38))#66]
+Results [1]: [cast((avg(UnscaledValue(ss_ext_discount_amt#38))#66 / 100.0) as decimal(11,6)) AS avg(ss_ext_discount_amt)#67]
+
+Subquery:12 Hosting operator id = 4 Hosting Expression = Subquery scalar-subquery#14, [id=#342]
+* HashAggregate (88)
++- Exchange (87)
+   +- * HashAggregate (86)
+      +- * Project (85)
+         +- * Filter (84)
+            +- * ColumnarToRow (83)
+               +- Scan parquet tpcds_1.store_sales (82)
+
+
+(82) Scan parquet tpcds_1.store_sales
+Output [2]: [ss_quantity#34, ss_net_paid#44]
+Batched: true
+Location: InMemoryFileIndex [file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/store_sales]
+PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)]
+ReadSchema: struct<ss_quantity:int,ss_net_paid:decimal(7,2)>
+
+(83) ColumnarToRow [codegen id : 1]
+Input [2]: [ss_quantity#34, ss_net_paid#44]
+
+(84) Filter [codegen id : 1]
+Input [2]: [ss_quantity#34, ss_net_paid#44]
+Condition : ((isnotnull(ss_quantity#34) AND (ss_quantity#34 >= 61)) AND (ss_quantity#34 <= 80))
+
+(85) Project [codegen id : 1]
+Output [1]: [ss_net_paid#44]
+Input [2]: [ss_quantity#34, ss_net_paid#44]
+
+(86) HashAggregate [codegen id : 1]
+Input [1]: [ss_net_paid#44]
+Keys: []
+Functions [1]: [partial_avg(UnscaledValue(ss_net_paid#44))]
+Aggregate Attributes [2]: [sum#117, count#118L]
+Results [2]: [sum#119, count#120L]
+
+(87) Exchange
+Input [2]: [sum#119, count#120L]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [id=#338]
+
+(88) HashAggregate [codegen id : 2]
+Input [2]: [sum#119, count#120L]
+Keys: []
+Functions [1]: [avg(UnscaledValue(ss_net_paid#44))]
+Aggregate Attributes [1]: [avg(UnscaledValue(ss_net_paid#44))#68]
+Results [1]: [cast((avg(UnscaledValue(ss_net_paid#44))#68 / 100.0) as decimal(11,6)) AS avg(ss_net_paid)#69]
+
+Subquery:13 Hosting operator id = 4 Hosting Expression = Subquery scalar-subquery#16, [id=#370]
+* HashAggregate (95)
++- Exchange (94)
+   +- * HashAggregate (93)
+      +- * Project (92)
+         +- * Filter (91)
+            +- * ColumnarToRow (90)
+               +- Scan parquet tpcds_1.store_sales (89)
+
+
+(89) Scan parquet tpcds_1.store_sales
+Output [1]: [ss_quantity#34]
+Batched: true
+Location: InMemoryFileIndex [file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/store_sales]
+PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)]
+ReadSchema: struct<ss_quantity:int>
+
+(90) ColumnarToRow [codegen id : 1]
+Input [1]: [ss_quantity#34]
+
+(91) Filter [codegen id : 1]
+Input [1]: [ss_quantity#34]
+Condition : ((isnotnull(ss_quantity#34) AND (ss_quantity#34 >= 81)) AND (ss_quantity#34 <= 100))
+
+(92) Project [codegen id : 1]
+Output: []
+Input [1]: [ss_quantity#34]
+
+(93) HashAggregate [codegen id : 1]
+Input: []
+Keys: []
+Functions [1]: [partial_count(1)]
+Aggregate Attributes [1]: [count#121L]
+Results [1]: [count#122L]
+
+(94) Exchange
+Input [1]: [count#122L]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [id=#366]
+
+(95) HashAggregate [codegen id : 2]
+Input [1]: [count#122L]
+Keys: []
+Functions [1]: [count(1)]
+Aggregate Attributes [1]: [count(1)#70L]
+Results [1]: [count(1)#70L AS count(1)#71L]
+
+Subquery:14 Hosting operator id = 4 Hosting Expression = Subquery scalar-subquery#17, [id=#398]
+* HashAggregate (102)
++- Exchange (101)
+   +- * HashAggregate (100)
+      +- * Project (99)
+         +- * Filter (98)
+            +- * ColumnarToRow (97)
+               +- Scan parquet tpcds_1.store_sales (96)
+
+
+(96) Scan parquet tpcds_1.store_sales
+Output [2]: [ss_quantity#34, ss_ext_discount_amt#38]
+Batched: true
+Location: InMemoryFileIndex [file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/store_sales]
+PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)]
+ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+
+(97) ColumnarToRow [codegen id : 1]
+Input [2]: [ss_quantity#34, ss_ext_discount_amt#38]
+
+(98) Filter [codegen id : 1]
+Input [2]: [ss_quantity#34, ss_ext_discount_amt#38]
+Condition : ((isnotnull(ss_quantity#34) AND (ss_quantity#34 >= 81)) AND (ss_quantity#34 <= 100))
+
+(99) Project [codegen id : 1]
+Output [1]: [ss_ext_discount_amt#38]
+Input [2]: [ss_quantity#34, ss_ext_discount_amt#38]
+
+(100) HashAggregate [codegen id : 1]
+Input [1]: [ss_ext_discount_amt#38]
+Keys: []
+Functions [1]: [partial_avg(UnscaledValue(ss_ext_discount_amt#38))]
+Aggregate Attributes [2]: [sum#123, count#124L]
+Results [2]: [sum#125, count#126L]
+
+(101) Exchange
+Input [2]: [sum#125, count#126L]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [id=#394]
+
+(102) HashAggregate [codegen id : 2]
+Input [2]: [sum#125, count#126L]
+Keys: []
+Functions [1]: [avg(UnscaledValue(ss_ext_discount_amt#38))]
+Aggregate Attributes [1]: [avg(UnscaledValue(ss_ext_discount_amt#38))#72]
+Results [1]: [cast((avg(UnscaledValue(ss_ext_discount_amt#38))#72 / 100.0) as decimal(11,6)) AS avg(ss_ext_discount_amt)#73]
+
+Subquery:15 Hosting operator id = 4 Hosting Expression = Subquery scalar-subquery#18, [id=#426]
+* HashAggregate (109)
++- Exchange (108)
+   +- * HashAggregate (107)
+      +- * Project (106)
+         +- * Filter (105)
+            +- * ColumnarToRow (104)
+               +- Scan parquet tpcds_1.store_sales (103)
+
+
+(103) Scan parquet tpcds_1.store_sales
+Output [2]: [ss_quantity#34, ss_net_paid#44]
+Batched: true
+Location: InMemoryFileIndex [file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/store_sales]
+PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)]
+ReadSchema: struct<ss_quantity:int,ss_net_paid:decimal(7,2)>
+
+(104) ColumnarToRow [codegen id : 1]
+Input [2]: [ss_quantity#34, ss_net_paid#44]
+
+(105) Filter [codegen id : 1]
+Input [2]: [ss_quantity#34, ss_net_paid#44]
+Condition : ((isnotnull(ss_quantity#34) AND (ss_quantity#34 >= 81)) AND (ss_quantity#34 <= 100))
+
+(106) Project [codegen id : 1]
+Output [1]: [ss_net_paid#44]
+Input [2]: [ss_quantity#34, ss_net_paid#44]
+
+(107) HashAggregate [codegen id : 1]
+Input [1]: [ss_net_paid#44]
+Keys: []
+Functions [1]: [partial_avg(UnscaledValue(ss_net_paid#44))]
+Aggregate Attributes [2]: [sum#127, count#128L]
+Results [2]: [sum#129, count#130L]
+
+(108) Exchange
+Input [2]: [sum#129, count#130L]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [id=#422]
+
+(109) HashAggregate [codegen id : 2]
+Input [2]: [sum#129, count#130L]
+Keys: []
+Functions [1]: [avg(UnscaledValue(ss_net_paid#44))]
+Aggregate Attributes [1]: [avg(UnscaledValue(ss_net_paid#44))#74]
+Results [1]: [cast((avg(UnscaledValue(ss_net_paid#44))#74 / 100.0) as decimal(11,6)) AS avg(ss_net_paid)#75]
+
+

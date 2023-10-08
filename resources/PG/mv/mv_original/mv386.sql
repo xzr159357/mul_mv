@@ -1,0 +1,3 @@
+select comp_cast_type.kind AS kind, complete_cast.movie_id AS movie_id, complete_cast.subject_id AS subject_id, keyword.id AS id, keyword.keyword AS keyword
+ from complete_cast,movie_keyword,comp_cast_type,keyword
+ where (comp_cast_type.id = complete_cast.status_id) And (complete_cast.movie_id = movie_keyword.movie_id) And (movie_keyword.keyword_id = keyword.id) And (complete_cast.status_id = comp_cast_type.id) And (comp_cast_type.kind = '__NOTEQUAL__complete+verified') And (keyword.keyword in ('murder', 'murder-in-title', 'blood', 'violence'))

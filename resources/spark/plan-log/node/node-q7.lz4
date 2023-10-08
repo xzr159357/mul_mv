@@ -1,0 +1,336 @@
+[PlanMetric]
+id:0 name:TakeOrderedAndProject desc:TakeOrderedAndProject(limit=100, orderBy=[i_item_id#65 ASC NULLS FIRST], output=[i_item_id#65,agg1#0,agg2#1,agg3#2,agg4#3])
+SQLPlanMetric(shuffle records written,41, sum)
+SQLPlanMetric(shuffle write time,42 ns, nsTiming)
+SQLPlanMetric(records read,39, sum)
+SQLPlanMetric(local bytes read,37, size)
+SQLPlanMetric(fetch wait time,38000000 ns, timing)
+SQLPlanMetric(remote bytes read,35, size)
+SQLPlanMetric(local blocks read,34, sum)
+SQLPlanMetric(remote blocks read,33, sum)
+SQLPlanMetric(remote bytes read to disk,36, size)
+SQLPlanMetric(shuffle bytes written,40, size)
+
+
+
+id:2 name:HashAggregate desc:HashAggregate(keys=[i_item_id#65], functions=[avg(cast(ss_quantity#14 as bigint)), avg(UnscaledValue(ss_list_price#16)), avg(UnscaledValue(ss_coupon_amt#23)), avg(UnscaledValue(ss_sales_price#17))])
+SQLPlanMetric(spill size,46, size)
+SQLPlanMetric(time in aggregation build,47000000 ns, timing)
+SQLPlanMetric(peak memory,45, size)
+SQLPlanMetric(number of output rows,44, sum)
+SQLPlanMetric(avg hash probe bucket list iters,48, average)
+
+
+
+id:1 name:WholeStageCodegen (6) desc:WholeStageCodegen (6)
+SQLPlanMetric(duration,43000000 ns, timing)
+
+
+
+id:3 name:Exchange desc:Exchange hashpartitioning(i_item_id#65, 200), ENSURE_REQUIREMENTS, [id=#181]
+SQLPlanMetric(shuffle records written,31, sum)
+SQLPlanMetric(shuffle write time,32 ns, nsTiming)
+SQLPlanMetric(records read,29, sum)
+SQLPlanMetric(local bytes read,27, size)
+SQLPlanMetric(fetch wait time,28000000 ns, timing)
+SQLPlanMetric(remote bytes read,25, size)
+SQLPlanMetric(local blocks read,24, sum)
+SQLPlanMetric(remote blocks read,23, sum)
+SQLPlanMetric(data size,22, size)
+SQLPlanMetric(remote bytes read to disk,26, size)
+SQLPlanMetric(shuffle bytes written,30, size)
+
+
+
+id:5 name:HashAggregate desc:HashAggregate(keys=[i_item_id#65], functions=[partial_avg(cast(ss_quantity#14 as bigint)), partial_avg(UnscaledValue(ss_list_price#16)), partial_avg(UnscaledValue(ss_coupon_amt#23)), partial_avg(UnscaledValue(ss_sales_price#17))])
+SQLPlanMetric(spill size,52, size)
+SQLPlanMetric(time in aggregation build,53000000 ns, timing)
+SQLPlanMetric(peak memory,51, size)
+SQLPlanMetric(number of output rows,50, sum)
+SQLPlanMetric(avg hash probe bucket list iters,54, average)
+
+
+
+id:6 name:Project desc:Project [ss_quantity#14, ss_list_price#16, ss_sales_price#17, ss_coupon_amt#23, i_item_id#65]
+
+
+
+id:7 name:BroadcastHashJoin desc:BroadcastHashJoin [ss_promo_sk#12], [p_promo_sk#86], Inner, BuildRight, false
+SQLPlanMetric(number of output rows,55, sum)
+
+
+
+id:8 name:Project desc:Project [ss_promo_sk#12, ss_quantity#14, ss_list_price#16, ss_sales_price#17, ss_coupon_amt#23, i_item_id#65]
+
+
+
+id:9 name:BroadcastHashJoin desc:BroadcastHashJoin [ss_item_sk#6], [i_item_sk#64], Inner, BuildRight, false
+SQLPlanMetric(number of output rows,56, sum)
+
+
+
+id:10 name:Project desc:Project [ss_item_sk#6, ss_promo_sk#12, ss_quantity#14, ss_list_price#16, ss_sales_price#17, ss_coupon_amt#23]
+
+
+
+id:11 name:BroadcastHashJoin desc:BroadcastHashJoin [ss_sold_date_sk#4], [d_date_sk#36], Inner, BuildRight, false
+SQLPlanMetric(number of output rows,57, sum)
+
+
+
+id:12 name:Project desc:Project [ss_sold_date_sk#4, ss_item_sk#6, ss_promo_sk#12, ss_quantity#14, ss_list_price#16, ss_sales_price#17, ss_coupon_amt#23]
+
+
+
+id:13 name:BroadcastHashJoin desc:BroadcastHashJoin [ss_cdemo_sk#8], [cd_demo_sk#27], Inner, BuildRight, false
+SQLPlanMetric(number of output rows,58, sum)
+
+
+
+id:14 name:Filter desc:Filter (((isnotnull(ss_cdemo_sk#8) AND isnotnull(ss_sold_date_sk#4)) AND isnotnull(ss_item_sk#6)) AND isnotnull(ss_promo_sk#12))
+SQLPlanMetric(number of output rows,59, sum)
+
+
+
+id:15 name:ColumnarToRow desc:ColumnarToRow
+SQLPlanMetric(number of output rows,60, sum)
+SQLPlanMetric(number of input batches,61, sum)
+
+
+
+id:4 name:WholeStageCodegen (5) desc:WholeStageCodegen (5)
+SQLPlanMetric(duration,49000000 ns, timing)
+
+
+
+id:16 name:Scan parquet tpcds_1.store_sales desc:FileScan parquet tpcds_1.store_sales[ss_sold_date_sk#4,ss_item_sk#6,ss_cdemo_sk#8,ss_promo_sk#12,ss_quantity#14,ss_list_price#16,ss_sales_price#17,ss_coupon_amt#23] Batched: true, DataFilters: [isnotnull(ss_cdemo_sk#8), isnotnull(ss_sold_date_sk#4), isnotnull(ss_item_sk#6), isnotnull(ss_pr..., Format: Parquet, Location: InMemoryFileIndex[file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/sto..., PartitionFilters: [], PushedFilters: [IsNotNull(ss_cdemo_sk), IsNotNull(ss_sold_date_sk), IsNotNull(ss_item_sk), IsNotNull(ss_promo_sk)], ReadSchema: struct<ss_sold_date_sk:int,ss_item_sk:int,ss_cdemo_sk:int,ss_promo_sk:int,ss_quantity:int,ss_list...
+SQLPlanMetric(number of files read,63, sum)
+SQLPlanMetric(scan time,66000000 ns, timing)
+SQLPlanMetric(metadata time,64000000 ns, timing)
+SQLPlanMetric(size of files read,65, size)
+SQLPlanMetric(number of output rows,62, sum)
+
+
+
+id:17 name:BroadcastExchange desc:BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#149]
+SQLPlanMetric(time to broadcast,71000000 ns, timing)
+SQLPlanMetric(time to build,70000000 ns, timing)
+SQLPlanMetric(time to collect,69000000 ns, timing)
+SQLPlanMetric(number of output rows,68, sum)
+SQLPlanMetric(data size,67, size)
+
+
+
+id:19 name:Project desc:Project [cd_demo_sk#27]
+
+
+
+id:20 name:Filter desc:Filter ((((((isnotnull(cd_gender#28) AND isnotnull(cd_marital_status#29)) AND isnotnull(cd_education_status#30)) AND (cd_gender#28 = M)) AND (cd_marital_status#29 = S)) AND (cd_education_status#30 = College             )) AND isnotnull(cd_demo_sk#27))
+SQLPlanMetric(number of output rows,73, sum)
+
+
+
+id:21 name:ColumnarToRow desc:ColumnarToRow
+SQLPlanMetric(number of output rows,74, sum)
+SQLPlanMetric(number of input batches,75, sum)
+
+
+
+id:18 name:WholeStageCodegen (1) desc:WholeStageCodegen (1)
+SQLPlanMetric(duration,72000000 ns, timing)
+
+
+
+id:22 name:Scan parquet tpcds_1.customer_demographics desc:FileScan parquet tpcds_1.customer_demographics[cd_demo_sk#27,cd_gender#28,cd_marital_status#29,cd_education_status#30] Batched: true, DataFilters: [isnotnull(cd_gender#28), isnotnull(cd_marital_status#29), isnotnull(cd_education_status#30), (cd..., Format: Parquet, Location: InMemoryFileIndex[file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/cus..., PartitionFilters: [], PushedFilters: [IsNotNull(cd_gender), IsNotNull(cd_marital_status), IsNotNull(cd_education_status), EqualTo(cd_g..., ReadSchema: struct<cd_demo_sk:int,cd_gender:string,cd_marital_status:string,cd_education_status:string>
+SQLPlanMetric(number of files read,77, sum)
+SQLPlanMetric(scan time,80000000 ns, timing)
+SQLPlanMetric(metadata time,78000000 ns, timing)
+SQLPlanMetric(size of files read,79, size)
+SQLPlanMetric(number of output rows,76, sum)
+
+
+
+id:23 name:BroadcastExchange desc:BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#158]
+SQLPlanMetric(time to broadcast,85000000 ns, timing)
+SQLPlanMetric(time to build,84000000 ns, timing)
+SQLPlanMetric(time to collect,83000000 ns, timing)
+SQLPlanMetric(number of output rows,82, sum)
+SQLPlanMetric(data size,81, size)
+
+
+
+id:25 name:Project desc:Project [d_date_sk#36]
+
+
+
+id:26 name:Filter desc:Filter ((isnotnull(d_year#42) AND (d_year#42 = 2000)) AND isnotnull(d_date_sk#36))
+SQLPlanMetric(number of output rows,87, sum)
+
+
+
+id:27 name:ColumnarToRow desc:ColumnarToRow
+SQLPlanMetric(number of output rows,88, sum)
+SQLPlanMetric(number of input batches,89, sum)
+
+
+
+id:24 name:WholeStageCodegen (2) desc:WholeStageCodegen (2)
+SQLPlanMetric(duration,86000000 ns, timing)
+
+
+
+id:28 name:Scan parquet tpcds_1.date_dim desc:FileScan parquet tpcds_1.date_dim[d_date_sk#36,d_year#42] Batched: true, DataFilters: [isnotnull(d_year#42), (d_year#42 = 2000), isnotnull(d_date_sk#36)], Format: Parquet, Location: InMemoryFileIndex[file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/dat..., PartitionFilters: [], PushedFilters: [IsNotNull(d_year), EqualTo(d_year,2000), IsNotNull(d_date_sk)], ReadSchema: struct<d_date_sk:int,d_year:int>
+SQLPlanMetric(number of files read,91, sum)
+SQLPlanMetric(scan time,94000000 ns, timing)
+SQLPlanMetric(metadata time,92000000 ns, timing)
+SQLPlanMetric(size of files read,93, size)
+SQLPlanMetric(number of output rows,90, sum)
+
+
+
+id:29 name:BroadcastExchange desc:BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#166]
+SQLPlanMetric(time to broadcast,99000000 ns, timing)
+SQLPlanMetric(time to build,98000000 ns, timing)
+SQLPlanMetric(time to collect,97000000 ns, timing)
+SQLPlanMetric(number of output rows,96, sum)
+SQLPlanMetric(data size,95, size)
+
+
+
+id:31 name:Filter desc:Filter isnotnull(i_item_sk#64)
+SQLPlanMetric(number of output rows,101, sum)
+
+
+
+id:32 name:ColumnarToRow desc:ColumnarToRow
+SQLPlanMetric(number of output rows,102, sum)
+SQLPlanMetric(number of input batches,103, sum)
+
+
+
+id:30 name:WholeStageCodegen (3) desc:WholeStageCodegen (3)
+SQLPlanMetric(duration,100000000 ns, timing)
+
+
+
+id:33 name:Scan parquet tpcds_1.item desc:FileScan parquet tpcds_1.item[i_item_sk#64,i_item_id#65] Batched: true, DataFilters: [isnotnull(i_item_sk#64)], Format: Parquet, Location: InMemoryFileIndex[file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/item], PartitionFilters: [], PushedFilters: [IsNotNull(i_item_sk)], ReadSchema: struct<i_item_sk:int,i_item_id:string>
+SQLPlanMetric(number of files read,105, sum)
+SQLPlanMetric(scan time,108000000 ns, timing)
+SQLPlanMetric(metadata time,106000000 ns, timing)
+SQLPlanMetric(size of files read,107, size)
+SQLPlanMetric(number of output rows,104, sum)
+
+
+
+id:34 name:BroadcastExchange desc:BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#175]
+SQLPlanMetric(time to broadcast,113000000 ns, timing)
+SQLPlanMetric(time to build,112000000 ns, timing)
+SQLPlanMetric(time to collect,111000000 ns, timing)
+SQLPlanMetric(number of output rows,110, sum)
+SQLPlanMetric(data size,109, size)
+
+
+
+id:36 name:Project desc:Project [p_promo_sk#86]
+
+
+
+id:37 name:Filter desc:Filter (((p_channel_email#95 = N) OR (p_channel_event#100 = N)) AND isnotnull(p_promo_sk#86))
+SQLPlanMetric(number of output rows,115, sum)
+
+
+
+id:38 name:ColumnarToRow desc:ColumnarToRow
+SQLPlanMetric(number of output rows,116, sum)
+SQLPlanMetric(number of input batches,117, sum)
+
+
+
+id:35 name:WholeStageCodegen (4) desc:WholeStageCodegen (4)
+SQLPlanMetric(duration,114000000 ns, timing)
+
+
+
+id:39 name:Scan parquet tpcds_1.promotion desc:FileScan parquet tpcds_1.promotion[p_promo_sk#86,p_channel_email#95,p_channel_event#100] Batched: true, DataFilters: [((p_channel_email#95 = N) OR (p_channel_event#100 = N)), isnotnull(p_promo_sk#86)], Format: Parquet, Location: InMemoryFileIndex[file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/pro..., PartitionFilters: [], PushedFilters: [Or(EqualTo(p_channel_email,N),EqualTo(p_channel_event,N)), IsNotNull(p_promo_sk)], ReadSchema: struct<p_promo_sk:int,p_channel_email:string,p_channel_event:string>
+SQLPlanMetric(number of files read,119, sum)
+SQLPlanMetric(scan time,122000000 ns, timing)
+SQLPlanMetric(metadata time,120000000 ns, timing)
+SQLPlanMetric(size of files read,121, size)
+SQLPlanMetric(number of output rows,118, sum)
+
+
+
+  2->0;
+
+  3->2;
+
+  5->3;
+
+  6->5;
+
+  7->6;
+
+  8->7;
+
+  9->8;
+
+  10->9;
+
+  11->10;
+
+  12->11;
+
+  13->12;
+
+  14->13;
+
+  15->14;
+
+  16->15;
+
+  17->13;
+
+  19->17;
+
+  20->19;
+
+  21->20;
+
+  22->21;
+
+  23->11;
+
+  25->23;
+
+  26->25;
+
+  27->26;
+
+  28->27;
+
+  29->9;
+
+  31->29;
+
+  32->31;
+
+  33->32;
+
+  34->7;
+
+  36->34;
+
+  37->36;
+
+  38->37;
+
+  39->38;
+
+[SubGraph]
+cluster 1 : 2 
+cluster 4 : 5 6 7 8 9 10 11 12 13 14 15 
+cluster 18 : 19 20 21 
+cluster 24 : 25 26 27 
+cluster 30 : 31 32 
+cluster 35 : 36 37 38 
+

@@ -1,0 +1,3 @@
+create materialized view if not exists mv492 as select keyword.id AS keyword_id_0, keyword.keyword AS keyword, link_type.id AS link_type_id_2, link_type.link AS link, movie_keyword.movie_id AS movie_id, movie_link.linked_movie_id AS linked_movie_id
+ from movie_keyword,link_type,movie_link,keyword
+ where (movie_keyword.movie_id = movie_link.movie_id) And (movie_keyword.keyword_id = keyword.id) And (link_type.id = movie_link.link_type_id) And (keyword.keyword = '10,000-mile-club')

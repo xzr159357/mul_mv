@@ -1,0 +1,71 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parallel Aware": false,
+    "Join Type": "Inner",
+    "Startup Cost": 116129.8,
+    "Total Cost": 244894.06,
+    "Plan Rows": 1843943,
+    "Plan Width": 135,
+    "Actual Startup Time": 1790.777,
+    "Actual Total Time": 5756.611,
+    "Actual Rows": 2059977,
+    "Actual Loops": 1,
+    "Inner Unique": true,
+    "Hash Cond": "(mc.movie_id = t.id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": false,
+        "Relation Name": "movie_companies",
+        "Alias": "mc",
+        "Startup Cost": 0.0,
+        "Total Cost": 54972.29,
+        "Plan Rows": 2609129,
+        "Plan Width": 40,
+        "Actual Startup Time": 0.07,
+        "Actual Total Time": 630.155,
+        "Actual Rows": 2609129,
+        "Actual Loops": 1
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": false,
+        "Startup Cost": 67619.64,
+        "Total Cost": 67619.64,
+        "Plan Rows": 1786813,
+        "Plan Width": 95,
+        "Actual Startup Time": 1788.618,
+        "Actual Total Time": 1788.628,
+        "Actual Rows": 1794153,
+        "Actual Loops": 1,
+        "Hash Buckets": 32768,
+        "Original Hash Buckets": 32768,
+        "Hash Batches": 64,
+        "Original Hash Batches": 64,
+        "Peak Memory Usage": 3399,
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Relation Name": "title",
+            "Alias": "t",
+            "Startup Cost": 0.0,
+            "Total Cost": 67619.64,
+            "Plan Rows": 1786813,
+            "Plan Width": 95,
+            "Actual Startup Time": 0.035,
+            "Actual Total Time": 1000.422,
+            "Actual Rows": 1794153,
+            "Actual Loops": 1,
+            "Filter": "(production_year < 2009)",
+            "Rows Removed by Filter": 734159
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": true,
+    "Join Type": "Inner",
+    "Startup Cost": 244791.64,
+    "Total Cost": 282651.26,
+    "Plan Rows": 4871,
+    "Plan Width": 208,
+    "Actual Startup Time": 769.502,
+    "Actual Total Time": 945.114,
+    "Actual Rows": 7703,
+    "Actual Loops": 7,
+    "Inner Unique": false,
+    "Hash Cond": "(mc.movie_id = t.id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": true,
+        "Relation Name": "movie_companies",
+        "Alias": "mc",
+        "Startup Cost": 0.0,
+        "Total Cost": 35403.82,
+        "Plan Rows": 652282,
+        "Plan Width": 40,
+        "Actual Startup Time": 0.048,
+        "Actual Total Time": 75.919,
+        "Actual Rows": 372733,
+        "Actual Loops": 7
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": true,
+        "Startup Cost": 244744.44,
+        "Total Cost": 244744.44,
+        "Plan Rows": 3776,
+        "Plan Width": 168,
+        "Actual Startup Time": 768.869,
+        "Actual Total Time": 769.193,
+        "Actual Rows": 2965,
+        "Actual Loops": 7,
+        "Hash Buckets": 32768,
+        "Original Hash Buckets": 32768,
+        "Hash Batches": 1,
+        "Original Hash Batches": 1,
+        "Peak Memory Usage": 3232,
+        "Plans": [
+          {
+            "Node Type": "Hash Join",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": true,
+            "Join Type": "Inner",
+            "Startup Cost": 43959.31,
+            "Total Cost": 244744.44,
+            "Plan Rows": 3776,
+            "Plan Width": 168,
+            "Actual Startup Time": 138.257,
+            "Actual Total Time": 765.06,
+            "Actual Rows": 2965,
+            "Actual Loops": 7,
+            "Inner Unique": true,
+            "Hash Cond": "(mi.movie_id = t.id)",
+            "Plans": [
+              {
+                "Node Type": "Seq Scan",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": true,
+                "Relation Name": "movie_info",
+                "Alias": "mi",
+                "Startup Cost": 0.0,
+                "Total Cost": 198938.07,
+                "Plan Rows": 703643,
+                "Plan Width": 73,
+                "Actual Startup Time": 17.556,
+                "Actual Total Time": 529.036,
+                "Actual Rows": 517854,
+                "Actual Loops": 7,
+                "Filter": "(info_type_id < 4)",
+                "Rows Removed by Filter": 1601535
+              },
+              {
+                "Node Type": "Hash",
+                "Parent Relationship": "Inner",
+                "Parallel Aware": true,
+                "Startup Cost": 43916.91,
+                "Total Cost": 43916.91,
+                "Plan Rows": 3392,
+                "Plan Width": 95,
+                "Actual Startup Time": 120.171,
+                "Actual Total Time": 120.175,
+                "Actual Rows": 2005,
+                "Actual Loops": 7,
+                "Hash Buckets": 16384,
+                "Original Hash Buckets": 16384,
+                "Hash Batches": 1,
+                "Original Hash Batches": 1,
+                "Peak Memory Usage": 1888,
+                "Plans": [
+                  {
+                    "Node Type": "Seq Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": true,
+                    "Relation Name": "title",
+                    "Alias": "t",
+                    "Startup Cost": 0.0,
+                    "Total Cost": 43916.91,
+                    "Plan Rows": 3392,
+                    "Plan Width": 95,
+                    "Actual Startup Time": 0.179,
+                    "Actual Total Time": 118.519,
+                    "Actual Rows": 2005,
+                    "Actual Loops": 7,
+                    "Filter": "(production_year = 1977)",
+                    "Rows Removed by Filter": 359182
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

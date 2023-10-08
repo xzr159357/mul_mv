@@ -1,0 +1,3 @@
+create materialized view if not exists mv365 as select comp_cast_type.id AS comp_cast_type_id_0, comp_cast_type.kind AS kind, complete_cast.movie_id AS movie_id, complete_cast.subject_id AS subject_id, keyword.id AS keyword_id_4, keyword.keyword AS keyword
+ from complete_cast,movie_keyword,comp_cast_type,keyword
+ where (complete_cast.movie_id = movie_keyword.movie_id) And (comp_cast_type.id = complete_cast.status_id) And (movie_keyword.keyword_id = keyword.id) And (keyword.keyword = 'sequel')

@@ -1,0 +1,425 @@
+[PlanMetric]
+id:1 name:Sort desc:Sort [d_week_seq1#0 ASC NULLS FIRST], true, 0
+SQLPlanMetric(sort time,210000000 ns, timing)
+SQLPlanMetric(peak memory,211, size)
+SQLPlanMetric(spill size,212, size)
+
+
+
+id:0 name:WholeStageCodegen (15) desc:WholeStageCodegen (15)
+SQLPlanMetric(duration,209000000 ns, timing)
+
+
+
+id:2 name:Exchange desc:Exchange rangepartitioning(d_week_seq1#0 ASC NULLS FIRST, 200), ENSURE_REQUIREMENTS, [id=#418]
+SQLPlanMetric(shuffle records written,207, sum)
+SQLPlanMetric(shuffle write time,208 ns, nsTiming)
+SQLPlanMetric(records read,205, sum)
+SQLPlanMetric(local bytes read,203, size)
+SQLPlanMetric(fetch wait time,204000000 ns, timing)
+SQLPlanMetric(remote bytes read,201, size)
+SQLPlanMetric(local blocks read,200, sum)
+SQLPlanMetric(remote blocks read,199, sum)
+SQLPlanMetric(data size,198, size)
+SQLPlanMetric(remote bytes read to disk,202, size)
+SQLPlanMetric(shuffle bytes written,206, size)
+
+
+
+id:4 name:Project desc:Project [d_week_seq1#0, round(CheckOverflow((promote_precision(sun_sales1#1) / promote_precision(sun_sales2#9)), DecimalType(37,20), true), 2) AS round((sun_sales1 / sun_sales2), 2)#193, round(CheckOverflow((promote_precision(mon_sales1#2) / promote_precision(mon_sales2#10)), DecimalType(37,20), true), 2) AS round((mon_sales1 / mon_sales2), 2)#194, round(CheckOverflow((promote_precision(tue_sales1#3) / promote_precision(tue_sales2#11)), DecimalType(37,20), true), 2) AS round((tue_sales1 / tue_sales2), 2)#195, round(CheckOverflow((promote_precision(wed_sales1#4) / promote_precision(wed_sales2#12)), DecimalType(37,20), true), 2) AS round((wed_sales1 / wed_sales2), 2)#196, round(CheckOverflow((promote_precision(thu_sales1#5) / promote_precision(thu_sales2#13)), DecimalType(37,20), true), 2) AS round((thu_sales1 / thu_sales2), 2)#197, round(CheckOverflow((promote_precision(fri_sales1#6) / promote_precision(fri_sales2#14)), DecimalType(37,20), true), 2) AS round((fri_sales1 / fri_sales2), 2)#198, round(CheckOverflow((promote_precision(sat_sales1#7) / promote_precision(sat_sales2#15)), DecimalType(37,20), true), 2) AS round((sat_sales1 / sat_sales2), 2)#199]
+
+
+
+id:5 name:SortMergeJoin desc:SortMergeJoin [d_week_seq1#0], [(d_week_seq2#8 - 53)], Inner
+SQLPlanMetric(number of output rows,214, sum)
+
+
+
+id:3 name:WholeStageCodegen (14) desc:WholeStageCodegen (14)
+SQLPlanMetric(duration,213000000 ns, timing)
+
+
+
+id:7 name:Sort desc:Sort [d_week_seq1#0 ASC NULLS FIRST], false, 0
+SQLPlanMetric(sort time,216000000 ns, timing)
+SQLPlanMetric(peak memory,217, size)
+SQLPlanMetric(spill size,218, size)
+
+
+
+id:8 name:Project desc:Project [d_week_seq#99 AS d_week_seq1#0, sun_sales#20 AS sun_sales1#1, mon_sales#21 AS mon_sales1#2, tue_sales#22 AS tue_sales1#3, wed_sales#23 AS wed_sales1#4, thu_sales#24 AS thu_sales1#5, fri_sales#25 AS fri_sales1#6, sat_sales#26 AS sat_sales1#7]
+
+
+
+id:9 name:BroadcastHashJoin desc:BroadcastHashJoin [d_week_seq#99], [d_week_seq#141], Inner, BuildRight, false
+SQLPlanMetric(number of output rows,219, sum)
+
+
+
+id:10 name:HashAggregate desc:HashAggregate(keys=[d_week_seq#99], functions=[sum(UnscaledValue(CASE WHEN (d_day_name#109 = Sunday   ) THEN sales_price#17 ELSE null END)), sum(UnscaledValue(CASE WHEN (d_day_name#109 = Monday   ) THEN sales_price#17 ELSE null END)), sum(UnscaledValue(CASE WHEN (d_day_name#109 = Tuesday  ) THEN sales_price#17 ELSE null END)), sum(UnscaledValue(CASE WHEN (d_day_name#109 = Wednesday) THEN sales_price#17 ELSE null END)), sum(UnscaledValue(CASE WHEN (d_day_name#109 = Thursday ) THEN sales_price#17 ELSE null END)), sum(UnscaledValue(CASE WHEN (d_day_name#109 = Friday   ) THEN sales_price#17 ELSE null END)), sum(UnscaledValue(CASE WHEN (d_day_name#109 = Saturday ) THEN sales_price#17 ELSE null END))])
+SQLPlanMetric(spill size,222, size)
+SQLPlanMetric(time in aggregation build,223000000 ns, timing)
+SQLPlanMetric(peak memory,221, size)
+SQLPlanMetric(number of output rows,220, sum)
+SQLPlanMetric(avg hash probe bucket list iters,224, average)
+
+
+
+id:6 name:WholeStageCodegen (6) desc:WholeStageCodegen (6)
+SQLPlanMetric(duration,215000000 ns, timing)
+
+
+
+id:11 name:Exchange desc:Exchange hashpartitioning(d_week_seq#99, 200), ENSURE_REQUIREMENTS, [id=#247]
+SQLPlanMetric(shuffle records written,97, sum)
+SQLPlanMetric(shuffle write time,98 ns, nsTiming)
+SQLPlanMetric(records read,95, sum)
+SQLPlanMetric(local bytes read,93, size)
+SQLPlanMetric(fetch wait time,94000000 ns, timing)
+SQLPlanMetric(remote bytes read,91, size)
+SQLPlanMetric(local blocks read,90, sum)
+SQLPlanMetric(remote blocks read,89, sum)
+SQLPlanMetric(data size,88, size)
+SQLPlanMetric(remote bytes read to disk,92, size)
+SQLPlanMetric(shuffle bytes written,96, size)
+
+
+
+id:13 name:HashAggregate desc:HashAggregate(keys=[d_week_seq#99], functions=[partial_sum(UnscaledValue(CASE WHEN (d_day_name#109 = Sunday   ) THEN sales_price#17 ELSE null END)), partial_sum(UnscaledValue(CASE WHEN (d_day_name#109 = Monday   ) THEN sales_price#17 ELSE null END)), partial_sum(UnscaledValue(CASE WHEN (d_day_name#109 = Tuesday  ) THEN sales_price#17 ELSE null END)), partial_sum(UnscaledValue(CASE WHEN (d_day_name#109 = Wednesday) THEN sales_price#17 ELSE null END)), partial_sum(UnscaledValue(CASE WHEN (d_day_name#109 = Thursday ) THEN sales_price#17 ELSE null END)), partial_sum(UnscaledValue(CASE WHEN (d_day_name#109 = Friday   ) THEN sales_price#17 ELSE null END)), partial_sum(UnscaledValue(CASE WHEN (d_day_name#109 = Saturday ) THEN sales_price#17 ELSE null END))])
+SQLPlanMetric(spill size,228, size)
+SQLPlanMetric(time in aggregation build,229000000 ns, timing)
+SQLPlanMetric(peak memory,227, size)
+SQLPlanMetric(number of output rows,226, sum)
+SQLPlanMetric(avg hash probe bucket list iters,230, average)
+
+
+
+id:14 name:Project desc:Project [sales_price#17, d_week_seq#99, d_day_name#109]
+
+
+
+id:15 name:BroadcastHashJoin desc:BroadcastHashJoin [sold_date_sk#16], [d_date_sk#95], Inner, BuildRight, false
+SQLPlanMetric(number of output rows,231, sum)
+
+
+
+id:12 name:WholeStageCodegen (4) desc:WholeStageCodegen (4)
+SQLPlanMetric(duration,225000000 ns, timing)
+
+
+
+id:16 name:Union desc:Union
+
+
+
+id:18 name:Project desc:Project [ws_sold_date_sk#27 AS sold_date_sk#16, ws_ext_sales_price#50 AS sales_price#17]
+
+
+
+id:19 name:Filter desc:Filter isnotnull(ws_sold_date_sk#27)
+SQLPlanMetric(number of output rows,233, sum)
+
+
+
+id:20 name:ColumnarToRow desc:ColumnarToRow
+SQLPlanMetric(number of output rows,234, sum)
+SQLPlanMetric(number of input batches,235, sum)
+
+
+
+id:17 name:WholeStageCodegen (1) desc:WholeStageCodegen (1)
+SQLPlanMetric(duration,232000000 ns, timing)
+
+
+
+id:21 name:Scan parquet tpcds_1.web_sales desc:FileScan parquet tpcds_1.web_sales[ws_sold_date_sk#27,ws_ext_sales_price#50] Batched: true, DataFilters: [isnotnull(ws_sold_date_sk#27)], Format: Parquet, Location: InMemoryFileIndex[file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/web..., PartitionFilters: [], PushedFilters: [IsNotNull(ws_sold_date_sk)], ReadSchema: struct<ws_sold_date_sk:int,ws_ext_sales_price:decimal(7,2)>
+SQLPlanMetric(number of files read,237, sum)
+SQLPlanMetric(scan time,240000000 ns, timing)
+SQLPlanMetric(metadata time,238000000 ns, timing)
+SQLPlanMetric(size of files read,239, size)
+SQLPlanMetric(number of output rows,236, sum)
+
+
+
+id:23 name:Project desc:Project [cs_sold_date_sk#61 AS sold_date_sk#18, cs_ext_sales_price#84 AS sales_price#19]
+
+
+
+id:24 name:Filter desc:Filter isnotnull(cs_sold_date_sk#61)
+SQLPlanMetric(number of output rows,242, sum)
+
+
+
+id:25 name:ColumnarToRow desc:ColumnarToRow
+SQLPlanMetric(number of output rows,243, sum)
+SQLPlanMetric(number of input batches,244, sum)
+
+
+
+id:22 name:WholeStageCodegen (2) desc:WholeStageCodegen (2)
+SQLPlanMetric(duration,241000000 ns, timing)
+
+
+
+id:26 name:Scan parquet tpcds_1.catalog_sales desc:FileScan parquet tpcds_1.catalog_sales[cs_sold_date_sk#61,cs_ext_sales_price#84] Batched: true, DataFilters: [isnotnull(cs_sold_date_sk#61)], Format: Parquet, Location: InMemoryFileIndex[file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/cat..., PartitionFilters: [], PushedFilters: [IsNotNull(cs_sold_date_sk)], ReadSchema: struct<cs_sold_date_sk:int,cs_ext_sales_price:decimal(7,2)>
+SQLPlanMetric(number of files read,246, sum)
+SQLPlanMetric(scan time,249000000 ns, timing)
+SQLPlanMetric(metadata time,247000000 ns, timing)
+SQLPlanMetric(size of files read,248, size)
+SQLPlanMetric(number of output rows,245, sum)
+
+
+
+id:27 name:BroadcastExchange desc:BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#241]
+SQLPlanMetric(time to broadcast,254000000 ns, timing)
+SQLPlanMetric(time to build,253000000 ns, timing)
+SQLPlanMetric(time to collect,252000000 ns, timing)
+SQLPlanMetric(number of output rows,251, sum)
+SQLPlanMetric(data size,250, size)
+
+
+
+id:29 name:Filter desc:Filter (isnotnull(d_date_sk#95) AND isnotnull(d_week_seq#99))
+SQLPlanMetric(number of output rows,256, sum)
+
+
+
+id:30 name:ColumnarToRow desc:ColumnarToRow
+SQLPlanMetric(number of output rows,257, sum)
+SQLPlanMetric(number of input batches,258, sum)
+
+
+
+id:28 name:WholeStageCodegen (3) desc:WholeStageCodegen (3)
+SQLPlanMetric(duration,255000000 ns, timing)
+
+
+
+id:31 name:Scan parquet tpcds_1.date_dim desc:FileScan parquet tpcds_1.date_dim[d_date_sk#95,d_week_seq#99,d_day_name#109] Batched: true, DataFilters: [isnotnull(d_date_sk#95), isnotnull(d_week_seq#99)], Format: Parquet, Location: InMemoryFileIndex[file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/dat..., PartitionFilters: [], PushedFilters: [IsNotNull(d_date_sk), IsNotNull(d_week_seq)], ReadSchema: struct<d_date_sk:int,d_week_seq:int,d_day_name:string>
+SQLPlanMetric(number of files read,260, sum)
+SQLPlanMetric(scan time,263000000 ns, timing)
+SQLPlanMetric(metadata time,261000000 ns, timing)
+SQLPlanMetric(size of files read,262, size)
+SQLPlanMetric(number of output rows,259, sum)
+
+
+
+id:32 name:BroadcastExchange desc:BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#255]
+SQLPlanMetric(time to broadcast,268000000 ns, timing)
+SQLPlanMetric(time to build,267000000 ns, timing)
+SQLPlanMetric(time to collect,266000000 ns, timing)
+SQLPlanMetric(number of output rows,265, sum)
+SQLPlanMetric(data size,264, size)
+
+
+
+id:34 name:Project desc:Project [d_week_seq#141]
+
+
+
+id:35 name:Filter desc:Filter ((isnotnull(d_year#143) AND (d_year#143 = 2001)) AND isnotnull(d_week_seq#141))
+SQLPlanMetric(number of output rows,270, sum)
+
+
+
+id:36 name:ColumnarToRow desc:ColumnarToRow
+SQLPlanMetric(number of output rows,271, sum)
+SQLPlanMetric(number of input batches,272, sum)
+
+
+
+id:33 name:WholeStageCodegen (5) desc:WholeStageCodegen (5)
+SQLPlanMetric(duration,269000000 ns, timing)
+
+
+
+id:37 name:Scan parquet tpcds_1.date_dim desc:FileScan parquet tpcds_1.date_dim[d_week_seq#141,d_year#143] Batched: true, DataFilters: [isnotnull(d_year#143), (d_year#143 = 2001), isnotnull(d_week_seq#141)], Format: Parquet, Location: InMemoryFileIndex[file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/dat..., PartitionFilters: [], PushedFilters: [IsNotNull(d_year), EqualTo(d_year,2001), IsNotNull(d_week_seq)], ReadSchema: struct<d_week_seq:int,d_year:int>
+SQLPlanMetric(number of files read,274, sum)
+SQLPlanMetric(scan time,277000000 ns, timing)
+SQLPlanMetric(metadata time,275000000 ns, timing)
+SQLPlanMetric(size of files read,276, size)
+SQLPlanMetric(number of output rows,273, sum)
+
+
+
+id:39 name:Sort desc:Sort [(d_week_seq2#8 - 53) ASC NULLS FIRST], false, 0
+SQLPlanMetric(sort time,279000000 ns, timing)
+SQLPlanMetric(peak memory,280, size)
+SQLPlanMetric(spill size,281, size)
+
+
+
+id:38 name:WholeStageCodegen (13) desc:WholeStageCodegen (13)
+SQLPlanMetric(duration,278000000 ns, timing)
+
+
+
+id:40 name:Exchange desc:Exchange hashpartitioning((d_week_seq2#8 - 53), 200), ENSURE_REQUIREMENTS, [id=#410]
+SQLPlanMetric(shuffle records written,196, sum)
+SQLPlanMetric(shuffle write time,197 ns, nsTiming)
+SQLPlanMetric(records read,194, sum)
+SQLPlanMetric(local bytes read,192, size)
+SQLPlanMetric(fetch wait time,193000000 ns, timing)
+SQLPlanMetric(remote bytes read,190, size)
+SQLPlanMetric(local blocks read,189, sum)
+SQLPlanMetric(remote blocks read,188, sum)
+SQLPlanMetric(data size,187, size)
+SQLPlanMetric(remote bytes read to disk,191, size)
+SQLPlanMetric(shuffle bytes written,195, size)
+
+
+
+id:42 name:Project desc:Project [d_week_seq#99 AS d_week_seq2#8, sun_sales#20 AS sun_sales2#9, mon_sales#21 AS mon_sales2#10, tue_sales#22 AS tue_sales2#11, wed_sales#23 AS wed_sales2#12, thu_sales#24 AS thu_sales2#13, fri_sales#25 AS fri_sales2#14, sat_sales#26 AS sat_sales2#15]
+
+
+
+id:43 name:BroadcastHashJoin desc:BroadcastHashJoin [d_week_seq#99], [d_week_seq#169], Inner, BuildRight, false
+SQLPlanMetric(number of output rows,283, sum)
+
+
+
+id:44 name:HashAggregate desc:HashAggregate(keys=[d_week_seq#99], functions=[sum(UnscaledValue(CASE WHEN (d_day_name#109 = Sunday   ) THEN sales_price#17 ELSE null END)), sum(UnscaledValue(CASE WHEN (d_day_name#109 = Monday   ) THEN sales_price#17 ELSE null END)), sum(UnscaledValue(CASE WHEN (d_day_name#109 = Tuesday  ) THEN sales_price#17 ELSE null END)), sum(UnscaledValue(CASE WHEN (d_day_name#109 = Wednesday) THEN sales_price#17 ELSE null END)), sum(UnscaledValue(CASE WHEN (d_day_name#109 = Thursday ) THEN sales_price#17 ELSE null END)), sum(UnscaledValue(CASE WHEN (d_day_name#109 = Friday   ) THEN sales_price#17 ELSE null END)), sum(UnscaledValue(CASE WHEN (d_day_name#109 = Saturday ) THEN sales_price#17 ELSE null END))])
+SQLPlanMetric(spill size,286, size)
+SQLPlanMetric(time in aggregation build,287000000 ns, timing)
+SQLPlanMetric(peak memory,285, size)
+SQLPlanMetric(number of output rows,284, sum)
+SQLPlanMetric(avg hash probe bucket list iters,288, average)
+
+
+
+id:41 name:WholeStageCodegen (12) desc:WholeStageCodegen (12)
+SQLPlanMetric(duration,282000000 ns, timing)
+
+
+
+id:45 name:BroadcastExchange desc:BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#292]
+SQLPlanMetric(time to broadcast,293000000 ns, timing)
+SQLPlanMetric(time to build,292000000 ns, timing)
+SQLPlanMetric(time to collect,291000000 ns, timing)
+SQLPlanMetric(number of output rows,290, sum)
+SQLPlanMetric(data size,289, size)
+
+
+
+id:47 name:Project desc:Project [d_week_seq#169]
+
+
+
+id:48 name:Filter desc:Filter ((isnotnull(d_year#171) AND (d_year#171 = 2002)) AND isnotnull(d_week_seq#169))
+SQLPlanMetric(number of output rows,295, sum)
+
+
+
+id:49 name:ColumnarToRow desc:ColumnarToRow
+SQLPlanMetric(number of output rows,296, sum)
+SQLPlanMetric(number of input batches,297, sum)
+
+
+
+id:46 name:WholeStageCodegen (11) desc:WholeStageCodegen (11)
+SQLPlanMetric(duration,294000000 ns, timing)
+
+
+
+id:50 name:Scan parquet tpcds_1.date_dim desc:FileScan parquet tpcds_1.date_dim[d_week_seq#169,d_year#171] Batched: true, DataFilters: [isnotnull(d_year#171), (d_year#171 = 2002), isnotnull(d_week_seq#169)], Format: Parquet, Location: InMemoryFileIndex[file:/home/daily/spark_tune/environment/spark-3.1.1/benchmarks/tpcds/data/1/dat..., PartitionFilters: [], PushedFilters: [IsNotNull(d_year), EqualTo(d_year,2002), IsNotNull(d_week_seq)], ReadSchema: struct<d_week_seq:int,d_year:int>
+SQLPlanMetric(number of files read,299, sum)
+SQLPlanMetric(scan time,302000000 ns, timing)
+SQLPlanMetric(metadata time,300000000 ns, timing)
+SQLPlanMetric(size of files read,301, size)
+SQLPlanMetric(number of output rows,298, sum)
+
+
+
+  2->1;
+
+  4->2;
+
+  5->4;
+
+  7->5;
+
+  8->7;
+
+  9->8;
+
+  10->9;
+
+  11->10;
+
+  13->11;
+
+  14->13;
+
+  15->14;
+
+  16->15;
+
+  18->16;
+
+  19->18;
+
+  20->19;
+
+  21->20;
+
+  23->16;
+
+  24->23;
+
+  25->24;
+
+  26->25;
+
+  27->15;
+
+  29->27;
+
+  30->29;
+
+  31->30;
+
+  32->9;
+
+  34->32;
+
+  35->34;
+
+  36->35;
+
+  37->36;
+
+  39->5;
+
+  40->39;
+
+  42->40;
+
+  43->42;
+
+  44->43;
+
+  11->44;
+
+  45->43;
+
+  47->45;
+
+  48->47;
+
+  49->48;
+
+  50->49;
+
+[SubGraph]
+cluster 0 : 1 
+cluster 3 : 4 5 
+cluster 6 : 7 8 9 10 
+cluster 12 : 13 14 15 
+cluster 17 : 18 19 20 
+cluster 22 : 23 24 25 
+cluster 28 : 29 30 
+cluster 33 : 34 35 36 
+cluster 38 : 39 
+cluster 41 : 42 43 44 
+cluster 46 : 47 48 49 
+

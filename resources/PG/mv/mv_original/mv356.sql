@@ -1,0 +1,3 @@
+select complete_cast.movie_id AS movie_id, complete_cast.status_id AS status_id, complete_cast.subject_id AS subject_id, keyword.id AS id, keyword.keyword AS keyword, movie_info.info AS info
+ from complete_cast,movie_keyword,movie_info,keyword
+ where (complete_cast.movie_id = movie_keyword.movie_id) And (movie_info.movie_id = movie_keyword.movie_id) And (movie_keyword.keyword_id = keyword.id) And (movie_info.info in ('Sweden', 'Germany', 'Swedish', 'German')) And (keyword.keyword = 'sequel')

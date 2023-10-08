@@ -1,0 +1,73 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parallel Aware": false,
+    "Join Type": "Inner",
+    "Startup Cost": 104551.48,
+    "Total Cost": 241637.68,
+    "Plan Rows": 1424041,
+    "Plan Width": 107,
+    "Actual Startup Time": 2332.091,
+    "Actual Total Time": 4618.07,
+    "Actual Rows": 372207,
+    "Actual Loops": 1,
+    "Inner Unique": true,
+    "Hash Cond": "(mk.movie_id = t.id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": false,
+        "Relation Name": "movie_keyword",
+        "Alias": "mk",
+        "Startup Cost": 0.0,
+        "Total Cost": 81003.12,
+        "Plan Rows": 3193168,
+        "Plan Width": 12,
+        "Actual Startup Time": 0.067,
+        "Actual Total Time": 1195.058,
+        "Actual Rows": 3195952,
+        "Actual Loops": 1,
+        "Filter": "(keyword_id > 1733)",
+        "Rows Removed by Filter": 1327978
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": false,
+        "Startup Cost": 73940.36,
+        "Total Cost": 73940.36,
+        "Plan Rows": 1127529,
+        "Plan Width": 95,
+        "Actual Startup Time": 1491.041,
+        "Actual Total Time": 1491.044,
+        "Actual Rows": 1213086,
+        "Actual Loops": 1,
+        "Hash Buckets": 32768,
+        "Original Hash Buckets": 32768,
+        "Hash Batches": 64,
+        "Original Hash Batches": 64,
+        "Peak Memory Usage": 2424,
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Relation Name": "title",
+            "Alias": "t",
+            "Startup Cost": 0.0,
+            "Total Cost": 73940.36,
+            "Plan Rows": 1127529,
+            "Plan Width": 95,
+            "Actual Startup Time": 0.015,
+            "Actual Total Time": 983.905,
+            "Actual Rows": 1213086,
+            "Actual Loops": 1,
+            "Filter": "((production_year > 1986) AND (kind_id = 7))",
+            "Rows Removed by Filter": 1315226
+          }
+        ]
+      }
+    ]
+  }
+}

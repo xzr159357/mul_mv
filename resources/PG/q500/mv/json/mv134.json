@@ -1,0 +1,55 @@
+{
+  "Plan": {
+    "Node Type": "Nested Loop",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": false,
+    "Join Type": "Inner",
+    "Startup Cost": 0.43,
+    "Total Cost": 371080.36,
+    "Plan Rows": 29983,
+    "Plan Width": 151,
+    "Actual Startup Time": 1750.435,
+    "Actual Total Time": 15229.85,
+    "Actual Rows": 1080754,
+    "Actual Loops": 4,
+    "Inner Unique": true,
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": true,
+        "Relation Name": "cast_info",
+        "Alias": "ci",
+        "Startup Cost": 0.0,
+        "Total Cost": 327657.8,
+        "Plan Rows": 29983,
+        "Plan Width": 56,
+        "Actual Startup Time": 1750.247,
+        "Actual Total Time": 2243.029,
+        "Actual Rows": 1080754,
+        "Actual Loops": 4,
+        "Filter": "(role_id = 10)",
+        "Rows Removed by Filter": 7980332
+      },
+      {
+        "Node Type": "Index Scan",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": false,
+        "Scan Direction": "Forward",
+        "Index Name": "title_pkey",
+        "Relation Name": "title",
+        "Alias": "t",
+        "Startup Cost": 0.43,
+        "Total Cost": 1.45,
+        "Plan Rows": 1,
+        "Plan Width": 95,
+        "Actual Startup Time": 0.011,
+        "Actual Total Time": 0.011,
+        "Actual Rows": 1,
+        "Actual Loops": 4323018,
+        "Index Cond": "(id = ci.movie_id)",
+        "Rows Removed by Index Recheck": 0
+      }
+    ]
+  }
+}

@@ -1,0 +1,3 @@
+select movie_companies.company_id AS company_id, movie_companies.movie_id AS movie_companies_movie_id_1, movie_info.info_type_id AS info_type_id, movie_info.movie_id AS movie_info_movie_id_3
+ from title,movie_info,movie_companies
+ where (title.id = movie_companies.movie_id) And (movie_info.movie_id = movie_companies.movie_id) And (movie_info.info_type_id > 9) And (movie_companies.company_id < 11369)

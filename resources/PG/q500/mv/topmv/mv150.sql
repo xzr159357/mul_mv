@@ -1,0 +1,3 @@
+create materialized view if not exists mv150 as select movie_keyword.keyword_id AS keyword_id, movie_keyword.movie_id AS movie_id, title.production_year AS production_year
+ from movie_keyword,title
+ where (movie_keyword.movie_id = title.id) And ((((((((movie_keyword.keyword_id = 6830) Or (movie_keyword.keyword_id > 34557))) Or (movie_keyword.keyword_id < 4089))) Or (movie_keyword.keyword_id = 14698))) Or (movie_keyword.keyword_id = 19480)) And (title.production_year > 1994)

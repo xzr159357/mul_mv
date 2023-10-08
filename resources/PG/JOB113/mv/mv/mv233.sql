@@ -1,0 +1,3 @@
+create materialized view if not exists mv233 as select cast_info.movie_id AS cast_info_movie_id_0, cast_info.person_id AS person_id, keyword.id AS id, keyword.keyword AS keyword, movie_companies.company_id AS company_id, movie_keyword.movie_id AS movie_keyword_movie_id_5, name.name AS name
+ from keyword,title,movie_companies,cast_info,name,movie_keyword
+ where (movie_keyword.keyword_id = keyword.id) And (keyword.keyword = 'character-name-in-title') And (title.id = movie_keyword.movie_id) And (cast_info.movie_id = title.id) And (movie_companies.movie_id = title.id) And (name.id = cast_info.person_id)

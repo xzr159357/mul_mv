@@ -1,0 +1,3 @@
+select cast_info.movie_id AS cast_info_movie_id_0, movie_companies.company_id AS company_id, movie_companies.company_type_id AS company_type_id, movie_info_idx.movie_id AS movie_info_idx_movie_id_3, title.production_year AS production_year
+ from title,cast_info,movie_info_idx,movie_companies
+ where (title.id = movie_companies.movie_id) And (cast_info.movie_id = title.id) And (movie_info_idx.movie_id = title.id) And (title.production_year < 2012) And (movie_companies.company_id > 65820)  And  (movie_companies.company_type_id > 1)

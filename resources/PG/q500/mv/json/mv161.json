@@ -1,0 +1,72 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": true,
+    "Join Type": "Inner",
+    "Startup Cost": 45660.92,
+    "Total Cost": 82776.98,
+    "Plan Rows": 13525,
+    "Plan Width": 135,
+    "Actual Startup Time": 139.522,
+    "Actual Total Time": 318.334,
+    "Actual Rows": 2372,
+    "Actual Loops": 7,
+    "Inner Unique": true,
+    "Hash Cond": "(mc.movie_id = t.id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": true,
+        "Relation Name": "movie_companies",
+        "Alias": "mc",
+        "Startup Cost": 0.0,
+        "Total Cost": 35403.82,
+        "Plan Rows": 652282,
+        "Plan Width": 40,
+        "Actual Startup Time": 0.043,
+        "Actual Total Time": 75.289,
+        "Actual Rows": 372733,
+        "Actual Loops": 7
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": true,
+        "Startup Cost": 45497.09,
+        "Total Cost": 45497.09,
+        "Plan Rows": 13106,
+        "Plan Width": 95,
+        "Actual Startup Time": 126.926,
+        "Actual Total Time": 126.931,
+        "Actual Rows": 8069,
+        "Actual Loops": 7,
+        "Hash Buckets": 65536,
+        "Original Hash Buckets": 65536,
+        "Hash Batches": 1,
+        "Original Hash Batches": 1,
+        "Peak Memory Usage": 7264,
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": true,
+            "Relation Name": "title",
+            "Alias": "t",
+            "Startup Cost": 0.0,
+            "Total Cost": 45497.09,
+            "Plan Rows": 13106,
+            "Plan Width": 95,
+            "Actual Startup Time": 0.048,
+            "Actual Total Time": 121.249,
+            "Actual Rows": 8069,
+            "Actual Loops": 7,
+            "Filter": "((kind_id = 7) AND (production_year = 2004))",
+            "Rows Removed by Filter": 353119
+          }
+        ]
+      }
+    ]
+  }
+}

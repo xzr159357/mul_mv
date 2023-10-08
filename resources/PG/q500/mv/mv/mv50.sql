@@ -1,0 +1,3 @@
+create materialized view if not exists mv50 as select cast_info.movie_id AS cast_info_movie_id_0, cast_info.person_id AS person_id, movie_info.info_type_id AS movie_info_info_type_id_2, movie_info_idx.info_type_id AS movie_info_idx_info_type_id_3, movie_keyword.movie_id AS movie_keyword_movie_id_4
+ from title,movie_info_idx,movie_keyword,movie_info,cast_info
+ where (title.id = movie_info_idx.movie_id) And (cast_info.movie_id = title.id) And (movie_info.movie_id = title.id) And (movie_keyword.movie_id = title.id) And (cast_info.movie_id = movie_info_idx.movie_id) And (movie_info_idx.info_type_id = 99) And (movie_info.info_type_id > 13) And (cast_info.person_id = 2029088)

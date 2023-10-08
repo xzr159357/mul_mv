@@ -1,0 +1,87 @@
+digraph G {
+  0 [labelType="html" label="<br><b>TakeOrderedAndProject</b><br><br>"];
+
+  subgraph cluster1 {
+    isCluster="true";
+    label="WholeStageCodegen (4)\n \nduration: total (min, med, max (stageId: taskId))\n7.0 s (1 ms, 6 ms, 176 ms (stage 3.0: task 61))";
+      2 [labelType="html" label="<b>HashAggregate</b><br><br>time in aggregation build total (min, med, max (stageId: taskId))<br>248 ms (0 ms, 0 ms, 31 ms (stage 3.0: task 68))<br>peak memory total (min, med, max (stageId: taskId))<br>1170.0 MiB (256.0 KiB, 256.0 KiB, 16.3 MiB (stage 3.0: task 44))<br>number of output rows: 83<br>avg hash probe bucket list iters (min, med, max (stageId: taskId)):<br>(1, 1, 1 (stage 3.0: task 44))"];
+  }
+     
+  3 [labelType="html" label="<b>Exchange</b><br><br>shuffle records written: 83<br>shuffle write time total (min, med, max (stageId: taskId))<br>37 ms (0 ms, 0 ms, 37 ms (stage 2.0: task 16))<br>records read: 83<br>local bytes read total (min, med, max (stageId: taskId))<br>7.6 KiB (0.0 B, 0.0 B, 189.0 B (stage 3.0: task 64))<br>fetch wait time total (min, med, max (stageId: taskId))<br>0 ms (0 ms, 0 ms, 0 ms (stage 3.0: task 44))<br>local blocks read: 70<br>data size total (min, med, max (stageId: taskId))<br>7.8 KiB (0.0 B, 0.0 B, 7.8 KiB (stage 2.0: task 16))<br>shuffle bytes written total (min, med, max (stageId: taskId))<br>7.6 KiB (0.0 B, 0.0 B, 7.6 KiB (stage 2.0: task 16))"];
+
+  subgraph cluster4 {
+    isCluster="true";
+    label="WholeStageCodegen (3)\n \nduration: total (min, med, max (stageId: taskId))\n12.6 s (367 ms, 472 ms, 799 ms (stage 2.0: task 16))";
+      5 [labelType="html" label="<b>HashAggregate</b><br><br>time in aggregation build total (min, med, max (stageId: taskId))<br>2.1 s (52 ms, 69 ms, 360 ms (stage 2.0: task 16))<br>peak memory total (min, med, max (stageId: taskId))<br>7.3 MiB (256.0 KiB, 256.0 KiB, 256.0 KiB (stage 2.0: task 29))<br>number of output rows: 83"];    
+  6 [labelType="html" label="<br><b>Project</b><br><br>"];    
+  7 [labelType="html" label="<b>BroadcastHashJoin</b><br><br>number of output rows: 976"];    
+  8 [labelType="html" label="<br><b>Project</b><br><br>"];    
+  9 [labelType="html" label="<b>BroadcastHashJoin</b><br><br>number of output rows: 444,832"];    
+  16 [labelType="html" label="<b>Filter</b><br><br>number of output rows: 2,750,838"];    
+  17 [labelType="html" label="<b>ColumnarToRow</b><br><br>number of output rows: 2,879,789<br>number of input batches: 704"];
+  }
+     
+  10 [labelType="html" label="<b>BroadcastExchange</b><br><br>time to broadcast: 5 ms<br>time to build: 46 ms<br>time to collect: 2.9 s<br>number of output rows: 6,000<br>data size: 1280.0 KiB"];
+
+  subgraph cluster11 {
+    isCluster="true";
+    label="WholeStageCodegen (1)\n \nduration: 745 ms";
+      12 [labelType="html" label="<br><b>Project</b><br><br>"];    
+  13 [labelType="html" label="<b>Filter</b><br><br>number of output rows: 6,000"];    
+  14 [labelType="html" label="<b>ColumnarToRow</b><br><br>number of output rows: 73,049<br>number of input batches: 18"];
+  }
+     
+  15 [labelType="html" label="<b>Scan parquet tpcds_1.date_dim</b><br><br>number of files read: 1<br>scan time: 724 ms<br>metadata time: 6 ms<br>size of files read: 1799.9 KiB<br>number of output rows: 73,049"];
+  18 [labelType="html" label="<b>Scan parquet tpcds_1.store_sales</b><br><br>number of files read: 1<br>scan time total (min, med, max (stageId: taskId))<br>1.8 s (47 ms, 63 ms, 124 ms (stage 2.0: task 16))<br>metadata time: 0 ms<br>size of files read: 114.1 MiB<br>number of output rows: 2,879,789"];
+  19 [labelType="html" label="<b>BroadcastExchange</b><br><br>time to broadcast: 12 ms<br>time to build: 34 ms<br>time to collect: 2.9 s<br>number of output rows: 35<br>data size: 1026.0 KiB"];
+
+  subgraph cluster20 {
+    isCluster="true";
+    label="WholeStageCodegen (2)\n \nduration: 742 ms";
+      21 [labelType="html" label="<br><b>Project</b><br><br>"];    
+  22 [labelType="html" label="<b>Filter</b><br><br>number of output rows: 35"];    
+  23 [labelType="html" label="<b>ColumnarToRow</b><br><br>number of output rows: 18,000<br>number of input batches: 5"];
+  }
+     
+  24 [labelType="html" label="<b>Scan parquet tpcds_1.item</b><br><br>number of files read: 1<br>scan time: 730 ms<br>metadata time: 5 ms<br>size of files read: 1731.2 KiB<br>number of output rows: 18,000"];
+  2->0;
+
+  3->2;
+
+  5->3;
+
+  6->5;
+
+  7->6;
+
+  8->7;
+
+  9->8;
+
+  10->9;
+
+  12->10;
+
+  13->12;
+
+  14->13;
+
+  15->14;
+
+  16->9;
+
+  17->16;
+
+  18->17;
+
+  19->7;
+
+  21->19;
+
+  22->21;
+
+  23->22;
+
+  24->23;
+
+}

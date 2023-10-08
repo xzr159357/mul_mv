@@ -1,0 +1,3 @@
+select movie_info_idx.movie_id AS movie_id, movie_keyword.keyword_id AS keyword_id
+ from movie_keyword,title,movie_info_idx
+ where ((((((((movie_keyword.keyword_id = 6830) Or (movie_keyword.keyword_id = 16264))) Or (movie_keyword.keyword_id > 34557))) Or (movie_keyword.keyword_id < 789))) Or (movie_keyword.keyword_id = 3054)) And (movie_keyword.movie_id = title.id) And (title.id = movie_keyword.movie_id) And (movie_info_idx.movie_id = title.id)

@@ -1,0 +1,125 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": true,
+    "Join Type": "Inner",
+    "Startup Cost": 293635.71,
+    "Total Cost": 352231.06,
+    "Plan Rows": 523236,
+    "Plan Width": 208,
+    "Actual Startup Time": 3334.688,
+    "Actual Total Time": 4538.774,
+    "Actual Rows": 1084198,
+    "Actual Loops": 4,
+    "Inner Unique": false,
+    "Hash Cond": "(mc.movie_id = t.id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": true,
+        "Relation Name": "movie_companies",
+        "Alias": "mc",
+        "Startup Cost": 0.0,
+        "Total Cost": 35403.82,
+        "Plan Rows": 652282,
+        "Plan Width": 40,
+        "Actual Startup Time": 0.064,
+        "Actual Total Time": 183.316,
+        "Actual Rows": 652282,
+        "Actual Loops": 4
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": true,
+        "Startup Cost": 279058.46,
+        "Total Cost": 279058.46,
+        "Plan Rows": 405620,
+        "Plan Width": 168,
+        "Actual Startup Time": 2902.103,
+        "Actual Total Time": 2902.183,
+        "Actual Rows": 522767,
+        "Actual Loops": 4,
+        "Hash Buckets": 32768,
+        "Original Hash Buckets": 32768,
+        "Hash Batches": 128,
+        "Original Hash Batches": 128,
+        "Peak Memory Usage": 2560,
+        "Plans": [
+          {
+            "Node Type": "Hash Join",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": true,
+            "Join Type": "Inner",
+            "Startup Cost": 59496.64,
+            "Total Cost": 279058.46,
+            "Plan Rows": 405620,
+            "Plan Width": 168,
+            "Actual Startup Time": 1731.933,
+            "Actual Total Time": 2507.871,
+            "Actual Rows": 522767,
+            "Actual Loops": 4,
+            "Inner Unique": true,
+            "Hash Cond": "(mi.movie_id = t.id)",
+            "Plans": [
+              {
+                "Node Type": "Seq Scan",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": true,
+                "Relation Name": "movie_info",
+                "Alias": "mi",
+                "Startup Cost": 0.0,
+                "Total Cost": 198938.07,
+                "Plan Rows": 405620,
+                "Plan Width": 73,
+                "Actual Startup Time": 32.102,
+                "Actual Total Time": 928.231,
+                "Actual Rows": 522767,
+                "Actual Loops": 4,
+                "Filter": "(info_type_id < 3)",
+                "Rows Removed by Filter": 3186163
+              },
+              {
+                "Node Type": "Hash",
+                "Parent Relationship": "Inner",
+                "Parallel Aware": true,
+                "Startup Cost": 42336.73,
+                "Total Cost": 42336.73,
+                "Plan Rows": 632073,
+                "Plan Width": 95,
+                "Actual Startup Time": 605.751,
+                "Actual Total Time": 605.756,
+                "Actual Rows": 632078,
+                "Actual Loops": 4,
+                "Hash Buckets": 32768,
+                "Original Hash Buckets": 32768,
+                "Hash Batches": 128,
+                "Original Hash Batches": 128,
+                "Peak Memory Usage": 2624,
+                "Plans": [
+                  {
+                    "Node Type": "Seq Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": true,
+                    "Relation Name": "title",
+                    "Alias": "t",
+                    "Startup Cost": 0.0,
+                    "Total Cost": 42336.73,
+                    "Plan Rows": 632073,
+                    "Plan Width": 95,
+                    "Actual Startup Time": 0.045,
+                    "Actual Total Time": 198.172,
+                    "Actual Rows": 632078,
+                    "Actual Loops": 4
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

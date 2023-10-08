@@ -1,0 +1,74 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": true,
+    "Join Type": "Inner",
+    "Startup Cost": 37271.35,
+    "Total Cost": 83261.19,
+    "Plan Rows": 16244,
+    "Plan Width": 135,
+    "Actual Startup Time": 122.98,
+    "Actual Total Time": 468.901,
+    "Actual Rows": 12178,
+    "Actual Loops": 5,
+    "Inner Unique": false,
+    "Hash Cond": "(t.id = mc.movie_id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": true,
+        "Relation Name": "title",
+        "Alias": "t",
+        "Startup Cost": 0.0,
+        "Total Cost": 43916.91,
+        "Plan Rows": 541952,
+        "Plan Width": 95,
+        "Actual Startup Time": 0.051,
+        "Actual Total Time": 196.245,
+        "Actual Rows": 434233,
+        "Actual Loops": 5,
+        "Filter": "(production_year > 1963)",
+        "Rows Removed by Filter": 71430
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": true,
+        "Startup Cost": 37034.53,
+        "Total Cost": 37034.53,
+        "Plan Rows": 18946,
+        "Plan Width": 40,
+        "Actual Startup Time": 122.203,
+        "Actual Total Time": 122.204,
+        "Actual Rows": 16814,
+        "Actual Loops": 5,
+        "Hash Buckets": 131072,
+        "Original Hash Buckets": 131072,
+        "Hash Batches": 1,
+        "Original Hash Batches": 1,
+        "Peak Memory Usage": 6880,
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": true,
+            "Relation Name": "movie_companies",
+            "Alias": "mc",
+            "Startup Cost": 0.0,
+            "Total Cost": 37034.53,
+            "Plan Rows": 18946,
+            "Plan Width": 40,
+            "Actual Startup Time": 0.075,
+            "Actual Total Time": 113.693,
+            "Actual Rows": 16814,
+            "Actual Loops": 5,
+            "Filter": "(company_id < 19)",
+            "Rows Removed by Filter": 505012
+          }
+        ]
+      }
+    ]
+  }
+}

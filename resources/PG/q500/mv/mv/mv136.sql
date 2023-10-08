@@ -1,0 +1,3 @@
+create materialized view if not exists mv136 as select cast_info.role_id AS role_id, movie_companies.company_type_id AS company_type_id, movie_keyword.keyword_id AS keyword_id
+ from movie_keyword,title,cast_info,movie_companies
+ where (movie_keyword.movie_id = title.id) And (movie_keyword.keyword_id < 4030) And (cast_info.movie_id = title.id) And (movie_companies.movie_id = title.id) And (cast_info.role_id = 10) And (title.id = cast_info.movie_id) And (movie_companies.company_type_id = 2)

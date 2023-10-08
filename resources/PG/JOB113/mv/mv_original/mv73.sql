@@ -1,0 +1,3 @@
+select aka_name.name AS aka_name_name_0, aka_name.person_id AS person_id, cast_info.movie_id AS movie_id, cast_info.note AS note, cast_info.role_id AS role_id, name.name AS name_name_5, role_type.role AS role, title.production_year AS production_year, title.title AS title
+ from role_type,title,cast_info,aka_name,name
+ where (cast_info.role_id = role_type.id) And (role_type.role = 'actress') And (title.id = cast_info.movie_id) And (aka_name.person_id = cast_info.person_id) And (cast_info.note = '(voice: English version)') And (name.id = aka_name.person_id)

@@ -1,0 +1,72 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": true,
+    "Join Type": "Inner",
+    "Startup Cost": 59496.64,
+    "Total Cost": 270546.86,
+    "Plan Rows": 101771,
+    "Plan Width": 168,
+    "Actual Startup Time": 932.153,
+    "Actual Total Time": 1169.168,
+    "Actual Rows": 67778,
+    "Actual Loops": 7,
+    "Inner Unique": true,
+    "Hash Cond": "(mi.movie_id = t.id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": true,
+        "Relation Name": "movie_info",
+        "Alias": "mi",
+        "Startup Cost": 0.0,
+        "Total Cost": 198938.07,
+        "Plan Rows": 101771,
+        "Plan Width": 73,
+        "Actual Startup Time": 214.488,
+        "Actual Total Time": 497.288,
+        "Actual Rows": 67778,
+        "Actual Loops": 7,
+        "Filter": "(info_type_id = 6)",
+        "Rows Removed by Filter": 2051611
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": true,
+        "Startup Cost": 42336.73,
+        "Total Cost": 42336.73,
+        "Plan Rows": 632073,
+        "Plan Width": 95,
+        "Actual Startup Time": 346.183,
+        "Actual Total Time": 346.188,
+        "Actual Rows": 361187,
+        "Actual Loops": 7,
+        "Hash Buckets": 32768,
+        "Original Hash Buckets": 32768,
+        "Hash Batches": 128,
+        "Original Hash Batches": 128,
+        "Peak Memory Usage": 2656,
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": true,
+            "Relation Name": "title",
+            "Alias": "t",
+            "Startup Cost": 0.0,
+            "Total Cost": 42336.73,
+            "Plan Rows": 632073,
+            "Plan Width": 95,
+            "Actual Startup Time": 0.04,
+            "Actual Total Time": 104.932,
+            "Actual Rows": 361187,
+            "Actual Loops": 7
+          }
+        ]
+      }
+    ]
+  }
+}
