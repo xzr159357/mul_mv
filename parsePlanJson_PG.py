@@ -45,6 +45,13 @@ class Gather(object):
         return 'Gather'
 
 
+class Gather_Merge(object):
+    def __init__(self):
+        self.node_type = 'Gather Merge'
+
+    def __str__(self):
+        return 'Gather Merge'
+
 class Unique(object):
     def __init__(self):
         self.node_type = 'Unique'
@@ -453,7 +460,9 @@ def getNodeinfo(node, alias2table):
     nodeType = node['Node Type']
 
     if 'Gather' == nodeType:
-        return  Gather(), None
+        return Gather(), None
+    if 'Gather Merge' == nodeType:
+        return Gather_Merge(), None
     if 'SetOp' == nodeType:
         return Set(node['Command']), None
     if 'WindowAgg' == nodeType:
@@ -901,7 +910,10 @@ def getTreeNode_PG(root, alias2table, clusters):
 def buildOnePlanTree_PG(sqlFile, jsonFile, analyze=True):
     global g_table
     f_open = open(jsonFile, "r", encoding='utf-8')
-    plan = json.load(f_open)['Plan']
+    plan = json.load(f_open)
+    if type(plan) == list:
+        plan = plan[0]
+    plan = plan['Plan']
     f_open.close()
 
     alias2table = {}

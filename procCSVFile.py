@@ -279,8 +279,10 @@ def saveTmpQueryMap(query_mv_map, initIDS=[]):
         # csv_writer.writerow(['file', 'id'])
         for fileName, ids in query_mv_map.items():
             print(fileName)
-            print(list(set(ids)))
-            for mvId in list(set(ids)):
+            ids = list(set(ids))
+            ids.sort()
+            print(ids)
+            for mvId in ids:
                 if int(mvId) in initIDS:
                     csv_writer.writerow([fileName, mvId])
     # 所有mv

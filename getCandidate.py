@@ -129,6 +129,7 @@ def getInitMVs(q_mv_maps, clusters, method="topk"):
         # with open("resources/PG/data/")
 
         # output = [int(x[0]) for x in tmpList]
+        print(f"output num : {len(output)}")
         print(output)
         return candDict, output[:cntLimit]
 
