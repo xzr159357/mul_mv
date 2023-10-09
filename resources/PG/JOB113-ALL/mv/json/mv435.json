@@ -1,0 +1,268 @@
+{
+  "Plan": {
+    "Node Type": "Nested Loop",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": false,
+    "Join Type": "Inner",
+    "Startup Cost": 62783.18,
+    "Total Cost": 64027.99,
+    "Plan Rows": 1,
+    "Plan Width": 44,
+    "Actual Startup Time": 654.048,
+    "Actual Total Time": 680.181,
+    "Actual Rows": 682,
+    "Actual Loops": 3,
+    "Inner Unique": true,
+    "Plans": [
+      {
+        "Node Type": "Nested Loop",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": false,
+        "Join Type": "Inner",
+        "Startup Cost": 62783.03,
+        "Total Cost": 64026.79,
+        "Plan Rows": 7,
+        "Plan Width": 48,
+        "Actual Startup Time": 654.012,
+        "Actual Total Time": 678.304,
+        "Actual Rows": 690,
+        "Actual Loops": 3,
+        "Inner Unique": true,
+        "Plans": [
+          {
+            "Node Type": "Merge Join",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Join Type": "Inner",
+            "Startup Cost": 62782.88,
+            "Total Cost": 63829.71,
+            "Plan Rows": 1157,
+            "Plan Width": 52,
+            "Actual Startup Time": 653.809,
+            "Actual Total Time": 675.42,
+            "Actual Rows": 784,
+            "Actual Loops": 3,
+            "Inner Unique": false,
+            "Merge Cond": "(mc.movie_id = cc.movie_id)",
+            "Plans": [
+              {
+                "Node Type": "Sort",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Startup Cost": 46868.32,
+                "Total Cost": 46879.37,
+                "Plan Rows": 4423,
+                "Plan Width": 40,
+                "Actual Startup Time": 514.804,
+                "Actual Total Time": 516.573,
+                "Actual Rows": 5444,
+                "Actual Loops": 3,
+                "Sort Key": [
+                  "mc.movie_id"
+                ],
+                "Sort Method": "external merge",
+                "Sort Space Used": 3088,
+                "Sort Space Type": "Disk",
+                "Workers": [
+                  {
+                    "Worker Number": 0,
+                    "Sort Method": "external merge",
+                    "Sort Space Used": 3120,
+                    "Sort Space Type": "Disk"
+                  },
+                  {
+                    "Worker Number": 1,
+                    "Sort Method": "external merge",
+                    "Sort Space Used": 3112,
+                    "Sort Space Type": "Disk"
+                  }
+                ],
+                "Plans": [
+                  {
+                    "Node Type": "Hash Join",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": true,
+                    "Join Type": "Inner",
+                    "Startup Cost": 5445.39,
+                    "Total Cost": 46600.49,
+                    "Plan Rows": 4423,
+                    "Plan Width": 40,
+                    "Actual Startup Time": 67.552,
+                    "Actual Total Time": 442.616,
+                    "Actual Rows": 80292,
+                    "Actual Loops": 3,
+                    "Inner Unique": true,
+                    "Hash Cond": "(mc.company_id = cn.id)",
+                    "Plans": [
+                      {
+                        "Node Type": "Seq Scan",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": true,
+                        "Relation Name": "movie_companies",
+                        "Alias": "mc",
+                        "Startup Cost": 0.0,
+                        "Total Cost": 39752.37,
+                        "Plan Rows": 534364,
+                        "Plan Width": 12,
+                        "Actual Startup Time": 0.067,
+                        "Actual Total Time": 238.455,
+                        "Actual Rows": 423996,
+                        "Actual Loops": 3,
+                        "Filter": "(note IS NULL)",
+                        "Rows Removed by Filter": 445713
+                      },
+                      {
+                        "Node Type": "Hash",
+                        "Parent Relationship": "Inner",
+                        "Parallel Aware": true,
+                        "Startup Cost": 5431.09,
+                        "Total Cost": 5431.09,
+                        "Plan Rows": 1144,
+                        "Plan Width": 36,
+                        "Actual Startup Time": 66.949,
+                        "Actual Total Time": 66.95,
+                        "Actual Rows": 16101,
+                        "Actual Loops": 3,
+                        "Hash Buckets": 65536,
+                        "Original Hash Buckets": 2048,
+                        "Hash Batches": 1,
+                        "Original Hash Batches": 1,
+                        "Peak Memory Usage": 3792,
+                        "Plans": [
+                          {
+                            "Node Type": "Seq Scan",
+                            "Parent Relationship": "Outer",
+                            "Parallel Aware": true,
+                            "Relation Name": "company_name",
+                            "Alias": "cn",
+                            "Startup Cost": 0.0,
+                            "Total Cost": 5431.09,
+                            "Plan Rows": 1144,
+                            "Plan Width": 36,
+                            "Actual Startup Time": 0.053,
+                            "Actual Total Time": 49.589,
+                            "Actual Rows": 16101,
+                            "Actual Loops": 3,
+                            "Filter": "(((country_code)::text <> '[pl]'::text) AND (((name)::text ~~ '%Film%'::text) OR ((name)::text ~~ '%Warner%'::text)))",
+                            "Rows Removed by Filter": 62232
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Node Type": "Materialize",
+                "Parent Relationship": "Inner",
+                "Parallel Aware": false,
+                "Startup Cost": 15914.56,
+                "Total Cost": 16589.99,
+                "Plan Rows": 135086,
+                "Plan Width": 12,
+                "Actual Startup Time": 138.729,
+                "Actual Total Time": 151.816,
+                "Actual Rows": 31132,
+                "Actual Loops": 3,
+                "Plans": [
+                  {
+                    "Node Type": "Sort",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Startup Cost": 15914.56,
+                    "Total Cost": 16252.28,
+                    "Plan Rows": 135086,
+                    "Plan Width": 12,
+                    "Actual Startup Time": 138.722,
+                    "Actual Total Time": 146.75,
+                    "Actual Rows": 31088,
+                    "Actual Loops": 3,
+                    "Sort Key": [
+                      "cc.movie_id"
+                    ],
+                    "Sort Method": "external merge",
+                    "Sort Space Used": 2920,
+                    "Sort Space Type": "Disk",
+                    "Workers": [
+                      {
+                        "Worker Number": 0,
+                        "Sort Method": "external merge",
+                        "Sort Space Used": 2920,
+                        "Sort Space Type": "Disk"
+                      },
+                      {
+                        "Worker Number": 1,
+                        "Sort Method": "external merge",
+                        "Sort Space Used": 2920,
+                        "Sort Space Type": "Disk"
+                      }
+                    ],
+                    "Plans": [
+                      {
+                        "Node Type": "Seq Scan",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": false,
+                        "Relation Name": "complete_cast",
+                        "Alias": "cc",
+                        "Startup Cost": 0.0,
+                        "Total Cost": 2092.86,
+                        "Plan Rows": 135086,
+                        "Plan Width": 12,
+                        "Actual Startup Time": 0.048,
+                        "Actual Total Time": 42.585,
+                        "Actual Rows": 135086,
+                        "Actual Loops": 3
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "Node Type": "Index Scan",
+            "Parent Relationship": "Inner",
+            "Parallel Aware": false,
+            "Scan Direction": "Forward",
+            "Index Name": "comp_cast_type_pkey",
+            "Relation Name": "comp_cast_type",
+            "Alias": "cct2",
+            "Startup Cost": 0.15,
+            "Total Cost": 0.17,
+            "Plan Rows": 1,
+            "Plan Width": 4,
+            "Actual Startup Time": 0.003,
+            "Actual Total Time": 0.003,
+            "Actual Rows": 1,
+            "Actual Loops": 2352,
+            "Index Cond": "(id = cc.status_id)",
+            "Rows Removed by Index Recheck": 0,
+            "Filter": "((kind)::text = 'complete'::text)",
+            "Rows Removed by Filter": 0
+          }
+        ]
+      },
+      {
+        "Node Type": "Index Scan",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": false,
+        "Scan Direction": "Forward",
+        "Index Name": "company_type_pkey",
+        "Relation Name": "company_type",
+        "Alias": "ct",
+        "Startup Cost": 0.15,
+        "Total Cost": 0.17,
+        "Plan Rows": 1,
+        "Plan Width": 4,
+        "Actual Startup Time": 0.002,
+        "Actual Total Time": 0.002,
+        "Actual Rows": 1,
+        "Actual Loops": 2069,
+        "Index Cond": "(id = mc.company_type_id)",
+        "Rows Removed by Index Recheck": 0,
+        "Filter": "((kind)::text = 'production companies'::text)",
+        "Rows Removed by Filter": 0
+      }
+    ]
+  }
+}

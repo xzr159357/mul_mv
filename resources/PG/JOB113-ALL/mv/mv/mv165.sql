@@ -1,0 +1,3 @@
+create materialized view if not exists mv165 as select keyword.id AS id, keyword.keyword AS keyword, movie_companies.company_id AS company_id, movie_companies.company_type_id AS company_type_id, movie_companies.movie_id AS movie_id, movie_companies.note AS note
+ from movie_companies,movie_keyword,keyword
+ where (movie_companies.movie_id = movie_keyword.movie_id) And (movie_companies.note IS NOT NULL) And (movie_keyword.keyword_id = keyword.id) And (keyword.keyword in ('sequel', 'revenge', 'based-on-novel'))

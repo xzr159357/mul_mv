@@ -1,0 +1,74 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": false,
+    "Join Type": "Inner",
+    "Startup Cost": 18.93,
+    "Total Cost": 45216.62,
+    "Plan Rows": 20,
+    "Plan Width": 28,
+    "Actual Startup Time": 245.936,
+    "Actual Total Time": 376.585,
+    "Actual Rows": 5937,
+    "Actual Loops": 3,
+    "Inner Unique": true,
+    "Hash Cond": "(mc.company_type_id = ct.id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": true,
+        "Relation Name": "movie_companies",
+        "Alias": "mc",
+        "Startup Cost": 0.0,
+        "Total Cost": 45188.06,
+        "Plan Rows": 3649,
+        "Plan Width": 32,
+        "Actual Startup Time": 183.042,
+        "Actual Total Time": 373.889,
+        "Actual Rows": 5939,
+        "Actual Loops": 3,
+        "Filter": "(((note)::text !~~ '%(as Metro-Goldwyn-Mayer Pictures)%'::text) AND ((note)::text ~~ '%(co-production)%'::text))",
+        "Rows Removed by Filter": 863771
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": false,
+        "Startup Cost": 18.88,
+        "Total Cost": 18.88,
+        "Plan Rows": 4,
+        "Plan Width": 4,
+        "Actual Startup Time": 0.069,
+        "Actual Total Time": 0.07,
+        "Actual Rows": 1,
+        "Actual Loops": 3,
+        "Hash Buckets": 1024,
+        "Original Hash Buckets": 1024,
+        "Hash Batches": 1,
+        "Original Hash Batches": 1,
+        "Peak Memory Usage": 9,
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Relation Name": "company_type",
+            "Alias": "ct",
+            "Startup Cost": 0.0,
+            "Total Cost": 18.88,
+            "Plan Rows": 4,
+            "Plan Width": 4,
+            "Actual Startup Time": 0.057,
+            "Actual Total Time": 0.059,
+            "Actual Rows": 1,
+            "Actual Loops": 3,
+            "Filter": "((kind)::text = 'production companies'::text)",
+            "Rows Removed by Filter": 3
+          }
+        ]
+      }
+    ]
+  }
+}

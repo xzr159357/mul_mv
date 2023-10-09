@@ -1,0 +1,110 @@
+{
+  "Plan": {
+    "Node Type": "Nested Loop",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": false,
+    "Join Type": "Inner",
+    "Startup Cost": 49194.92,
+    "Total Cost": 496536.04,
+    "Plan Rows": 1,
+    "Plan Width": 40,
+    "Actual Startup Time": 3434.862,
+    "Actual Total Time": 5001.955,
+    "Actual Rows": 1,
+    "Actual Loops": 3,
+    "Inner Unique": true,
+    "Plans": [
+      {
+        "Node Type": "Hash Join",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": true,
+        "Join Type": "Inner",
+        "Startup Cost": 49194.49,
+        "Total Cost": 491163.01,
+        "Plan Rows": 11735,
+        "Plan Width": 29,
+        "Actual Startup Time": 274.531,
+        "Actual Total Time": 4959.724,
+        "Actual Rows": 1033,
+        "Actual Loops": 3,
+        "Inner Unique": true,
+        "Hash Cond": "(ci.movie_id = t.id)",
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": true,
+            "Relation Name": "cast_info",
+            "Alias": "ci",
+            "Startup Cost": 0.0,
+            "Total Cost": 402615.6,
+            "Plan Rows": 14991560,
+            "Plan Width": 8,
+            "Actual Startup Time": 0.064,
+            "Actual Total Time": 2133.08,
+            "Actual Rows": 12081448,
+            "Actual Loops": 3
+          },
+          {
+            "Node Type": "Hash",
+            "Parent Relationship": "Inner",
+            "Parallel Aware": true,
+            "Startup Cost": 49184.18,
+            "Total Cost": 49184.18,
+            "Plan Rows": 825,
+            "Plan Width": 21,
+            "Actual Startup Time": 266.832,
+            "Actual Total Time": 266.833,
+            "Actual Rows": 146,
+            "Actual Loops": 3,
+            "Hash Buckets": 2048,
+            "Original Hash Buckets": 2048,
+            "Hash Batches": 1,
+            "Original Hash Batches": 1,
+            "Peak Memory Usage": 112,
+            "Plans": [
+              {
+                "Node Type": "Seq Scan",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": true,
+                "Relation Name": "title",
+                "Alias": "t",
+                "Startup Cost": 0.0,
+                "Total Cost": 49184.18,
+                "Plan Rows": 825,
+                "Plan Width": 21,
+                "Actual Startup Time": 79.215,
+                "Actual Total Time": 266.545,
+                "Actual Rows": 146,
+                "Actual Loops": 3,
+                "Filter": "(production_year > 2014)",
+                "Rows Removed by Filter": 842625
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Node Type": "Index Scan",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": false,
+        "Scan Direction": "Forward",
+        "Index Name": "name_pkey",
+        "Relation Name": "name",
+        "Alias": "n",
+        "Startup Cost": 0.43,
+        "Total Cost": 0.46,
+        "Plan Rows": 1,
+        "Plan Width": 19,
+        "Actual Startup Time": 0.038,
+        "Actual Total Time": 0.038,
+        "Actual Rows": 0,
+        "Actual Loops": 3099,
+        "Index Cond": "(id = ci.person_id)",
+        "Rows Removed by Index Recheck": 0,
+        "Filter": "((name)::text ~~ '%Downey%Robert%'::text)",
+        "Rows Removed by Filter": 1
+      }
+    ]
+  }
+}

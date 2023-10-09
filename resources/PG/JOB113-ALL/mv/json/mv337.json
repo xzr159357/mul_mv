@@ -1,0 +1,74 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": false,
+    "Join Type": "Inner",
+    "Startup Cost": 2.43,
+    "Total Cost": 255110.36,
+    "Plan Rows": 2445,
+    "Plan Width": 4,
+    "Actual Startup Time": 1563.321,
+    "Actual Total Time": 2034.139,
+    "Actual Rows": 196255,
+    "Actual Loops": 3,
+    "Inner Unique": true,
+    "Hash Cond": "(mi.info_type_id = it1.id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": true,
+        "Relation Name": "movie_info",
+        "Alias": "mi",
+        "Startup Cost": 0.0,
+        "Total Cost": 254355.67,
+        "Plan Rows": 276219,
+        "Plan Width": 8,
+        "Actual Startup Time": 0.899,
+        "Actual Total Time": 1962.47,
+        "Actual Rows": 223112,
+        "Actual Loops": 3,
+        "Filter": "((info)::text = ANY ('{Germany,German,USA,American}'::text[]))",
+        "Rows Removed by Filter": 4722128
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": false,
+        "Startup Cost": 2.41,
+        "Total Cost": 2.41,
+        "Plan Rows": 1,
+        "Plan Width": 4,
+        "Actual Startup Time": 0.049,
+        "Actual Total Time": 0.05,
+        "Actual Rows": 1,
+        "Actual Loops": 3,
+        "Hash Buckets": 1024,
+        "Original Hash Buckets": 1024,
+        "Hash Batches": 1,
+        "Original Hash Batches": 1,
+        "Peak Memory Usage": 9,
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Relation Name": "info_type",
+            "Alias": "it1",
+            "Startup Cost": 0.0,
+            "Total Cost": 2.41,
+            "Plan Rows": 1,
+            "Plan Width": 4,
+            "Actual Startup Time": 0.014,
+            "Actual Total Time": 0.036,
+            "Actual Rows": 1,
+            "Actual Loops": 3,
+            "Filter": "((info)::text = 'countries'::text)",
+            "Rows Removed by Filter": 112
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,3 @@
+select info_type.id AS info_type_id_0, info_type.info AS info_type_info_1, kind_type.id AS kind_type_id_2, kind_type.kind AS kind, movie_companies.company_id AS company_id, movie_companies.movie_id AS movie_id, movie_info_idx.info AS movie_info_idx_info_6, title.production_year AS production_year, title.title AS title
+ from title,movie_info_idx,kind_type,movie_companies,info_type
+ where (title.id = movie_info_idx.movie_id) And (movie_companies.movie_id = title.id) And (title.kind_id = kind_type.id) And (movie_info_idx.info_type_id = info_type.id) And (movie_info_idx.info < '3.0') And (kind_type.kind = 'tv series') And (info_type.info = 'rating')

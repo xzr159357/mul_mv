@@ -1,0 +1,3 @@
+select cast_info.movie_id AS movie_id, cast_info.note AS note, cast_info.person_id AS person_id, cast_info.person_role_id AS person_role_id, cast_info.role_id AS role_id, info_type.id AS id, info_type.info AS info_type_info_6, movie_info.info AS movie_info_info_7, title.production_year AS production_year, title.title AS title
+ from info_type,movie_info,title,cast_info
+ where (movie_info.info_type_id = info_type.id) And (info_type.info = 'release dates') And (movie_info.info IS NOT NULL)  And  (((movie_info.info = '__LIKE__Japan:%201%')) Or ((movie_info.info = '__LIKE__USA:%201%'))) And (title.id = movie_info.movie_id) And (cast_info.movie_id = title.id) And (cast_info.note in ('(voice)', '(voice: Japanese version)', '(voice) (uncredited)', '(voice: English version)'))

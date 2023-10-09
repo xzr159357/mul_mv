@@ -1,0 +1,74 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": false,
+    "Join Type": "Inner",
+    "Startup Cost": 2.43,
+    "Total Cost": 63488.83,
+    "Plan Rows": 305,
+    "Plan Width": 99,
+    "Actual Startup Time": 0.149,
+    "Actual Total Time": 334.83,
+    "Actual Rows": 28061,
+    "Actual Loops": 3,
+    "Inner Unique": true,
+    "Hash Cond": "(pi.info_type_id = it.id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": true,
+        "Relation Name": "person_info",
+        "Alias": "pi",
+        "Startup Cost": 0.0,
+        "Total Cost": 63392.52,
+        "Plan Rows": 34474,
+        "Plan Width": 103,
+        "Actual Startup Time": 0.056,
+        "Actual Total Time": 319.823,
+        "Actual Rows": 28061,
+        "Actual Loops": 3,
+        "Filter": "(note IS NOT NULL)",
+        "Rows Removed by Filter": 959827
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": false,
+        "Startup Cost": 2.41,
+        "Total Cost": 2.41,
+        "Plan Rows": 1,
+        "Plan Width": 4,
+        "Actual Startup Time": 0.064,
+        "Actual Total Time": 0.067,
+        "Actual Rows": 1,
+        "Actual Loops": 3,
+        "Hash Buckets": 1024,
+        "Original Hash Buckets": 1024,
+        "Hash Batches": 1,
+        "Original Hash Batches": 1,
+        "Peak Memory Usage": 9,
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Relation Name": "info_type",
+            "Alias": "it",
+            "Startup Cost": 0.0,
+            "Total Cost": 2.41,
+            "Plan Rows": 1,
+            "Plan Width": 4,
+            "Actual Startup Time": 0.032,
+            "Actual Total Time": 0.056,
+            "Actual Rows": 1,
+            "Actual Loops": 3,
+            "Filter": "((info)::text = 'mini biography'::text)",
+            "Rows Removed by Filter": 112
+          }
+        ]
+      }
+    ]
+  }
+}

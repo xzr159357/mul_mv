@@ -1,0 +1,72 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": false,
+    "Join Type": "Inner",
+    "Startup Cost": 18.93,
+    "Total Cost": 442222.27,
+    "Plan Rows": 84460,
+    "Plan Width": 8,
+    "Actual Startup Time": 3510.8,
+    "Actual Total Time": 4969.405,
+    "Actual Rows": 92134,
+    "Actual Loops": 3,
+    "Inner Unique": true,
+    "Hash Cond": "(ci.role_id = rt.id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": true,
+        "Relation Name": "cast_info",
+        "Alias": "ci",
+        "Startup Cost": 0.0,
+        "Total Cost": 402615.6,
+        "Plan Rows": 14991560,
+        "Plan Width": 12,
+        "Actual Startup Time": 0.047,
+        "Actual Total Time": 2161.923,
+        "Actual Rows": 12081448,
+        "Actual Loops": 3
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": false,
+        "Startup Cost": 18.88,
+        "Total Cost": 18.88,
+        "Plan Rows": 4,
+        "Plan Width": 4,
+        "Actual Startup Time": 0.031,
+        "Actual Total Time": 0.032,
+        "Actual Rows": 1,
+        "Actual Loops": 3,
+        "Hash Buckets": 1024,
+        "Original Hash Buckets": 1024,
+        "Hash Batches": 1,
+        "Original Hash Batches": 1,
+        "Peak Memory Usage": 9,
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Relation Name": "role_type",
+            "Alias": "rt",
+            "Startup Cost": 0.0,
+            "Total Cost": 18.88,
+            "Plan Rows": 4,
+            "Plan Width": 4,
+            "Actual Startup Time": 0.024,
+            "Actual Total Time": 0.026,
+            "Actual Rows": 1,
+            "Actual Loops": 3,
+            "Filter": "((role)::text = 'costume designer'::text)",
+            "Rows Removed by Filter": 11
+          }
+        ]
+      }
+    ]
+  }
+}

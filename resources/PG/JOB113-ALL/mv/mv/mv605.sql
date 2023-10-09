@@ -1,0 +1,3 @@
+create materialized view if not exists mv605 as select company_name.country_code AS country_code, company_name.id AS company_name_id_1, company_name.name AS name, kind_type.id AS kind_type_id_3, kind_type.kind AS kind, movie_companies.movie_id AS movie_id, movie_info_idx.info AS info, movie_info_idx.info_type_id AS info_type_id, title.production_year AS production_year, title.title AS title
+ from company_name,title,movie_info_idx,kind_type,movie_companies
+ where (movie_companies.company_id = company_name.id) And (company_name.country_code = '[nl]') And (title.kind_id = kind_type.id) And (title.id = movie_info_idx.movie_id) And (movie_info_idx.movie_id = movie_companies.movie_id) And (kind_type.kind = 'tv series')

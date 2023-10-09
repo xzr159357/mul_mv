@@ -1,0 +1,125 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": true,
+    "Join Type": "Inner",
+    "Startup Cost": 47422.67,
+    "Total Cost": 63324.63,
+    "Plan Rows": 14521,
+    "Plan Width": 49,
+    "Actual Startup Time": 1218.936,
+    "Actual Total Time": 1638.541,
+    "Actual Rows": 580899,
+    "Actual Loops": 3,
+    "Inner Unique": false,
+    "Hash Cond": "(mi_idx1.movie_id = mc1.movie_id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": true,
+        "Relation Name": "movie_info_idx",
+        "Alias": "mi_idx1",
+        "Startup Cost": 0.0,
+        "Total Cost": 13685.15,
+        "Plan Rows": 575015,
+        "Plan Width": 13,
+        "Actual Startup Time": 0.062,
+        "Actual Total Time": 112.75,
+        "Actual Rows": 460012,
+        "Actual Loops": 3
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": true,
+        "Startup Cost": 47354.72,
+        "Total Cost": 47354.72,
+        "Plan Rows": 5436,
+        "Plan Width": 36,
+        "Actual Startup Time": 946.46,
+        "Actual Total Time": 946.476,
+        "Actual Rows": 384599,
+        "Actual Loops": 3,
+        "Hash Buckets": 65536,
+        "Original Hash Buckets": 16384,
+        "Hash Batches": 32,
+        "Original Hash Batches": 1,
+        "Peak Memory Usage": 2752,
+        "Plans": [
+          {
+            "Node Type": "Hash Join",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": true,
+            "Join Type": "Inner",
+            "Startup Cost": 4748.56,
+            "Total Cost": 47354.72,
+            "Plan Rows": 5436,
+            "Plan Width": 36,
+            "Actual Startup Time": 60.892,
+            "Actual Total Time": 634.968,
+            "Actual Rows": 384599,
+            "Actual Loops": 3,
+            "Inner Unique": true,
+            "Hash Cond": "(mc1.company_id = cn1.id)",
+            "Plans": [
+              {
+                "Node Type": "Seq Scan",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": true,
+                "Relation Name": "movie_companies",
+                "Alias": "mc1",
+                "Startup Cost": 0.0,
+                "Total Cost": 39752.37,
+                "Plan Rows": 1087137,
+                "Plan Width": 8,
+                "Actual Startup Time": 0.033,
+                "Actual Total Time": 190.95,
+                "Actual Rows": 869710,
+                "Actual Loops": 3
+              },
+              {
+                "Node Type": "Hash",
+                "Parent Relationship": "Inner",
+                "Parallel Aware": true,
+                "Startup Cost": 4739.92,
+                "Total Cost": 4739.92,
+                "Plan Rows": 691,
+                "Plan Width": 36,
+                "Actual Startup Time": 60.781,
+                "Actual Total Time": 60.784,
+                "Actual Rows": 28281,
+                "Actual Loops": 3,
+                "Hash Buckets": 131072,
+                "Original Hash Buckets": 2048,
+                "Hash Batches": 1,
+                "Original Hash Batches": 1,
+                "Peak Memory Usage": 7024,
+                "Plans": [
+                  {
+                    "Node Type": "Seq Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": true,
+                    "Relation Name": "company_name",
+                    "Alias": "cn1",
+                    "Startup Cost": 0.0,
+                    "Total Cost": 4739.92,
+                    "Plan Rows": 691,
+                    "Plan Width": 36,
+                    "Actual Startup Time": 0.025,
+                    "Actual Total Time": 36.964,
+                    "Actual Rows": 28281,
+                    "Actual Loops": 3,
+                    "Filter": "((country_code)::text = '[us]'::text)",
+                    "Rows Removed by Filter": 50051
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": false,
+    "Join Type": "Inner",
+    "Startup Cost": 18.93,
+    "Total Cost": 440311.37,
+    "Plan Rows": 422,
+    "Plan Width": 12,
+    "Actual Startup Time": 713.193,
+    "Actual Total Time": 2675.36,
+    "Actual Rows": 74229,
+    "Actual Loops": 3,
+    "Inner Unique": true,
+    "Hash Cond": "(ci.role_id = rt.id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": true,
+        "Relation Name": "cast_info",
+        "Alias": "ci",
+        "Startup Cost": 0.0,
+        "Total Cost": 440094.5,
+        "Plan Rows": 74958,
+        "Plan Width": 16,
+        "Actual Startup Time": 0.123,
+        "Actual Total Time": 2614.876,
+        "Actual Rows": 237943,
+        "Actual Loops": 3,
+        "Filter": "((note)::text = '(voice)'::text)",
+        "Rows Removed by Filter": 11843505
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": false,
+        "Startup Cost": 18.88,
+        "Total Cost": 18.88,
+        "Plan Rows": 4,
+        "Plan Width": 4,
+        "Actual Startup Time": 0.033,
+        "Actual Total Time": 0.034,
+        "Actual Rows": 1,
+        "Actual Loops": 3,
+        "Hash Buckets": 1024,
+        "Original Hash Buckets": 1024,
+        "Hash Batches": 1,
+        "Original Hash Batches": 1,
+        "Peak Memory Usage": 9,
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Relation Name": "role_type",
+            "Alias": "rt",
+            "Startup Cost": 0.0,
+            "Total Cost": 18.88,
+            "Plan Rows": 4,
+            "Plan Width": 4,
+            "Actual Startup Time": 0.021,
+            "Actual Total Time": 0.024,
+            "Actual Rows": 1,
+            "Actual Loops": 3,
+            "Filter": "((role)::text = 'actress'::text)",
+            "Rows Removed by Filter": 11
+          }
+        ]
+      }
+    ]
+  }
+}

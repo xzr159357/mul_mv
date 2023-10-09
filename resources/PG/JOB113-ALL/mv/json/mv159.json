@@ -1,0 +1,182 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": true,
+    "Join Type": "Inner",
+    "Startup Cost": 49552.22,
+    "Total Cost": 97913.19,
+    "Plan Rows": 721,
+    "Plan Width": 68,
+    "Actual Startup Time": 394.989,
+    "Actual Total Time": 960.075,
+    "Actual Rows": 1640,
+    "Actual Loops": 3,
+    "Inner Unique": false,
+    "Hash Cond": "(mk.movie_id = mc.movie_id)",
+    "Plans": [
+      {
+        "Node Type": "Hash Join",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": false,
+        "Join Type": "Inner",
+        "Startup Cost": 2832.0,
+        "Total Cost": 51083.91,
+        "Plan Rows": 28281,
+        "Plan Width": 4,
+        "Actual Startup Time": 48.288,
+        "Actual Total Time": 605.657,
+        "Actual Rows": 15801,
+        "Actual Loops": 3,
+        "Inner Unique": true,
+        "Hash Cond": "(mk.keyword_id = k.id)",
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": true,
+            "Relation Name": "movie_keyword",
+            "Alias": "mk",
+            "Startup Cost": 0.0,
+            "Total Cost": 43303.71,
+            "Plan Rows": 1884971,
+            "Plan Width": 8,
+            "Actual Startup Time": 0.048,
+            "Actual Total Time": 277.672,
+            "Actual Rows": 1507977,
+            "Actual Loops": 3
+          },
+          {
+            "Node Type": "Hash",
+            "Parent Relationship": "Inner",
+            "Parallel Aware": false,
+            "Startup Cost": 2806.84,
+            "Total Cost": 2806.84,
+            "Plan Rows": 2013,
+            "Plan Width": 4,
+            "Actual Startup Time": 48.14,
+            "Actual Total Time": 48.142,
+            "Actual Rows": 3,
+            "Actual Loops": 3,
+            "Hash Buckets": 2048,
+            "Original Hash Buckets": 2048,
+            "Hash Batches": 1,
+            "Original Hash Batches": 1,
+            "Peak Memory Usage": 17,
+            "Plans": [
+              {
+                "Node Type": "Seq Scan",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Relation Name": "keyword",
+                "Alias": "k",
+                "Startup Cost": 0.0,
+                "Total Cost": 2806.84,
+                "Plan Rows": 2013,
+                "Plan Width": 4,
+                "Actual Startup Time": 1.83,
+                "Actual Total Time": 48.127,
+                "Actual Rows": 3,
+                "Actual Loops": 3,
+                "Filter": "((keyword)::text = ANY ('{sequel,revenge,based-on-novel}'::text[]))",
+                "Rows Removed by Filter": 134167
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": true,
+        "Startup Cost": 46651.66,
+        "Total Cost": 46651.66,
+        "Plan Rows": 5485,
+        "Plan Width": 64,
+        "Actual Startup Time": 345.133,
+        "Actual Total Time": 345.14,
+        "Actual Rows": 4631,
+        "Actual Loops": 3,
+        "Hash Buckets": 16384,
+        "Original Hash Buckets": 16384,
+        "Hash Batches": 1,
+        "Original Hash Batches": 1,
+        "Peak Memory Usage": 1600,
+        "Plans": [
+          {
+            "Node Type": "Hash Join",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": true,
+            "Join Type": "Inner",
+            "Startup Cost": 5448.24,
+            "Total Cost": 46651.66,
+            "Plan Rows": 5485,
+            "Plan Width": 64,
+            "Actual Startup Time": 40.123,
+            "Actual Total Time": 341.169,
+            "Actual Rows": 4631,
+            "Actual Loops": 3,
+            "Inner Unique": true,
+            "Hash Cond": "(mc.company_id = cn.id)",
+            "Plans": [
+              {
+                "Node Type": "Seq Scan",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": true,
+                "Relation Name": "movie_companies",
+                "Alias": "mc",
+                "Startup Cost": 0.0,
+                "Total Cost": 39752.37,
+                "Plan Rows": 552773,
+                "Plan Width": 36,
+                "Actual Startup Time": 0.047,
+                "Actual Total Time": 234.559,
+                "Actual Rows": 445713,
+                "Actual Loops": 3,
+                "Filter": "(note IS NOT NULL)",
+                "Rows Removed by Filter": 423996
+              },
+              {
+                "Node Type": "Hash",
+                "Parent Relationship": "Inner",
+                "Parallel Aware": true,
+                "Startup Cost": 5431.09,
+                "Total Cost": 5431.09,
+                "Plan Rows": 1372,
+                "Plan Width": 36,
+                "Actual Startup Time": 39.356,
+                "Actual Total Time": 39.357,
+                "Actual Rows": 30,
+                "Actual Loops": 3,
+                "Hash Buckets": 4096,
+                "Original Hash Buckets": 4096,
+                "Hash Batches": 1,
+                "Original Hash Batches": 1,
+                "Peak Memory Usage": 128,
+                "Plans": [
+                  {
+                    "Node Type": "Seq Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": true,
+                    "Relation Name": "company_name",
+                    "Alias": "cn",
+                    "Startup Cost": 0.0,
+                    "Total Cost": 5431.09,
+                    "Plan Rows": 1372,
+                    "Plan Width": 36,
+                    "Actual Startup Time": 0.705,
+                    "Actual Total Time": 39.272,
+                    "Actual Rows": 30,
+                    "Actual Loops": 3,
+                    "Filter": "(((country_code)::text <> '[pl]'::text) AND (((name)::text ~~ '20th Century Fox%'::text) OR ((name)::text ~~ 'Twentieth Century Fox%'::text)))",
+                    "Rows Removed by Filter": 78303
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

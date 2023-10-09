@@ -1,0 +1,3 @@
+select comp_cast_type.id AS comp_cast_type_id_0, comp_cast_type.kind AS kind, complete_cast.movie_id AS movie_id, keyword.id AS keyword_id_3, keyword.keyword AS keyword, title.production_year AS production_year, title.title AS title
+ from movie_keyword,complete_cast,keyword,title,comp_cast_type
+ where (movie_keyword.movie_id = title.id) And (keyword.id = movie_keyword.keyword_id) And (complete_cast.status_id = comp_cast_type.id) And (title.id = complete_cast.movie_id) And (comp_cast_type.id = complete_cast.subject_id) And (comp_cast_type.kind = 'completeverified')

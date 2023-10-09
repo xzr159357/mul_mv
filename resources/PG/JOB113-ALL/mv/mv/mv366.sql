@@ -1,0 +1,3 @@
+create materialized view if not exists mv366 as select info_type.id AS info_type_id_0, info_type.info AS info_type_info_1, kind_type.id AS kind_type_id_2, kind_type.kind AS kind, movie_info.info AS movie_info_info_4, movie_info.movie_id AS movie_id, movie_info.note AS note, title.production_year AS production_year, title.title AS title
+ from info_type,movie_info,kind_type,title
+ where (movie_info.info_type_id = info_type.id) And (info_type.info = 'release dates') And (movie_info.note like '%internet%')  And  (movie_info.info like 'USA:% 200%') And (title.id = movie_info.movie_id) And (kind_type.id = title.kind_id)

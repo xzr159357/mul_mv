@@ -1,0 +1,3 @@
+select cast_info.movie_id AS movie_id, cast_info.note AS note, cast_info.person_id AS person_id, cast_info.person_role_id AS person_role_id, cast_info.role_id AS role_id, company_name.country_code AS country_code, company_name.id AS id, role_type.role AS role
+ from movie_companies,company_name,role_type,cast_info
+ where (cast_info.movie_id = movie_companies.movie_id) And (movie_companies.company_id = company_name.id) And (company_name.country_code = '[us]') And (cast_info.role_id = role_type.id) And (role_type.role = 'actress') And (cast_info.note in ('(voice)', '(voice: Japanese version)', '(voice) (uncredited)', '(voice: English version)'))

@@ -1,0 +1,72 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": false,
+    "Join Type": "Inner",
+    "Startup Cost": 3712.49,
+    "Total Cost": 51964.4,
+    "Plan Rows": 75402,
+    "Plan Width": 36,
+    "Actual Startup Time": 65.34,
+    "Actual Total Time": 627.982,
+    "Actual Rows": 11849,
+    "Actual Loops": 3,
+    "Inner Unique": true,
+    "Hash Cond": "(mk.keyword_id = k.id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": true,
+        "Relation Name": "movie_keyword",
+        "Alias": "mk",
+        "Startup Cost": 0.0,
+        "Total Cost": 43303.71,
+        "Plan Rows": 1884971,
+        "Plan Width": 8,
+        "Actual Startup Time": 0.076,
+        "Actual Total Time": 278.676,
+        "Actual Rows": 1507977,
+        "Actual Loops": 3
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": false,
+        "Startup Cost": 3645.4,
+        "Total Cost": 3645.4,
+        "Plan Rows": 5367,
+        "Plan Width": 36,
+        "Actual Startup Time": 65.061,
+        "Actual Total Time": 65.062,
+        "Actual Rows": 8,
+        "Actual Loops": 3,
+        "Hash Buckets": 8192,
+        "Original Hash Buckets": 8192,
+        "Hash Batches": 1,
+        "Original Hash Batches": 1,
+        "Peak Memory Usage": 65,
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Relation Name": "keyword",
+            "Alias": "k",
+            "Startup Cost": 0.0,
+            "Total Cost": 3645.4,
+            "Plan Rows": 5367,
+            "Plan Width": 36,
+            "Actual Startup Time": 0.247,
+            "Actual Total Time": 65.022,
+            "Actual Rows": 8,
+            "Actual Loops": 3,
+            "Filter": "((keyword)::text = ANY ('{superhero,sequel,second-part,marvel-comics,based-on-comic,tv-special,fight,violence}'::text[]))",
+            "Rows Removed by Filter": 134162
+          }
+        ]
+      }
+    ]
+  }
+}

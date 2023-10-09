@@ -1,0 +1,3 @@
+select company_name.country_code AS country_code, company_name.id AS id, company_name.name AS name, movie_companies.movie_id AS movie_id, movie_info_idx.info AS info, movie_info_idx.info_type_id AS info_type_id, title.kind_id AS kind_id, title.production_year AS production_year, title.title AS title
+ from movie_companies,movie_info_idx,company_name,title
+ where (movie_info_idx.movie_id = movie_companies.movie_id) And (movie_companies.company_id = company_name.id) And (title.id = movie_info_idx.movie_id) And (company_name.country_code = '[us]')

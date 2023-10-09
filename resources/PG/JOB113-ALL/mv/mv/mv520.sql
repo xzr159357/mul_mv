@@ -1,0 +1,3 @@
+create materialized view if not exists mv520 as select comp_cast_type.id AS id, comp_cast_type.kind AS kind, complete_cast.movie_id AS movie_id, complete_cast.status_id AS status_id, movie_info.info AS info, movie_info.info_type_id AS info_type_id, title.production_year AS production_year, title.title AS title
+ from comp_cast_type,movie_info,complete_cast,title
+ where (complete_cast.subject_id = comp_cast_type.id) And (comp_cast_type.kind = 'cast') And (movie_info.movie_id = title.id) And (movie_info.info IS NOT NULL)  And  (((movie_info.info = '__LIKE__Japan:%200%')) Or ((movie_info.info = '__LIKE__USA:%200%'))) And (title.id = complete_cast.movie_id)

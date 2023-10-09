@@ -1,0 +1,110 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": true,
+    "Join Type": "Inner",
+    "Startup Cost": 477584.79,
+    "Total Cost": 521413.95,
+    "Plan Rows": 1,
+    "Plan Width": 20,
+    "Actual Startup Time": 3484.123,
+    "Actual Total Time": 3950.985,
+    "Actual Rows": 29496,
+    "Actual Loops": 3,
+    "Inner Unique": false,
+    "Hash Cond": "(mc.movie_id = ci.movie_id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": true,
+        "Relation Name": "movie_companies",
+        "Alias": "mc",
+        "Startup Cost": 0.0,
+        "Total Cost": 39752.37,
+        "Plan Rows": 1087137,
+        "Plan Width": 12,
+        "Actual Startup Time": 0.105,
+        "Actual Total Time": 184.428,
+        "Actual Rows": 869710,
+        "Actual Loops": 3
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": true,
+        "Startup Cost": 477584.78,
+        "Total Cost": 477584.78,
+        "Plan Rows": 1,
+        "Plan Width": 8,
+        "Actual Startup Time": 3483.638,
+        "Actual Total Time": 3483.64,
+        "Actual Rows": 8625,
+        "Actual Loops": 3,
+        "Hash Buckets": 32768,
+        "Original Hash Buckets": 1024,
+        "Hash Batches": 1,
+        "Original Hash Batches": 1,
+        "Peak Memory Usage": 1560,
+        "Plans": [
+          {
+            "Node Type": "Nested Loop",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Join Type": "Inner",
+            "Startup Cost": 0.15,
+            "Total Cost": 477584.78,
+            "Plan Rows": 1,
+            "Plan Width": 8,
+            "Actual Startup Time": 0.397,
+            "Actual Total Time": 3274.919,
+            "Actual Rows": 8625,
+            "Actual Loops": 3,
+            "Inner Unique": true,
+            "Plans": [
+              {
+                "Node Type": "Seq Scan",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": true,
+                "Relation Name": "cast_info",
+                "Alias": "ci",
+                "Startup Cost": 0.0,
+                "Total Cost": 477573.4,
+                "Plan Rows": 1,
+                "Plan Width": 12,
+                "Actual Startup Time": 0.354,
+                "Actual Total Time": 3240.131,
+                "Actual Rows": 10763,
+                "Actual Loops": 3,
+                "Filter": "(((note)::text ~~ '%(voice)%'::text) AND ((note)::text ~~ '%(uncredited)%'::text))",
+                "Rows Removed by Filter": 12070685
+              },
+              {
+                "Node Type": "Index Scan",
+                "Parent Relationship": "Inner",
+                "Parallel Aware": false,
+                "Scan Direction": "Forward",
+                "Index Name": "role_type_pkey",
+                "Relation Name": "role_type",
+                "Alias": "rt",
+                "Startup Cost": 0.15,
+                "Total Cost": 8.17,
+                "Plan Rows": 1,
+                "Plan Width": 4,
+                "Actual Startup Time": 0.002,
+                "Actual Total Time": 0.002,
+                "Actual Rows": 1,
+                "Actual Loops": 32288,
+                "Index Cond": "(id = ci.role_id)",
+                "Rows Removed by Index Recheck": 0,
+                "Filter": "((role)::text = 'actor'::text)",
+                "Rows Removed by Filter": 0
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

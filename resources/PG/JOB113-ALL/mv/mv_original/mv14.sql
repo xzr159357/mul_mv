@@ -1,0 +1,3 @@
+select company_name.country_code AS country_code, company_name.id AS company_name_id_1, keyword.id AS keyword_id_2, keyword.keyword AS keyword, movie_companies.movie_id AS movie_id
+ from movie_companies,company_name,movie_keyword,keyword
+ where (movie_keyword.movie_id = movie_companies.movie_id) And (movie_companies.company_id = company_name.id) And (company_name.country_code = '[de]') And (movie_keyword.keyword_id = keyword.id) And (keyword.keyword = 'character-name-in-title')

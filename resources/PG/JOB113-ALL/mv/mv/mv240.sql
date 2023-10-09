@@ -1,0 +1,3 @@
+create materialized view if not exists mv240 as select company_name.country_code AS country_code, company_name.id AS company_name_id_1, info_type.id AS info_type_id_2, info_type.info AS info, movie_companies.company_type_id AS company_type_id, movie_companies.movie_id AS movie_id, movie_info.note AS note, title.production_year AS production_year, title.title AS title
+ from company_name,title,movie_info,movie_companies,info_type
+ where (company_name.id = movie_companies.company_id) And (title.id = movie_info.movie_id) And (movie_companies.movie_id = title.id) And (movie_info.info_type_id = info_type.id) And (movie_info.note like '%internet%') And (info_type.info = 'release dates')

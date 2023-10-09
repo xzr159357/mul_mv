@@ -1,0 +1,3 @@
+select cast_info.movie_id AS movie_id, cast_info.note AS note, cast_info.person_role_id AS person_role_id, cast_info.role_id AS role_id, char_name.name AS name, company_name.country_code AS country_code, company_name.id AS id, movie_companies.company_type_id AS company_type_id, role_type.role AS role
+ from company_name,role_type,cast_info,movie_companies,char_name
+ where (company_name.id = movie_companies.company_id) And (role_type.id = cast_info.role_id) And (movie_companies.movie_id = cast_info.movie_id) And (cast_info.note like '%(voice)%')  And  (cast_info.note like '%(uncredited)%') And (char_name.id = cast_info.person_role_id)

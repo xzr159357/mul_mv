@@ -1,0 +1,74 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": true,
+    "Join Type": "Inner",
+    "Startup Cost": 5445.39,
+    "Total Cost": 46600.49,
+    "Plan Rows": 4423,
+    "Plan Width": 40,
+    "Actual Startup Time": 67.552,
+    "Actual Total Time": 442.616,
+    "Actual Rows": 80292,
+    "Actual Loops": 3,
+    "Inner Unique": true,
+    "Hash Cond": "(mc.company_id = cn.id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": true,
+        "Relation Name": "movie_companies",
+        "Alias": "mc",
+        "Startup Cost": 0.0,
+        "Total Cost": 39752.37,
+        "Plan Rows": 534364,
+        "Plan Width": 12,
+        "Actual Startup Time": 0.067,
+        "Actual Total Time": 238.455,
+        "Actual Rows": 423996,
+        "Actual Loops": 3,
+        "Filter": "(note IS NULL)",
+        "Rows Removed by Filter": 445713
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": true,
+        "Startup Cost": 5431.09,
+        "Total Cost": 5431.09,
+        "Plan Rows": 1144,
+        "Plan Width": 36,
+        "Actual Startup Time": 66.949,
+        "Actual Total Time": 66.95,
+        "Actual Rows": 16101,
+        "Actual Loops": 3,
+        "Hash Buckets": 65536,
+        "Original Hash Buckets": 2048,
+        "Hash Batches": 1,
+        "Original Hash Batches": 1,
+        "Peak Memory Usage": 3792,
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": true,
+            "Relation Name": "company_name",
+            "Alias": "cn",
+            "Startup Cost": 0.0,
+            "Total Cost": 5431.09,
+            "Plan Rows": 1144,
+            "Plan Width": 36,
+            "Actual Startup Time": 0.053,
+            "Actual Total Time": 49.589,
+            "Actual Rows": 16101,
+            "Actual Loops": 3,
+            "Filter": "(((country_code)::text <> '[pl]'::text) AND (((name)::text ~~ '%Film%'::text) OR ((name)::text ~~ '%Warner%'::text)))",
+            "Rows Removed by Filter": 62232
+          }
+        ]
+      }
+    ]
+  }
+}
