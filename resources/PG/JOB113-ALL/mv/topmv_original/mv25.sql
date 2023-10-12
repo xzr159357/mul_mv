@@ -1,3 +1,3 @@
 select keyword.id AS id, keyword.keyword AS keyword, movie_keyword.movie_id AS movie_id
- from movie_keyword,keyword
- where (movie_keyword.keyword_id = keyword.id) And (keyword.keyword like '%sequel%')
+from keyword, movie_keyword
+ where (keyword.keyword like '%sequel%') And (movie_keyword.keyword_id = keyword.id)

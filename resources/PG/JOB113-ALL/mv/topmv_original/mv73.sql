@@ -1,3 +1,3 @@
 select aka_name.name AS aka_name_name_0, aka_name.person_id AS person_id, cast_info.movie_id AS movie_id, info_type.info AS info, name.gender AS gender, name.name AS name_name_5, name.name_pcode_cf AS name_pcode_cf, person_info.info_type_id AS info_type_id, person_info.note AS note
- from name,cast_info,aka_name,person_info,info_type
- where (name.id = aka_name.person_id) And (cast_info.person_id = name.id) And (aka_name.person_id = person_info.person_id) And (aka_name.name like '%a%') And (person_info.info_type_id = info_type.id) And (person_info.note = 'Volker Boehm') And (info_type.info = 'mini biography')
+from aka_name, cast_info, info_type, name, person_info
+ where (aka_name.name like '%a%') And (aka_name.person_id = person_info.person_id) And (cast_info.person_id = name.id) And (info_type.info = 'mini biography') And (name.id = aka_name.person_id) And (person_info.info_type_id = info_type.id) And (person_info.note = 'Volker Boehm')

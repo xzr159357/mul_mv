@@ -1016,8 +1016,8 @@ def train(data, keywords, replacedquery=True):
     ALL_X = [d[0] for d in data]
     ALL_Y = torch.FloatTensor([d[1] / scale for d in data]).to(device)
     ALL_Y_ = widedeep(ALL_X)
-    ALL_Y = ALL_Y.detach().numpy()
-    ALL_Y_ = ALL_Y_.detach().numpy()
+    ALL_Y = ALL_Y.to('cpu').detach().numpy()
+    ALL_Y_ = ALL_Y_.to('cpu').detach().numpy()
     MAPE = mape(ALL_Y, ALL_Y_)
     print("Finally, MAPE: {}%".format(MAPE))
 
@@ -1246,7 +1246,7 @@ def test(data, data_type, replacedquery=True):
         # print(ALL_Y)
 
         mse = mse_loss()
-        all_loss = np.sqrt(mse(ALL_Y_, ALL_Y).detach().numpy())
+        all_loss = np.sqrt(mse(ALL_Y_.to('cpu'), ALL_Y.to('cpu')).detach().numpy())
         print("finally, all loss:{}".format(all_loss))
 
         results_q_mv = []
@@ -1254,7 +1254,7 @@ def test(data, data_type, replacedquery=True):
             x, y, l = d
             y_ = widedeep([x]).squeeze(-1)
             y_ *= scale
-            results_q_mv.append((l[0] + "-" + l[1], y_.squeeze().detach().numpy()))
+            results_q_mv.append((l[0] + "-" + l[1], y_.squeeze().detach().to('cpu').numpy()))
             # results_q_mv.append((l[0] + "-" + l[1], y))
         if results_q_mv:
             appendCSVFile(results_q_mv, DataType.Q_MV)
@@ -1273,7 +1273,7 @@ def test(data, data_type, replacedquery=True):
         for d in data:
             x, y, l = d
             y_ = widedeep([x]).squeeze(-1)
-            results_mv.append((l, y_.squeeze().detach().numpy()))
+            results_mv.append((l, y_.squeeze().detach().to('cpu').numpy()))
             
         if results_mv:
             appendCSVFile(results_mv, DataType.MV)

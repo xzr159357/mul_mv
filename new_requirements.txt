@@ -8,3 +8,10 @@ z3-solver==4.8.15.0
 torch==1.11.0
 sql-metadata==2.5.0
 pypred==0.4.0
+gensim==3.8.3
+javalang
+swifter
+scikit-learn
+openpyxl
+torchvision
+tensorboard

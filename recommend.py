@@ -56,10 +56,12 @@ def recommend_dqn():
     if len(removeMvs) != 0:
         appendBaseCSVFile(removeMvs, getRemoveMvCSV())
 
+    # save z
+    with open(f"resources/data/z-opt_{get_DB_path()}.pkl", "wb") as f:
+        pickle.dump(Z, f)
     # save y
-    with open("resources/data/y-opt.pkl", "wb") as f:
+    with open(f"resources/data/y-opt_{get_DB_path()}.pkl", "wb") as f:
         pickle.dump(Y, f)
-
 
     print("z:{}".format(selectedZ))
     print("y:{}".format(Y))

@@ -1,3 +1,3 @@
-create materialized view if not exists mv396 as select info_type.id AS id, info_type.info AS info_type_info_1, movie_info.info AS movie_info_info_2, movie_info.info_type_id AS info_type_id, movie_info.movie_id AS movie_id, movie_info_idx.info AS movie_info_idx_info_5, movie_keyword.keyword_id AS keyword_id
- from movie_info_idx,info_type,movie_keyword,movie_info
- where (movie_info.movie_id = movie_info_idx.movie_id) And (movie_info_idx.info_type_id = info_type.id) And (movie_info.info_type_id = info_type.id) And (info_type.info = 'genres') And (info_type.info = 'votes') And (movie_keyword.movie_id = movie_info.movie_id) And (movie_info.info = 'Horror')
+create materialized view if not exists mv396 as select info_type.id AS id, info_type.info AS info_type_info_1, movie_info.info AS movie_info_info_2, movie_info.movie_id AS movie_id, movie_info_idx.info AS movie_info_idx_info_4, movie_info_idx.info_type_id AS info_type_id, movie_keyword.keyword_id AS keyword_id
+from info_type, movie_info, movie_info_idx, movie_keyword
+ where (info_type.info = 'genres') And (info_type.info = 'votes') And (movie_info.info = 'Horror') And (movie_info.info_type_id = info_type.id) And (movie_info.movie_id = movie_info_idx.movie_id) And (movie_info_idx.info_type_id = info_type.id) And (movie_keyword.movie_id = movie_info.movie_id)

@@ -1,3 +1,3 @@
-select info_type.id AS info_type_id_0, info_type.info AS info_type_info_1, keyword.keyword AS keyword, movie_info_idx.info AS movie_info_idx_info_3, title.id AS title_id_4, title.production_year AS production_year, title.title AS title
- from movie_keyword,keyword,title,movie_info_idx,info_type
- where (title.id = movie_keyword.movie_id) And (movie_info_idx.movie_id = movie_keyword.movie_id) And (movie_keyword.keyword_id = keyword.id) And (keyword.id = movie_keyword.keyword_id) And (movie_info_idx.movie_id = title.id) And (movie_keyword.movie_id = movie_info_idx.movie_id) And (movie_info_idx.info_type_id = info_type.id) And (movie_info_idx.info > '9.0') And (info_type.info = 'rating')
+select info_type.id AS id, info_type.info AS info_type_info_1, keyword.keyword AS keyword, movie_info_idx.info AS movie_info_idx_info_3, movie_info_idx.movie_id AS movie_id, title.production_year AS production_year, title.title AS title
+from info_type, keyword, movie_info_idx, movie_keyword, title
+ where (info_type.info = 'rating') And (keyword.id = movie_keyword.keyword_id) And (movie_info_idx.info > '9.0') And (movie_info_idx.info_type_id = info_type.id) And (movie_info_idx.movie_id = movie_keyword.movie_id) And (movie_info_idx.movie_id = title.id) And (movie_keyword.keyword_id = keyword.id) And (title.id = movie_keyword.movie_id)

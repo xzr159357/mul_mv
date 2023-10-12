@@ -1,3 +1,3 @@
 select keyword.id AS keyword_id_0, keyword.keyword AS keyword, link_type.id AS link_type_id_2, link_type.link AS link, movie_keyword.movie_id AS movie_id, title.title AS title
- from movie_keyword,movie_link,keyword,title,link_type
- where (title.id = movie_keyword.movie_id) And (movie_keyword.movie_id = movie_link.movie_id) And (movie_keyword.keyword_id = keyword.id) And (movie_link.link_type_id = link_type.id) And (title.id = movie_link.linked_movie_id) And (keyword.keyword = '10,000-mile-club')
+from keyword, link_type, movie_keyword, movie_link, title
+ where (keyword.keyword = '10,000-mile-club') And (movie_keyword.keyword_id = keyword.id) And (movie_keyword.movie_id = movie_link.movie_id) And (movie_link.link_type_id = link_type.id) And (title.id = movie_keyword.movie_id) And (title.id = movie_link.linked_movie_id)

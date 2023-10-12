@@ -492,8 +492,10 @@ def getJoinCandidate(candidate_clusters, mv_pre_path, initIDS, cur_engine):
         fromSql = " from "
         whereSql = " where "
         conditionList = []
+        table_list = []
         for rel, colCondition in cluster["Tree"].relations.items():
             fromSql += rel + ","
+            table_list.append(rel)
             for col, conditions in colCondition.items():
                 if col == "variableNames":
                     continue
@@ -526,14 +528,23 @@ def getJoinCandidate(candidate_clusters, mv_pre_path, initIDS, cur_engine):
                         #     print(condition)
                         whereSql += condition + " And "
                         conditionList.append(condition.replace("==", "=").replace("\"", "'"))
-        whereSql = whereSql.replace("==", "=").replace("\"", "'")
 
+
+        # where
+        # whereSql = whereSql.replace("==", "=").replace("\"", "'")
+        whereSql = " where "
+        conditionList.sort()
+        for condition in conditionList:
+            whereSql += condition + " And "
+
+        # fromSql = fromSql[:-1]
+        table_list.sort()
+        fromSql = "from"
+        for table in table_list:
+            fromSql += f" {table},"
         fromSql = fromSql[:-1]
-        # fromSql = sortRelations(fromSql[6:-1])
-        # if cluster["Tree"].data.type == NodeType.EXPRESSION:
-        #     attrs = cluster["Tree"].data.attribute
-        attrs = getReferredAttrs(cluster["Tree"])
 
+        attrs = getReferredAttrs(cluster["Tree"])
         attrType = type(attrs)
         if attrType == str:
             attrs = attrs[:-2]
@@ -543,6 +554,8 @@ def getJoinCandidate(candidate_clusters, mv_pre_path, initIDS, cur_engine):
             tmpAttrs = attrs
         tmpAttrs = [a.strip() for a in tmpAttrs]
         newAttrs = remove_equal_attr_PG(tmpAttrs, whereSql, cluster["Tree"])
+        # sort-字段
+        newAttrs.sort()
         newAttrs = check_Referred(newAttrs)
         attrs = str(newAttrs)[1:-2].replace("'", "")
         if " where " == whereSql:

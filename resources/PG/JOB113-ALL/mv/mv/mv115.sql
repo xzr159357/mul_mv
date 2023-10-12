@@ -1,3 +1,3 @@
 create materialized view if not exists mv115 as select cast_info.movie_id AS movie_id, cast_info.note AS cast_info_note_1, cast_info.person_id AS person_id, cast_info.person_role_id AS person_role_id, cast_info.role_id AS role_id, movie_companies.company_id AS company_id, movie_companies.note AS movie_companies_note_6, role_type.role AS role
- from movie_companies,role_type,cast_info
- where (cast_info.movie_id = movie_companies.movie_id) And (movie_companies.note like '%(200%)%')  And  (((movie_companies.note like '%(USA)%')) Or ((movie_companies.note like '%(worldwide)%'))) And (cast_info.role_id = role_type.id) And (role_type.role = 'actress') And (cast_info.note = '(voice)')
+from cast_info, movie_companies, role_type
+ where (cast_info.movie_id = movie_companies.movie_id) And (cast_info.note = '(voice)') And (cast_info.role_id = role_type.id) And (movie_companies.note like '%(200%)%')  And  (((movie_companies.note like '%(USA)%')) Or ((movie_companies.note like '%(worldwide)%'))) And (role_type.role = 'actress')

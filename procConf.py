@@ -215,6 +215,9 @@ def getRefThreshold():
 def getDatabase():
     return g_cfg.get("rawFile", "database")
 
+def get_DB_path():
+    return g_cfg.get("rawFile", "db_path")
+
 def get_logparser_path():
     return g_cfg.get("rawFile", "logparser_jar_path")
 

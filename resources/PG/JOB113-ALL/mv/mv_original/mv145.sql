@@ -1,3 +1,3 @@
 select company_type.id AS company_type_id_0, company_type.kind AS kind, link_type.id AS link_type_id_2, link_type.link AS link, movie_companies.company_id AS company_id, movie_companies.movie_id AS movie_id, movie_companies.note AS note
- from movie_companies,link_type,company_type,movie_link
- where (movie_companies.movie_id = movie_link.movie_id) And (movie_companies.company_type_id = company_type.id) And (movie_companies.note IS NULL) And (movie_link.link_type_id = link_type.id) And (link_type.link like '%follow%') And (company_type.kind = 'production companies')
+from company_type, link_type, movie_companies, movie_link
+ where (company_type.kind = 'production companies') And (link_type.link like '%follow%') And (movie_companies.company_type_id = company_type.id) And (movie_companies.movie_id = movie_link.movie_id) And (movie_companies.note IS NULL) And (movie_link.link_type_id = link_type.id)

@@ -1,3 +1,3 @@
 select cast_info.movie_id AS movie_id, cast_info.note AS note, cast_info.person_role_id AS person_role_id, cast_info.role_id AS role_id, char_name.name AS name, company_name.country_code AS country_code, company_name.id AS company_name_id_6, company_type.id AS company_type_id_7, title.production_year AS production_year, title.title AS title
- from company_name,cast_info,company_type,title,movie_companies,char_name
- where (movie_companies.company_id = company_name.id) And (company_name.country_code = '[us]') And (cast_info.movie_id = movie_companies.movie_id) And (cast_info.note like '%(producer)%') And (char_name.id = cast_info.person_role_id) And (company_type.id = movie_companies.company_type_id) And (title.id = movie_companies.movie_id)
+from cast_info, char_name, company_name, company_type, movie_companies, title
+ where (cast_info.movie_id = movie_companies.movie_id) And (cast_info.note like '%(producer)%') And (char_name.id = cast_info.person_role_id) And (company_name.country_code = '[us]') And (company_type.id = movie_companies.company_type_id) And (movie_companies.company_id = company_name.id) And (title.id = movie_companies.movie_id)

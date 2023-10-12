@@ -1,3 +1,3 @@
 select cast_info.movie_id AS movie_id, cast_info.person_id AS person_id, cast_info.person_role_id AS person_role_id, comp_cast_type.id AS comp_cast_type_id_3, comp_cast_type.kind AS comp_cast_type_kind_4, complete_cast.subject_id AS subject_id, kind_type.id AS kind_type_id_6, kind_type.kind AS kind_type_kind_7, title.production_year AS production_year, title.title AS title
- from complete_cast,cast_info,title,kind_type,comp_cast_type
- where (complete_cast.status_id = comp_cast_type.id) And (complete_cast.subject_id = comp_cast_type.id) And (title.id = complete_cast.movie_id) And (cast_info.movie_id = title.id) And (kind_type.id = title.kind_id) And (comp_cast_type.kind like '%complete%') And (comp_cast_type.kind = 'cast')
+from cast_info, comp_cast_type, complete_cast, kind_type, title
+ where (cast_info.movie_id = title.id) And (comp_cast_type.kind = 'cast') And (comp_cast_type.kind like '%complete%') And (complete_cast.status_id = comp_cast_type.id) And (complete_cast.subject_id = comp_cast_type.id) And (kind_type.id = title.kind_id) And (title.id = complete_cast.movie_id)

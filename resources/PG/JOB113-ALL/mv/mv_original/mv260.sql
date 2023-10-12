@@ -1,3 +1,3 @@
 select cast_info.movie_id AS movie_id, cast_info.person_id AS person_id, keyword.id AS id, keyword.keyword AS keyword, name.name AS name
- from name,movie_keyword,cast_info,keyword,title
- where (cast_info.person_id = name.id) And (name.name like '%B%') And (movie_keyword.keyword_id = keyword.id) And (title.id = movie_keyword.movie_id) And (cast_info.movie_id = title.id) And (keyword.keyword = 'character-name-in-title')
+from cast_info, keyword, movie_keyword, name, title
+ where (cast_info.movie_id = title.id) And (cast_info.person_id = name.id) And (keyword.keyword = 'character-name-in-title') And (movie_keyword.keyword_id = keyword.id) And (movie_keyword.movie_id = title.id) And (name.name like '%B%') And (title.id = movie_keyword.movie_id)
