@@ -1,3 +1,3 @@
-create materialized view if not exists mv570 as select info_type.id AS id, info_type.info AS info_type_info_1, movie_companies.company_id AS company_id, movie_companies.note AS note, movie_info.info AS movie_info_info_4
+create materialized view if not exists mv570 as select info_type.id AS id, info_type.info AS info_type_info_1, movie_companies.company_id AS company_id, movie_companies.movie_id AS movie_id, movie_companies.note AS note, movie_info.info AS movie_info_info_5
 from info_type, movie_companies, movie_info
- where (info_type.info = 'genres') And (movie_companies.movie_id = movie_info.movie_id) And (movie_companies.note like '%(Blu-ray)%') And (movie_info.info in ('Horror', 'Thriller')) And (movie_info.info_type_id = info_type.id) And (movie_info.movie_id = movie_companies.movie_id)
+ where (info_type.info = 'genres') And (movie_companies.note like '%(Blu-ray)%') And (movie_info.info in ('Horror', 'Thriller')) And (movie_info.info_type_id = info_type.id) And (movie_info.movie_id = movie_companies.movie_id)

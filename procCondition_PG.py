@@ -341,7 +341,7 @@ def transCondPG(rel, conditions, alias2table):
             # conditions = conditions.replace(column, curTable + "." + col)
         else:
             curTable = getTableFromItem(col, rel, g_table.data)
-        if curTable is not None and curTable.upper() in g_table.data :
+        if curTable is not None and curTable.upper() in g_table.data:
             typeName = g_table.data[curTable.upper()][col.upper()].upper()
             colPattern = re.compile(r"\b" + column + r"\b", re.IGNORECASE)
             colMatch = re.search(colPattern, conditions)
@@ -540,16 +540,7 @@ def getTreeConditions_PG(planTree, alias2table):
             # node.relations = dict(node.left.relations, **node.relations)
         if node.right is not None:
             procNodeCondition(node.right, alias2table)
-            # for interKey in list(set(node.relations.keys()).intersection(set(node.right.relations.keys()))):
-                # for innerKey in list(set(node.relations[interKey]).intersection(set(node.right.relations[interKey]))):
-                #     if innerKey == 'variableNames':
-                #         appendNames(node, interKey, node.right.relations[interKey][innerKey])
-                #     else:
-                #         for cond in node.right.relations[interKey][innerKey]:
-                #             appendColCondition(node, interKey, innerKey, cond)
-                #     # node.relations[interKey][innerKey] = node.relations[interKey][innerKey] + " and " + \
-                #     #                                      node.right.relations[interKey][innerKey]
-                # node.relations[interKey] = dict(node.right.relations[interKey], **node.relations[interKey])
+
             for interKey in node.right.relations.keys():
                 for innerKey, conds in node.right.relations[interKey].items():
                     if innerKey == 'variableNames':
