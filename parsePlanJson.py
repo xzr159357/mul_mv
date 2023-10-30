@@ -6,6 +6,7 @@ g_candidate_clusters = {}
 g_query_subs = {}
 
 
+
 def getReferredKeys(alias2table, sqlFile, relations, schemaDict):
     itemAll = defaultdict(list)
     with open(sqlFile) as file:

@@ -127,8 +127,10 @@ def resetInCondition(condition):
 
 def resetLikeCondition(condition):
     condition = condition.strip()
-    if condition.upper().find("LIKE__%") == -1:
+    # if condition.upper().find("LIKE__%") == -1:
+    if condition.upper().find("LIKE__") == -1:
         return condition
+    # print(f"LIKE!!!{condition}")
     condition = condition.replace("== \"__LIKE__", "like \"")
     condition = condition.replace("== \"__NOTLIKE__", "not like \"")
     return condition

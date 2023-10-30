@@ -472,6 +472,10 @@ def getJoinCandidate(candidate_clusters, mv_pre_path, initIDS, cur_engine):
         jsonName = "mv" + str(cid) + ".json"
         dsName = "mv" + str(cid) + ".ds"
 
+        # test
+        # if int(cid) == 257:
+        #     print(cid)
+
         if len(cluster["Tree"].relations) == 1:
             continue
         if cluster["Tree"].relations == {}:

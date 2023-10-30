@@ -499,9 +499,8 @@ def getTreeConditions_PG(planTree, alias2table):
             if 'Join Filter' in node.data:
                 condTmp, namesTmp, refCondition = transCondPG(node.relations.keys(), node.data["Join Filter"],
                                                               alias2table)
-            # if node.left is None:
-            #     return
-            # print("relation:{}\ncondition:{}, \nnames:{}, \nrefCols:{}".format(rel, condTmp, namesTmp, refCondition))
+
+            # 下面代码将.转化为Of
             for refs, condition in refCondition.items():
                 condition = remove_invalid_tokens(condition)
                 if -1 == refs.find("."):
