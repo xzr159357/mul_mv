@@ -1,0 +1,3 @@
+select cast_info.movie_id AS movie_id, cast_info.person_id AS person_id, keyword.id AS id, keyword.keyword AS keyword, movie_companies.company_id AS company_id, name.name AS name
+from cast_info, keyword, movie_companies, movie_keyword, name
+ where (cast_info.movie_id = movie_keyword.movie_id) And (keyword.keyword = 'character-name-in-title') And (movie_companies.movie_id = cast_info.movie_id) And (movie_keyword.keyword_id = keyword.id) And (name.id = cast_info.person_id)

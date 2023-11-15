@@ -1,0 +1,3 @@
+select company_name.country_code AS country_code, company_name.id AS company_name_id_1, info_type.id AS info_type_id_2, info_type.info AS info_type_info_3, movie_companies.movie_id AS movie_id, movie_companies.note AS note, movie_info.info AS movie_info_info_6, title.production_year AS production_year, title.title AS title
+from company_name, info_type, movie_companies, movie_info, title
+ where (company_name.id = movie_companies.company_id) And (info_type.info = 'release dates') And (movie_companies.movie_id = title.id) And (movie_info.info IS NOT NULL)  And  (((movie_info.info like 'Japan:%200%')) Or ((movie_info.info like 'USA:%200%'))) And (movie_info.info_type_id = info_type.id) And (title.id = movie_info.movie_id)

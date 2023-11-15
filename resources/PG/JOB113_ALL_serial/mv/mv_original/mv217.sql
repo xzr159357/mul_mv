@@ -1,0 +1,3 @@
+select info_type.id AS id, info_type.info AS info_type_info_1, movie_companies.company_id AS company_id, movie_companies.company_type_id AS company_type_id, movie_companies.movie_id AS movie_id, movie_info.info AS movie_info_info_5, movie_info.note AS note, title.production_year AS production_year, title.title AS title
+from info_type, movie_companies, movie_info, title
+ where (info_type.info = 'release dates') And (movie_companies.movie_id = title.id) And (movie_info.info IS NOT NULL)  And  (movie_info.note like '%internet%')  And  (((movie_info.info like 'USA:% 199%')) Or ((movie_info.info like 'USA:% 200%'))) And (movie_info.info_type_id = info_type.id) And (title.id = movie_info.movie_id)

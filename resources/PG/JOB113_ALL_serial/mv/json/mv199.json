@@ -1,0 +1,78 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": false,
+    "Async Capable": false,
+    "Join Type": "Inner",
+    "Startup Cost": 7309.72,
+    "Total Cost": 65784.94,
+    "Plan Rows": 6298,
+    "Plan Width": 8,
+    "Actual Startup Time": 51.028,
+    "Actual Total Time": 456.395,
+    "Actual Rows": 43837,
+    "Actual Loops": 1,
+    "Inner Unique": true,
+    "Hash Cond": "(mc.company_id = cn.id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": false,
+        "Async Capable": false,
+        "Relation Name": "movie_companies",
+        "Alias": "mc",
+        "Startup Cost": 0.0,
+        "Total Cost": 57926.93,
+        "Plan Rows": 17631,
+        "Plan Width": 12,
+        "Actual Startup Time": 0.021,
+        "Actual Total Time": 380.914,
+        "Actual Rows": 61664,
+        "Actual Loops": 1,
+        "Filter": "(((note)::text ~~ '%(200%)%'::text) AND ((note)::text ~~ '%(worldwide)%'::text))",
+        "Rows Removed by Filter": 2547465
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": false,
+        "Async Capable": false,
+        "Startup Cost": 5932.46,
+        "Total Cost": 5932.46,
+        "Plan Rows": 83941,
+        "Plan Width": 4,
+        "Actual Startup Time": 50.191,
+        "Actual Total Time": 50.193,
+        "Actual Rows": 84843,
+        "Actual Loops": 1,
+        "Hash Buckets": 131072,
+        "Original Hash Buckets": 131072,
+        "Hash Batches": 2,
+        "Original Hash Batches": 2,
+        "Peak Memory Usage": 2525,
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Relation Name": "company_name",
+            "Alias": "cn",
+            "Startup Cost": 0.0,
+            "Total Cost": 5932.46,
+            "Plan Rows": 83941,
+            "Plan Width": 4,
+            "Actual Startup Time": 0.015,
+            "Actual Total Time": 36.19,
+            "Actual Rows": 84843,
+            "Actual Loops": 1,
+            "Filter": "((country_code)::text = '[us]'::text)",
+            "Rows Removed by Filter": 150154
+          }
+        ]
+      }
+    ]
+  }
+}

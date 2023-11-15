@@ -1,0 +1,78 @@
+{
+  "Plan": {
+    "Node Type": "Nested Loop",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": false,
+    "Async Capable": false,
+    "Join Type": "Inner",
+    "Startup Cost": 2311.36,
+    "Total Cost": 367202.59,
+    "Plan Rows": 3425,
+    "Plan Width": 4,
+    "Actual Startup Time": 89.979,
+    "Actual Total Time": 790.091,
+    "Actual Rows": 451039,
+    "Actual Loops": 1,
+    "Inner Unique": false,
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": false,
+        "Async Capable": false,
+        "Relation Name": "info_type",
+        "Alias": "it",
+        "Startup Cost": 0.0,
+        "Total Cost": 2.41,
+        "Plan Rows": 1,
+        "Plan Width": 4,
+        "Actual Startup Time": 0.007,
+        "Actual Total Time": 0.024,
+        "Actual Rows": 1,
+        "Actual Loops": 1,
+        "Filter": "((info)::text = 'release dates'::text)",
+        "Rows Removed by Filter": 112
+      },
+      {
+        "Node Type": "Bitmap Heap Scan",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": false,
+        "Async Capable": false,
+        "Relation Name": "movie_info",
+        "Alias": "mi",
+        "Startup Cost": 2311.36,
+        "Total Cost": 367144.88,
+        "Plan Rows": 5529,
+        "Plan Width": 8,
+        "Actual Startup Time": 89.964,
+        "Actual Total Time": 750.5,
+        "Actual Rows": 451039,
+        "Actual Loops": 1,
+        "Recheck Cond": "(info_type_id = it.id)",
+        "Rows Removed by Index Recheck": 0,
+        "Filter": "((info IS NOT NULL) AND (((info)::text ~~ 'Japan:%200%'::text) OR ((info)::text ~~ 'USA:%200%'::text)))",
+        "Rows Removed by Filter": 2585680,
+        "Exact Heap Blocks": 25448,
+        "Lossy Heap Blocks": 0,
+        "Plans": [
+          {
+            "Node Type": "Bitmap Index Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Index Name": "info_type_id_movie_info",
+            "Startup Cost": 0.0,
+            "Total Cost": 2309.98,
+            "Plan Rows": 211939,
+            "Plan Width": 0,
+            "Actual Startup Time": 85.782,
+            "Actual Total Time": 85.784,
+            "Actual Rows": 3036719,
+            "Actual Loops": 1,
+            "Index Cond": "(info_type_id = it.id)"
+          }
+        ]
+      }
+    ]
+  }
+}

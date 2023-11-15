@@ -1,0 +1,10 @@
+create index person_id_mv489 on mv489(person_id);
+create index cast_info_movie_id_1_mv489 on mv489(cast_info_movie_id_1);
+create index person_role_id_mv489 on mv489(person_role_id);
+create index role_id_mv489 on mv489(role_id);
+create index comp_cast_type_id_5_mv489 on mv489(comp_cast_type_id_5);
+create index company_name_id_8_mv489 on mv489(company_name_id_8);
+create index info_type_id_10_mv489 on mv489(info_type_id_10);
+create index keyword_id_12_mv489 on mv489(keyword_id_12);
+create index movie_companies_movie_id_14_mv489 on mv489(movie_companies_movie_id_14);
+create index info_type_id_mv489 on mv489(info_type_id);

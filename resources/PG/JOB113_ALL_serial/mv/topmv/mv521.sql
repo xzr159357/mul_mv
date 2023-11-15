@@ -1,0 +1,3 @@
+create materialized view if not exists mv521 as select info_type.id AS info_type_id_0, info_type.info AS info_type_info_1, keyword.id AS keyword_id_2, keyword.keyword AS keyword, movie_companies.company_id AS company_id, movie_companies.movie_id AS movie_id, movie_info_idx.info AS movie_info_idx_info_6
+from info_type, keyword, movie_companies, movie_info_idx, movie_keyword
+ where (info_type.info = 'votes') And (keyword.keyword in ('murder', 'violence', 'blood', 'gore', 'death', 'female-nudity', 'hospital')) And (movie_companies.movie_id = movie_keyword.movie_id) And (movie_info_idx.info_type_id = info_type.id) And (movie_info_idx.movie_id = movie_companies.movie_id) And (movie_info_idx.movie_id = movie_keyword.movie_id) And (movie_keyword.keyword_id = keyword.id)

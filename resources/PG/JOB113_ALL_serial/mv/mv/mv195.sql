@@ -1,0 +1,3 @@
+create materialized view if not exists mv195 as select keyword.id AS keyword_id_0, keyword.keyword AS keyword, kind_type.id AS kind_type_id_2, kind_type.kind AS kind, movie_info.info AS info, movie_info.info_type_id AS info_type_id, movie_info.movie_id AS movie_id, title.production_year AS production_year, title.title AS title
+from keyword, kind_type, movie_info, movie_keyword, title
+ where (keyword.keyword IS NOT NULL)  And  (keyword.keyword in ('murder', 'murder-in-title', 'blood', 'violence')) And (kind_type.kind in ('movie', 'episode')) And (movie_info.movie_id = movie_keyword.movie_id) And (movie_keyword.keyword_id = keyword.id) And (title.id = movie_info.movie_id) And (title.id = movie_keyword.movie_id) And (title.kind_id = kind_type.id)

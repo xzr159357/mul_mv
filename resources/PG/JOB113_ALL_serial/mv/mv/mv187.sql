@@ -1,0 +1,3 @@
+create materialized view if not exists mv187 as select keyword.id AS id, keyword.keyword AS keyword, movie_info.info AS info, movie_info.info_type_id AS info_type_id, movie_info.movie_id AS movie_id, title.kind_id AS kind_id, title.production_year AS production_year, title.title AS title
+from keyword, movie_info, movie_keyword, title
+ where (keyword.keyword in ('murder', 'murder-in-title')) And (movie_info.movie_id = movie_keyword.movie_id) And (movie_keyword.keyword_id = keyword.id) And (title.id = movie_info.movie_id) And (title.id = movie_keyword.movie_id)

@@ -1,0 +1,76 @@
+{
+  "Plan": {
+    "Node Type": "Nested Loop",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": false,
+    "Async Capable": false,
+    "Join Type": "Inner",
+    "Startup Cost": 6.78,
+    "Total Cost": 16240.14,
+    "Plan Rows": 438,
+    "Plan Width": 4,
+    "Actual Startup Time": 3.002,
+    "Actual Total Time": 53.693,
+    "Actual Rows": 12951,
+    "Actual Loops": 1,
+    "Inner Unique": false,
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": false,
+        "Async Capable": false,
+        "Relation Name": "keyword",
+        "Alias": "k",
+        "Startup Cost": 0.0,
+        "Total Cost": 2626.12,
+        "Plan Rows": 13,
+        "Plan Width": 4,
+        "Actual Startup Time": 1.143,
+        "Actual Total Time": 19.379,
+        "Actual Rows": 30,
+        "Actual Loops": 1,
+        "Filter": "((keyword)::text ~~ '%sequel%'::text)",
+        "Rows Removed by Filter": 134140
+      },
+      {
+        "Node Type": "Bitmap Heap Scan",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": false,
+        "Async Capable": false,
+        "Relation Name": "movie_keyword",
+        "Alias": "mk",
+        "Startup Cost": 6.78,
+        "Total Cost": 1044.2,
+        "Plan Rows": 303,
+        "Plan Width": 8,
+        "Actual Startup Time": 0.082,
+        "Actual Total Time": 1.093,
+        "Actual Rows": 432,
+        "Actual Loops": 30,
+        "Recheck Cond": "(keyword_id = k.id)",
+        "Rows Removed by Index Recheck": 0,
+        "Exact Heap Blocks": 6979,
+        "Lossy Heap Blocks": 0,
+        "Plans": [
+          {
+            "Node Type": "Bitmap Index Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Index Name": "keyword_id_movie_keyword",
+            "Startup Cost": 0.0,
+            "Total Cost": 6.71,
+            "Plan Rows": 303,
+            "Plan Width": 0,
+            "Actual Startup Time": 0.048,
+            "Actual Total Time": 0.048,
+            "Actual Rows": 432,
+            "Actual Loops": 30,
+            "Index Cond": "(keyword_id = k.id)"
+          }
+        ]
+      }
+    ]
+  }
+}

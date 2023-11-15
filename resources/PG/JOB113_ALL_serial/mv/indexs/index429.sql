@@ -1,0 +1,9 @@
+create index comp_cast_type_id_0_mv429 on mv429(comp_cast_type_id_0);
+create index complete_cast_movie_id_2_mv429 on mv429(complete_cast_movie_id_2);
+create index info_type_id_3_mv429 on mv429(info_type_id_3);
+create index kind_type_id_5_mv429 on mv429(kind_type_id_5);
+create index company_id_mv429 on mv429(company_id);
+create index company_type_id_mv429 on mv429(company_type_id);
+create index movie_companies_movie_id_9_mv429 on mv429(movie_companies_movie_id_9);
+create index info_type_id_mv429 on mv429(info_type_id);
+create index keyword_id_mv429 on mv429(keyword_id);

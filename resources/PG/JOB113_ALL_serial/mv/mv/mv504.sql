@@ -1,0 +1,3 @@
+create materialized view if not exists mv504 as select comp_cast_type.id AS id, comp_cast_type.kind AS kind, complete_cast.movie_id AS movie_id, movie_info_idx.info AS info, movie_info_idx.info_type_id AS info_type_id, title.production_year AS production_year, title.title AS title
+from comp_cast_type, complete_cast, movie_info_idx, title
+ where (comp_cast_type.id = complete_cast.status_id) And (comp_cast_type.kind = 'complete+verified') And (comp_cast_type.kind in ('cast', 'crew')) And (complete_cast.subject_id = comp_cast_type.id) And (movie_info_idx.movie_id = title.id) And (title.id = complete_cast.movie_id)

@@ -1,0 +1,3 @@
+create materialized view if not exists mv268 as select cast_info.movie_id AS movie_id, cast_info.note AS cast_info_note_1, cast_info.person_id AS person_id, cast_info.person_role_id AS person_role_id, cast_info.role_id AS role_id, movie_companies.company_id AS company_id, movie_companies.note AS movie_companies_note_6, title.production_year AS production_year, title.title AS title
+from cast_info, char_name, movie_companies, title
+ where (cast_info.movie_id = movie_companies.movie_id) And (char_name.id = cast_info.person_role_id) And (movie_companies.movie_id = title.id) And (title.id = cast_info.movie_id) And (title.production_year >= 2007)  And  (title.production_year <= 2008)  And  (title.title like '%Kung%Fu%Panda%')

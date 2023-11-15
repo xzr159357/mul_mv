@@ -1,0 +1,3 @@
+select company_name.country_code AS country_code, company_name.id AS id, movie_companies.movie_id AS movie_id, movie_companies.note AS note, title.title AS title
+from company_name, movie_companies, title
+ where (company_name.country_code = '[jp]') And (movie_companies.company_id = company_name.id) And (movie_companies.note like '%(Japan)%')  And  (movie_companies.note not like '%(USA)%') And (title.id = movie_companies.movie_id)

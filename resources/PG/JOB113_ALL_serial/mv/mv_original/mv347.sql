@@ -1,0 +1,3 @@
+select cast_info.movie_id AS movie_id, cast_info.note AS note, cast_info.person_id AS person_id, cast_info.person_role_id AS person_role_id, cast_info.role_id AS role_id, company_name.country_code AS country_code, company_name.id AS id, company_name.name AS name, title.production_year AS production_year, title.title AS title
+from cast_info, company_name, movie_companies, title
+ where (cast_info.movie_id = movie_companies.movie_id) And (company_name.country_code = '[us]')  And  (company_name.name = 'DreamWorks Animation') And (movie_companies.company_id = company_name.id) And (title.id = cast_info.movie_id) And (title.id = movie_companies.movie_id)

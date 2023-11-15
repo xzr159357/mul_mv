@@ -1,0 +1,76 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": false,
+    "Async Capable": false,
+    "Join Type": "Inner",
+    "Startup Cost": 7309.72,
+    "Total Cost": 79752.1,
+    "Plan Rows": 931982,
+    "Plan Width": 4,
+    "Actual Startup Time": 46.644,
+    "Actual Total Time": 858.92,
+    "Actual Rows": 1153798,
+    "Actual Loops": 1,
+    "Inner Unique": true,
+    "Hash Cond": "(mc.company_id = cn.id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": false,
+        "Async Capable": false,
+        "Relation Name": "movie_companies",
+        "Alias": "mc",
+        "Startup Cost": 0.0,
+        "Total Cost": 44881.29,
+        "Plan Rows": 2609129,
+        "Plan Width": 8,
+        "Actual Startup Time": 0.014,
+        "Actual Total Time": 315.547,
+        "Actual Rows": 2609129,
+        "Actual Loops": 1
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": false,
+        "Async Capable": false,
+        "Startup Cost": 5932.46,
+        "Total Cost": 5932.46,
+        "Plan Rows": 83941,
+        "Plan Width": 4,
+        "Actual Startup Time": 45.961,
+        "Actual Total Time": 45.964,
+        "Actual Rows": 84843,
+        "Actual Loops": 1,
+        "Hash Buckets": 131072,
+        "Original Hash Buckets": 131072,
+        "Hash Batches": 2,
+        "Original Hash Batches": 2,
+        "Peak Memory Usage": 2525,
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Relation Name": "company_name",
+            "Alias": "cn",
+            "Startup Cost": 0.0,
+            "Total Cost": 5932.46,
+            "Plan Rows": 83941,
+            "Plan Width": 4,
+            "Actual Startup Time": 0.022,
+            "Actual Total Time": 33.547,
+            "Actual Rows": 84843,
+            "Actual Loops": 1,
+            "Filter": "((country_code)::text = '[us]'::text)",
+            "Rows Removed by Filter": 150154
+          }
+        ]
+      }
+    ]
+  }
+}

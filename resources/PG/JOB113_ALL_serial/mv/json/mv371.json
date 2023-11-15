@@ -1,0 +1,76 @@
+{
+  "Plan": {
+    "Node Type": "Nested Loop",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": false,
+    "Async Capable": false,
+    "Join Type": "Inner",
+    "Startup Cost": 6.78,
+    "Total Cost": 11041.25,
+    "Plan Rows": 236,
+    "Plan Width": 4,
+    "Actual Startup Time": 3.95,
+    "Actual Total Time": 308.34,
+    "Actual Rows": 76714,
+    "Actual Loops": 1,
+    "Inner Unique": false,
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": false,
+        "Async Capable": false,
+        "Relation Name": "keyword",
+        "Alias": "k",
+        "Startup Cost": 0.0,
+        "Total Cost": 3464.69,
+        "Plan Rows": 7,
+        "Plan Width": 4,
+        "Actual Startup Time": 0.795,
+        "Actual Total Time": 26.633,
+        "Actual Rows": 7,
+        "Actual Loops": 1,
+        "Filter": "((keyword)::text = ANY ('{murder,violence,blood,gore,death,female-nudity,hospital}'::text[]))",
+        "Rows Removed by Filter": 134163
+      },
+      {
+        "Node Type": "Bitmap Heap Scan",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": false,
+        "Async Capable": false,
+        "Relation Name": "movie_keyword",
+        "Alias": "mk",
+        "Startup Cost": 6.78,
+        "Total Cost": 1079.34,
+        "Plan Rows": 303,
+        "Plan Width": 8,
+        "Actual Startup Time": 2.489,
+        "Actual Total Time": 38.627,
+        "Actual Rows": 10959,
+        "Actual Loops": 7,
+        "Recheck Cond": "(keyword_id = k.id)",
+        "Rows Removed by Index Recheck": 0,
+        "Exact Heap Blocks": 53234,
+        "Lossy Heap Blocks": 0,
+        "Plans": [
+          {
+            "Node Type": "Bitmap Index Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Index Name": "keyword_id_movie_keyword",
+            "Startup Cost": 0.0,
+            "Total Cost": 6.71,
+            "Plan Rows": 303,
+            "Plan Width": 0,
+            "Actual Startup Time": 1.401,
+            "Actual Total Time": 1.401,
+            "Actual Rows": 10959,
+            "Actual Loops": 7,
+            "Index Cond": "(keyword_id = k.id)"
+          }
+        ]
+      }
+    ]
+  }
+}

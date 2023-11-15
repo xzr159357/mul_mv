@@ -1,0 +1,76 @@
+{
+  "Plan": {
+    "Node Type": "Hash Join",
+    "Parent Relationship": "Outer",
+    "Parallel Aware": false,
+    "Async Capable": false,
+    "Join Type": "Inner",
+    "Startup Cost": 118367.36,
+    "Total Cost": 141142.82,
+    "Plan Rows": 4186,
+    "Plan Width": 24,
+    "Actual Startup Time": 658.493,
+    "Actual Total Time": 820.426,
+    "Actual Rows": 1558,
+    "Actual Loops": 1,
+    "Inner Unique": true,
+    "Hash Cond": "(an.person_id = n.id)",
+    "Plans": [
+      {
+        "Node Type": "Seq Scan",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": false,
+        "Async Capable": false,
+        "Relation Name": "aka_name",
+        "Alias": "an",
+        "Startup Cost": 0.0,
+        "Total Cost": 20409.43,
+        "Plan Rows": 901343,
+        "Plan Width": 20,
+        "Actual Startup Time": 0.01,
+        "Actual Total Time": 81.963,
+        "Actual Rows": 901343,
+        "Actual Loops": 1
+      },
+      {
+        "Node Type": "Hash",
+        "Parent Relationship": "Inner",
+        "Parallel Aware": false,
+        "Async Capable": false,
+        "Startup Cost": 118125.41,
+        "Total Cost": 118125.41,
+        "Plan Rows": 19356,
+        "Plan Width": 4,
+        "Actual Startup Time": 657.425,
+        "Actual Total Time": 657.427,
+        "Actual Rows": 6768,
+        "Actual Loops": 1,
+        "Hash Buckets": 32768,
+        "Original Hash Buckets": 32768,
+        "Hash Batches": 1,
+        "Original Hash Batches": 1,
+        "Peak Memory Usage": 494,
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Relation Name": "name",
+            "Alias": "n",
+            "Startup Cost": 0.0,
+            "Total Cost": 118125.41,
+            "Plan Rows": 19356,
+            "Plan Width": 4,
+            "Actual Startup Time": 275.534,
+            "Actual Total Time": 656.097,
+            "Actual Rows": 6768,
+            "Actual Loops": 1,
+            "Filter": "(((name)::text ~~ '%Ang%'::text) AND ((gender)::text = 'f'::text))",
+            "Rows Removed by Filter": 4160723
+          }
+        ]
+      }
+    ]
+  }
+}
