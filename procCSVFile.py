@@ -299,6 +299,19 @@ def saveTmpQueryMap(query_mv_map, initIDS=[]):
                 if not mvId:
                     continue
                 csv_writer.writerow([fileName, mvId])
+    # 对应位置也加
+    mvPrePath = getRawPath(DataType.MV)
+    with open(mvPrePath + "/tmp_query-mvdata.csv", "w", newline="") as f:
+        csv_writer = csv.writer(f, dialect="excel")
+        # csv_writer.writerow(['file', 'id'])
+        for fileName, ids in query_mv_map.items():
+            print(fileName)
+            ids = list(set(ids))
+            ids.sort()
+            print(ids)
+            for mvId in ids:
+                if int(mvId) in initIDS:
+                    csv_writer.writerow([fileName, mvId])
 
 def loadQueryMap():
     file = getTmpPath(DataType.Q_MV)

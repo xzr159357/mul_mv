@@ -456,6 +456,30 @@ def check_Referred(newAttrs):
     return newAttrs
 
 
+index_dicts = {
+	'aka_name': ['id', 'person_id'],
+	'aka_title': ['id', 'kind_id', 'movie_id'],
+	'cast_info': ['id', 'movie_id', 'person_id', 'person_role_id', 'role_id'],
+	'char_name': ['id'],
+	'comp_cast_type': ['id'],
+	'company_name': ['id'],
+	'company_type': ['id'],
+	'complete_cast': ['id', 'movie_id'],
+	'info_type': ['id'],
+	'keyword': ['id'],
+	'kind_type': ['id'],
+	'link_type': ['id'],
+	'movie_companies': ['id', 'company_id', 'company_type_id', 'movie_id'],
+	'movie_info_idx': ['id', 'info_type_id', 'movie_id'],
+	'movie_info': ['id', 'info_type_id', 'movie_id'],
+	'movie_keyword': ['id', 'keyword_id', 'movie_id'],
+	'movie_link': ['id', 'linked_movie_id', 'link_type_id', 'movie_id'],
+	'name': ['id'],
+	'person_info': ['id', 'info_type_id', 'person_id'],
+	'role_type': ['id'],
+	'title': ['id', 'kind_id']
+}
+
 
 # 从join子树中获取候选视图
 def getJoinCandidate(candidate_clusters, mv_pre_path, initIDS, cur_engine):
@@ -562,6 +586,36 @@ def getJoinCandidate(candidate_clusters, mv_pre_path, initIDS, cur_engine):
         newAttrs.sort()
         newAttrs = check_Referred(newAttrs)
         attrs = str(newAttrs)[1:-2].replace("'", "")
+
+        index_alias_lst = []
+        # 加上索引，处理newAttrs，newAttrs带别名
+        for attr in newAttrs:
+            find_key = ""
+            find_table = ""
+            if "AS" in attr:
+                key, alias_key = attr.split(' AS ')
+            else:
+                key = attr
+                alias_key = key.split('.')[0]
+            f_table, f_column = key.split('.')
+            for table, columns in index_dicts.items():
+                for column in columns:
+                    if f_table == table and f_column == column:
+                        find_key = alias_key
+                        find_table = "mv" + str(cid)
+                        break
+                if find_key != "":
+                    break
+            if find_key != "":
+                index_column = f"create index {find_key}_{find_table} on {find_table}({find_key});"
+                index_alias_lst.append(index_column)
+
+        if len(index_alias_lst) > 0:
+            with open(mv_pre_path + "/indexs/" + "index" + str(cid) + ".sql", "w", encoding="utf-8") as f:
+                for index_alias in index_alias_lst:
+                    f.write(index_alias + '\n')
+
+
         if " where " == whereSql:
             sql = "select " + attrs + "\n" + fromSql
         else:
@@ -570,6 +624,7 @@ def getJoinCandidate(candidate_clusters, mv_pre_path, initIDS, cur_engine):
             f.write(createPre + str(cid) + createENGINE + sql)
         with open(mv_pre_path + "/mv_original/" + filename, "w", encoding="utf-8") as f:
             f.write(sql)
+
         # id_mv
         with open("resources/data/id_mv.csv", "a+", newline="") as f:
             csv_writer = csv.writer(f, dialect="excel")
@@ -1218,6 +1273,7 @@ def check_file_exists(engine="PG"):
         os.makedirs(mv_path + "/mv_original", exist_ok=True)
         os.makedirs(mv_path + "/topmv", exist_ok=True)
         os.makedirs(mv_path + "/topmv_original", exist_ok=True)
+        os.makedirs(mv_path + "/indexs", exist_ok=True)
         qmv_path = getRawPath(DataType.Q_MV)
         os.makedirs(qmv_path, exist_ok=True)
         os.makedirs(qmv_path + "/json", exist_ok=True)
@@ -1226,6 +1282,7 @@ def check_file_exists(engine="PG"):
         remove_directory_file(mv_path + "/mv_original")
         remove_directory_file(mv_path + "/topmv")
         remove_directory_file(mv_path + "/topmv_original")
+        remove_directory_file(mv_path + "/indexs")
         # 清空csv文件
         with open("resources/data/id_mv.csv", "w") as f:
             pass
