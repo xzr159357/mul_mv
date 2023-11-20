@@ -305,10 +305,10 @@ def saveTmpQueryMap(query_mv_map, initIDS=[]):
         csv_writer = csv.writer(f, dialect="excel")
         # csv_writer.writerow(['file', 'id'])
         for fileName, ids in query_mv_map.items():
-            print(fileName)
+            # print(fileName)
             ids = list(set(ids))
             ids.sort()
-            print(ids)
+            # print(ids)
             for mvId in ids:
                 if int(mvId) in initIDS:
                     csv_writer.writerow([fileName, mvId])

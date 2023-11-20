@@ -936,8 +936,8 @@ def buildOnePlanTree_PG(sqlFile, jsonFile, analyze=True):
                 # tree.referKeys[rel] = [value.lower() for value in g_table.data[rel.upper()]]
                 tree.referKeys[rel] = [value for value in referredKeys[rel]] # referredKeys[rel]
     # 将referKeys里涉及到的表和列信息进行匹配
-    print(bitmap_index_scan_list)
-    print(1111)
+    # print(bitmap_index_scan_list)
+    # print(1111)
     for i, node in enumerate(clusters):
         for tbl_name, tlb_dict in node.relations.items():
             for col_name, col_list in tlb_dict.items():
@@ -963,8 +963,8 @@ def buildOnePlanTree_PG(sqlFile, jsonFile, analyze=True):
                         col_of, tbl_of = k_l.split('Of')[0:2]
                         col_other = k_r
 
-                    print(k_l, k_r)
-                    print(col_of, tbl_of, col_other)
+                    # print(k_l, k_r)
+                    # print(col_of, tbl_of, col_other)
 
                     # 方法1：在referKeys里寻找col_other，会出现问题
                     # search_table = ""
@@ -992,7 +992,7 @@ def buildOnePlanTree_PG(sqlFile, jsonFile, analyze=True):
                         if right_value.split('.')[1] == col_other and f"{tbl_of}.{col_of}" == left_value:
                             search_table = right_value.split('.')[0]
                             break
-                    print(search_table)
+                    # print(search_table)
                     if search_table != "":
                         new_col = f"({col_other}Of{search_table} == {col_of}Of{tbl_of})"
                         clusters[i].relations[tbl_name][col_name][j] = new_col
@@ -1000,7 +1000,7 @@ def buildOnePlanTree_PG(sqlFile, jsonFile, analyze=True):
                         print(f"fail to find {col}")
 
     bitmap_index_scan_list = []
-    print(1111)
+    # print(1111)
 
     return "", clusters
 

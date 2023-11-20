@@ -955,6 +955,7 @@ def train(data, keywords, replacedquery=True):
             # q[2]是表名、列名
             # others包括 [q[0]['cost'], q[0]['cardinality'], mv[0]['cost'], mv[0]['cardinality']]
             X = [data[0] for data in train_per_step]
+            # X = X.to(device)
             # data[1]中是q_mv的cost
             # 取对数之后，会造成模型误差小，但求幂之后误差较大
             Y = torch.FloatTensor([data[1] / scale for data in train_per_step]).to(device)

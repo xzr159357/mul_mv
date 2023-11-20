@@ -36,14 +36,12 @@ def getInitMVs(q_mv_maps, clusters, method="topk"):
     cntLimit = int(getMvCntLimit())
     print(f"curent cntLimit: {cntLimit}")
     candDict = {k: v for k, v in tmpDict.items() if v[0] >= refThreshold}
-    # print(candDict)
     count = len(candDict)
     if count < cntLimit:
         cntLimit = count
 
     sorted_mv_qinghua_list = []
-
-    #     随机选择N个
+    # 随机选择N个
     if method == "random":
         tmpList = random.sample([int(k) for k, v in candDict.items()], k=cntLimit)
         output = tmpList
@@ -57,7 +55,14 @@ def getInitMVs(q_mv_maps, clusters, method="topk"):
         # 按引用次数排序之后，从中选择覆盖更多表的候选视图
         for x in reversed(tmpList):
             cntDict[x[1]].append(int(x[0]))
-        print(cntDict)
+
+        # 输出topk的mv
+        # print(cntDict)
+        print('----------------')
+        print("mv覆盖查询的数量", "mv里表的数量", "mv的ID", len(cntDict))
+        for (q, t, id), cid in cntDict.items():
+            print(f"{cid} : {q}, {t}, {id}")
+        print('----------------')
 
         coveredRel = set()
         coveredQuery = set()
@@ -126,11 +131,9 @@ def getInitMVs(q_mv_maps, clusters, method="topk"):
                 csv_writer.writerow([id, all_table_dict[id]])
 
 
-        # with open("resources/PG/data/")
-
         # output = [int(x[0]) for x in tmpList]
         print(f"output num : {len(output)}")
-        print(output)
+        # print(output)
         return candDict, output[:cntLimit]
 
 
@@ -1652,25 +1655,6 @@ def run_cmd(args_list):
     return s_return, s_output, s_err
 
 
-# def get_query_log_by_query_id(query_id):
-#     args_list = ["clickhouse client", "-h", get_CH_IP(), "-u", get_CH_USER(), "--password", get_CH_PASSWD(),"--port", "9000", "--query", f"\"select query_duration_ms, read_rows, read_bytes, result_rows, result_bytes, memory_usage from system.query_log where query_id ='{query_id}';\""]
-#     (ret, out, err) = run_cmd(args_list)
-#     if ret == 0:
-#         info = out[1].split('\t')
-#     else:
-#         info = None
-#     return info
-#
-#
-# def get_query_log_by_query_id(query_id):
-#     args_list = ["clickhouse client", "-h", get_CH_IP(), "-u", get_CH_USER(), "--password", get_CH_PASSWD(), "--port", "9000", "--query", f"\"select query_duration_ms, read_rows, read_bytes, result_rows, result_bytes, memory_usage from system.query_log where query_id ='{query_id}';\""]
-#     (ret, out, err) = run_cmd(args_list)
-#     if ret == 0:
-#         info = out[1].split('\t')
-#     else:
-#         info = None
-#     return info
-
 
 def get_query_log_by_query_id_2(query_id):
     sql_content = f"select query_duration_ms, read_rows, read_bytes, result_rows, result_bytes, memory_usage from system.query_log where query_id ='{query_id}';"
@@ -1699,71 +1683,5 @@ def get_cost_by_query_log(ql, operator):
 
 
 if __name__ == '__main__':
-    # global g_candidate_clusters
-    # global g_query_subs
-    # print(sys.getrecursionlimit())
-    # sys.setrecursionlimit(100000)
-    # print(sys.getrecursionlimit())
-
-    # 解析
     getCandidate(get_engine())
 
-    # 跑第一次
-    # run_ch_all(0)
-
-    # 跑第二次
-    # run_ch_all(1)
-
-    # 跑所有的两次
-    # run_ch_query_id()
-
-    # 看结果
-    # with open("./resources/data/query_id_cost_dict.ds", "rb") as f:
-    #     query_id_cost_dict = pickle.load(f)
-    # print(query_id_cost_dict)
-
-    # 跑指定的sql两次
-    # run_nums_cube1 = [38, 7]
-    # run_nums_cube4 = [10, 16, 19, 36, 43]
-    # run_nums_cube0 = [1, 15, 21, 28, 35]
-    # run_ch_list(run_nums_cube0)
-
-    # 创建视图
-    # create_projection()
-
-    # 跑看是否改写
-
-    # run_explain_all()
-    # with open("./resources/data/projection_q_mv_dict", "rb") as f:
-    #     projection_q_mv_dict = pickle.load(f)
-    # print(projection_q_mv_dict)
-
-
-    # 获取信息
-
-    # print('Running system command: {0}'.format(sh_query))
-
-    # query_path = getRawPath(DataType.Q) + "/sql/"
-    # sql_path = query_path + f"q1.sql"
-    # sql_content = load_file(sql_path)
-    # database = "cbg"
-    # # 跑sql
-    # sh_query = f"clickhouse-client " \
-    #            f"--send_logs_level=trace " \
-    #            f"--port 9000 " \
-    #            f"--database {database} " \
-    #            f"-t " \
-    #            f"--multiquery --query \"{sql_content}\""
-    # retcode, output = subprocess.getstatusoutput(sh_query)
-    # re_query_id = r' ] {(.*?)} <'
-    # query_id = re.findall(re_query_id, output)[-1]
-    # print(query_id)
-    #
-    #
-    # print(get_query_log_by_query_id(query_id))
-
-    # 获取推荐的视图
-    # create_recommend_projection()
-
-    # 获取覆盖率
-    # run_recommend_explain_all()
