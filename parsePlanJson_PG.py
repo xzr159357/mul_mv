@@ -922,22 +922,23 @@ def buildOnePlanTree_PG(sqlFile, jsonFile, analyze=True):
     plan = plan['Plan']
     f_open.close()
 
+    # 别名和列名
     alias2table = {}
     buildAlias2Table(plan, alias2table)
 
+    # 解析执行计划
     clusters = []
     childNode, referredRels = getTreeNode_PG(plan, alias2table, clusters)
+
+    # 直接从SQL文件中读取每个表涉及的列名，放在build出来的tree结构中。在merge的时候，将这些key也merge一下，最终放在select后面
     if referredRels is not None:
-        # 直接从SQL文件中读取每个表涉及的列名，放在build出来的tree结构中。在merge的时候，将这些key也merge一下，最终放在select后面
         referredKeys = getReferredKeys(alias2table, sqlFile, referredRels, g_table.data)
         for tree in clusters:
             for rel in tree.relations.keys():
-                # 加上所有的列
                 # tree.referKeys[rel] = [value.lower() for value in g_table.data[rel.upper()]]
                 tree.referKeys[rel] = [value for value in referredKeys[rel]] # referredKeys[rel]
-    # 将referKeys里涉及到的表和列信息进行匹配
-    # print(bitmap_index_scan_list)
-    # print(1111)
+
+    # 解决index_scan中缺失[表名.列名]的情况
     for i, node in enumerate(clusters):
         for tbl_name, tlb_dict in node.relations.items():
             for col_name, col_list in tlb_dict.items():
@@ -963,23 +964,6 @@ def buildOnePlanTree_PG(sqlFile, jsonFile, analyze=True):
                         col_of, tbl_of = k_l.split('Of')[0:2]
                         col_other = k_r
 
-                    # print(k_l, k_r)
-                    # print(col_of, tbl_of, col_other)
-
-                    # 方法1：在referKeys里寻找col_other，会出现问题
-                    # search_table = ""
-                    # for t_name, col_list in node.referKeys.items():
-                    #     for s_col in col_list:
-                    #         if s_col == col_other:
-                    #             search_table = t_name
-                    #             break
-                    #     if search_table != "":
-                    #         break
-                    # print(search_table)
-                    # if search_table != "":
-                    #     new_col = f"({col_other}Of{search_table} == {col_of}Of{tbl_of})"
-                    #     clusters[i].relations[tbl_name][col_name][j] = new_col
-
                     # 方法2：bitmap_index_scan_list中寻找
                     search_table = ""
                     for bitmap_index_scan in bitmap_index_scan_list:
@@ -1000,7 +984,6 @@ def buildOnePlanTree_PG(sqlFile, jsonFile, analyze=True):
                         print(f"fail to find {col}")
 
     bitmap_index_scan_list = []
-    # print(1111)
 
     return "", clusters
 
